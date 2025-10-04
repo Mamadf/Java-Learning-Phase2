@@ -4,8 +4,8 @@ public class Magazine extends LibraryItem{
     private String publisher;
     private int issue;
 
-    public Magazine(String title, String author, int publicationYear, String publisher, int issue) {
-        super(title, author, publicationYear);
+    public Magazine(String title, String author, int publicationYear, boolean available, String publisher, int issue) {
+        super(title, author, publicationYear , available);
         this.publisher = publisher;
         this.issue = issue;
     }
@@ -14,8 +14,10 @@ public class Magazine extends LibraryItem{
 
     @Override
     public void display() {
+        System.out.println("ID: " + this.getId());
         System.out.println("Book: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("issue number: " + issue + ", publisher: " + publisher);
+        System.out.println("------------------------");
     }
 }
