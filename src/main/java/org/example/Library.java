@@ -1,5 +1,6 @@
 package org.example;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Library {
@@ -81,6 +82,7 @@ public class Library {
         if (item != null) {
             if (!item.isAvailable()) {
                 item.setAvailable(true);
+                item.setReturnTime(LocalDate.now());
                 System.out.println("Item '" + item.getTitle() + "' returned successfully.");
             } else {
                 System.out.println("Item was not borrowed.");
@@ -89,4 +91,5 @@ public class Library {
             System.out.println("Item not found.");
         }
     }
+
 }

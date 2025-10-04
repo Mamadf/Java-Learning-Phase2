@@ -22,6 +22,7 @@ public class Thesis extends LibraryItem{
         System.out.println("Year: " + getPublicationYear());
         System.out.println("University: " + university + ", Supervisor: " + supervisor);
         System.out.println("Availability: " + isAvailable() );
+        System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
 }

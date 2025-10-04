@@ -1,8 +1,13 @@
 package org.example;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
+import java.util.Date;
+
 public abstract class LibraryItem {
     private static int counter = 1;
     private int id;
+    private LocalDate returnTime;
     private String title;
     private String author;
     private int publicationYear;
@@ -27,5 +32,13 @@ public abstract class LibraryItem {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public LocalDate getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(LocalDate returnTime) {
+        this.returnTime = returnTime;
     }
 }

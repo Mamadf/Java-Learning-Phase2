@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Library library = new Library();
         int id;
+        String title , author;
 
         library.addItem(new Book("Java Basics", "John Smith", 2020 , true,  "Programming", 300));
         library.addItem(new Magazine("Science Today", "Mary Editor", 2023, false,"Nature Pub" , 12));
@@ -40,6 +41,19 @@ public class Main {
                     break;
                 case "status":
                     library.printAll();
+                    break;
+                case "search by author":
+                    System.out.println("Enter Author: ");
+                    author = scanner.nextLine();
+                    library.searchByAuthor(author);
+                    break;
+                case "search by title":
+                    System.out.println("Enter title: ");
+                    title = scanner.nextLine();
+                    library.searchByTitle(title);
+                    break;
+                case "sort":
+                    library.sortByPublicationYear();
                     break;
                 case "exit":
                     running = false;

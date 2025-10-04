@@ -17,6 +17,7 @@ public class ReferenceBook extends LibraryItem{
         System.out.println("Year: " + getPublicationYear());
         System.out.println("Subject: " + subject + ", edition: " + edition);
         System.out.println("Availability: " + isAvailable() );
+        System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
 }

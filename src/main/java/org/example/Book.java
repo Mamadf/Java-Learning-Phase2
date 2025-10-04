@@ -19,6 +19,7 @@ public class Book extends LibraryItem {
         System.out.println("Year: " + getPublicationYear());
         System.out.println("Genre: " + genre + ", Pages: " + pages);
         System.out.println("Availability: " + isAvailable() );
+        System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
 }
