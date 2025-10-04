@@ -14,10 +14,11 @@ public class Magazine extends LibraryItem{
 
     @Override
     public void display() {
-        System.out.println("ID: " + this.getId());
+        System.out.println("ID: " + getId());
         System.out.println("Book: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("issue number: " + issue + ", publisher: " + publisher);
+        System.out.println("Availability: " + isAvailable() );
         System.out.println("------------------------");
     }
 }

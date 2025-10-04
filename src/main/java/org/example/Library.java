@@ -62,4 +62,31 @@ public class Library {
             }
         }
     }
+    public void borrowItem(int id) {
+        LibraryItem item = itemById.get(id);
+        if (item != null) {
+            if (item.isAvailable()) {
+                item.setAvailable(false);
+                System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
+            } else {
+                System.out.println("Item is already borrowed.");
+            }
+        } else {
+            System.out.println("Item not found.");
+        }
+    }
+
+    public void returnItem(int id) {
+        LibraryItem item = itemById.get(id);
+        if (item != null) {
+            if (!item.isAvailable()) {
+                item.setAvailable(true);
+                System.out.println("Item '" + item.getTitle() + "' returned successfully.");
+            } else {
+                System.out.println("Item was not borrowed.");
+            }
+        } else {
+            System.out.println("Item not found.");
+        }
+    }
 }
