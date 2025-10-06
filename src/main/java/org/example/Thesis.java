@@ -18,7 +18,7 @@ public class Thesis extends LibraryItem{
     @Override
     public void display() {
         System.out.println("ID: " + getId());
-        System.out.println("Book: " + getTitle() + " by " + getAuthor());
+        System.out.println("Thesis: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("University: " + university + ", Supervisor: " + supervisor);
         System.out.println("Availability: " + isAvailable() );

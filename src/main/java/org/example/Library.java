@@ -32,19 +32,25 @@ public class Library {
         return itemById.get(id);
     }
 
-    public void searchByTitle(String title) {
+    public List<LibraryItem> searchByTitle(String title) {
+        List <LibraryItem> result = new ArrayList<>();
         for (LibraryItem item : items) {
             if (item.getTitle().equalsIgnoreCase(title)) {
                 item.display();
+                result.add(item);
             }
         }
+        return result;
     }
-    public void searchByAuthor(String author) {
+    public List<LibraryItem> searchByAuthor(String author) {
+        List <LibraryItem> result = new ArrayList<>();
         for (LibraryItem item : items) {
             if (item.getAuthor().equalsIgnoreCase(author)) {
                 item.display();
+                result.add(item);
             }
         }
+        return result;
     }
     public void sortByPublicationYear() {
         items.sort(Comparator.comparingInt(LibraryItem::getPublicationYear));
@@ -63,7 +69,7 @@ public class Library {
             }
         }
     }
-    public void borrowItem(int id) {
+    public LibraryItem borrowItem(int id) {
         LibraryItem item = itemById.get(id);
         if (item != null) {
             if (item.isAvailable()) {
@@ -71,13 +77,16 @@ public class Library {
                 System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
             } else {
                 System.out.println("Item is already borrowed.");
+                return null;
             }
         } else {
             System.out.println("Item not found.");
+            return null;
         }
+        return item;
     }
 
-    public void returnItem(int id) {
+    public LibraryItem returnItem(int id) {
         LibraryItem item = itemById.get(id);
         if (item != null) {
             if (!item.isAvailable()) {
@@ -86,10 +95,13 @@ public class Library {
                 System.out.println("Item '" + item.getTitle() + "' returned successfully.");
             } else {
                 System.out.println("Item was not borrowed.");
+                return null;
             }
         } else {
             System.out.println("Item not found.");
+            return null;
         }
+        return item;
     }
 
 }

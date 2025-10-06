@@ -1,27 +1,25 @@
 package org.example;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
         int id;
+        List<LibraryItem> items;
         String title , author;
+        loadData(library);
 
-        library.addItem(new Book("Java Basics", "John Smith", 2020 , true,  "Programming", 300));
-        library.addItem(new Magazine("Science Today", "Mary Editor", 2023, false,"Nature Pub" , 12));
-        library.addItem(new Thesis("AI in Healthcare", "Ali Reza", 2022, false, "Tehran Uni", "Dr. Karimi"));
-        library.addItem(new Book("test", "Ali Reza", 2022, true,"Tehran Uni", 23));
-        library.addItem(new Magazine("test", "Reza", 2018, true, "Tehran Uni", 1));
-        library.addItem(new ReferenceBook("Oxford Dictionary", "Oxford Press", 2015,true , "Language", "13"));
 
-//        library.printAll();
 
-//        System.out.println("Search by author 'Ali Reza':");
-//        library.searchByAuthor("Ali Reza");
-//        library.searchByTitle("test");
-//        library.printBorrowedItems();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         while (running) {
@@ -30,14 +28,25 @@ public class Main {
                 case "borrow":
                     System.out.println("Enter Book ID: ");
                     id = scanner.nextInt();
-                    library.borrowItem(id);
+                    LibraryItem item = library.borrowItem(id);
+                    if ( item != null ) {
+                        items = new ArrayList<>();
+                        items.add(item);
+                        writeLibrary("borrow", items);
+                    }
                     scanner.nextLine();
+
                     break;
                 case "return":
                     System.out.println("Enter Book ID: ");
                     id = scanner.nextInt();
                     scanner.nextLine();
-                    library.returnItem(id);
+                    LibraryItem returnItem = library.returnItem(id);
+                    if(returnItem != null) {
+                        items = new ArrayList<>();
+                        items.add(returnItem);
+                        writeLibrary("return", items);
+                    }
                     break;
                 case "status":
                     library.printAll();
@@ -45,12 +54,12 @@ public class Main {
                 case "search by author":
                     System.out.println("Enter Author: ");
                     author = scanner.nextLine();
-                    library.searchByAuthor(author);
+                    writeLibrary("search by author", library.searchByAuthor(author));
                     break;
                 case "search by title":
                     System.out.println("Enter title: ");
                     title = scanner.nextLine();
-                    library.searchByTitle(title);
+                    writeLibrary("search by title", library.searchByTitle(title));
                     break;
                 case "sort":
                     library.sortByPublicationYear();
@@ -61,6 +70,68 @@ public class Main {
                 default:
                     System.out.println("Invalid command");
             }
+        }
+    }
+
+    public static void loadData(Library library) {
+        String fileName = "data.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+                String[] values = line.split(",");
+                String type = values[0];
+                String title = values[1];
+                String author = values[2];
+                int year = Integer.parseInt(values[3]);
+                boolean available = Boolean.parseBoolean(values[4]);
+                String privateField = values[5];
+                switch (type) {
+                    case "Book":
+                        int pages = Integer.parseInt(values[6]);
+                        library.addItem(new Book(title, author, year, available, privateField, pages));
+                        break;
+                    case "Magazine":
+                        int issue = Integer.parseInt(values[6]);
+                        library.addItem(new Magazine(title, author, year, available, privateField, issue));
+                        break;
+                    case "ReferenceBook":
+                        String edition = values[6];
+                        library.addItem(new ReferenceBook(title , author , year, available, privateField, edition));
+                        break;
+                    case "Thesis":
+                        String supervisor = values[6];
+                        library.addItem(new Thesis(title, author, year, available, privateField, supervisor));
+                        break;
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void writeLibrary(String operation, List<LibraryItem> items) {
+        try (FileWriter writer = new FileWriter("Log.csv" , true)) {
+            writer.append("\nOperation: ").append(operation).append("\n");
+
+            writer.append("Title,Author,PublicationYear,Status\n");
+            for (LibraryItem item : items) {
+                writer.append(item.getTitle()).append(",")
+                        .append(item.getAuthor()).append(",")
+                        .append(String.valueOf(item.getPublicationYear())).append(",")
+                        .append(String.valueOf(item.isAvailable())).append(",")
+                        .append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
