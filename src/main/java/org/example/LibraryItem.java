@@ -7,19 +7,20 @@ import java.util.Date;
 public abstract class LibraryItem {
     private static int counter = 1;
     private int id;
-    private LocalDate returnTime;
+    private String returnTime;
     private String title;
     private String author;
     private int publicationYear;
     private boolean available;
+    private String type;
 
-
-    public LibraryItem(String title, String author, int publicationYear , boolean available) {
+    public LibraryItem(String title, String author, int publicationYear , boolean available , String type) {
         this.id = counter++;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.available = available;
+        this.type = type;
     }
 
 
@@ -34,11 +35,11 @@ public abstract class LibraryItem {
         this.available = available;
     }
 
-    public LocalDate getReturnTime() {
-        return returnTime;
+    public void setReturnTime(String returnTime) {
+        this.returnTime = returnTime;
     }
 
-    public void setReturnTime(LocalDate returnTime) {
-        this.returnTime = returnTime;
+    public String getReturnTime() {
+        return returnTime;
     }
 }

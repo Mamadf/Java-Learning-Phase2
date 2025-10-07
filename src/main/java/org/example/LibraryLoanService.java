@@ -44,7 +44,7 @@ public class LibraryLoanService {
         if (item != null) {
             if (!item.isAvailable()) {
                 item.setAvailable(true);
-                item.setReturnTime(LocalDate.now());
+                item.setReturnTime(LocalDate.now().toString());
                 System.out.println("Item '" + item.getTitle() + "' returned successfully.");
             } else {
                 System.out.println("Item was not borrowed.");
@@ -61,7 +61,7 @@ public class LibraryLoanService {
         LibraryItem item = itemById.get(id);
         if (item != null) {
             if (item.isAvailable()) {
-                item.setReturnTime(LocalDate.parse(date));
+                item.setReturnTime(date);
                 System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
             } else {
                 System.out.println("Item is borrowed.");

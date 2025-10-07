@@ -10,7 +10,7 @@ public class Thesis extends LibraryItem{
     public String getSupervisor() { return supervisor; }
 
     public Thesis(String title, String author, int publicationYear, boolean available, String university, String supervisor) {
-        super(title, author, publicationYear, available);
+        super(title, author, publicationYear, available , "Thesis");
         this.university = university;
         this.supervisor = supervisor;
     }

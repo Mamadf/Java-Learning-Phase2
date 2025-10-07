@@ -112,3 +112,11 @@ Operation: search by author
 Title,Author,PublicationYear,Status
 AI in Healthcare,Ali Reza,2022,true
 test,Ali Reza,2022,true
+
+Operation: return
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,true
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,true

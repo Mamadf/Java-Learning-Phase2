@@ -1,6 +1,9 @@
 package org.example;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -86,6 +89,7 @@ public class Main {
                     System.out.println("Invalid command");
             }
         }
+        saveToJson("test.json",  library);
     }
 
     public static void loadData(Library library) {
@@ -186,6 +190,14 @@ public class Main {
             }
         }else{
             System.out.println("Invalid date format");
+        }
+    }
+    public static void saveToJson(String fileName , Library library) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(library.getItems(), writer);
+        } catch (IOException e) {
+            System.err.println("Error saving library: " + e.getMessage());
         }
     }
 }

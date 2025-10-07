@@ -1,0 +1,64 @@
+[
+  {
+    "genre": "Programming",
+    "pages": 300,
+    "id": 1,
+    "title": "Java Basics",
+    "author": "John Smith",
+    "publicationYear": 2020,
+    "available": true,
+    "type": "Book"
+  },
+  {
+    "publisher": "Nature Pub",
+    "issue": 12,
+    "id": 2,
+    "title": "Science Today",
+    "author": "Mary Editor",
+    "publicationYear": 2023,
+    "available": false,
+    "type": "Magazine"
+  },
+  {
+    "university": "Tehran Uni",
+    "supervisor": "Dr. Karimi",
+    "id": 3,
+    "returnTime": "2025-10-07",
+    "title": "AI in Healthcare",
+    "author": "Ali Reza",
+    "publicationYear": 2022,
+    "available": true,
+    "type": "Thesis"
+  },
+  {
+    "genre": "Tehran Uni",
+    "pages": 23,
+    "id": 4,
+    "title": "test",
+    "author": "Ali Reza",
+    "publicationYear": 2022,
+    "available": true,
+    "type": "Book"
+  },
+  {
+    "publisher": "Tehran Uni",
+    "issue": 1,
+    "id": 5,
+    "title": "test",
+    "author": "Reza",
+    "publicationYear": 2018,
+    "available": true,
+    "type": "Magazine"
+  },
+  {
+    "subject": "Language",
+    "edition": "13",
+    "id": 6,
+    "returnTime": "2012-12-21",
+    "title": "Oxford Dictionary",
+    "author": "Oxford Press",
+    "publicationYear": 2015,
+    "available": true,
+    "type": "Reference Book"
+  }
+]
