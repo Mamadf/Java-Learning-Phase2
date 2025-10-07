@@ -27,3 +27,35 @@ Operation: search by title
 Title,Author,PublicationYear,Status
 test,Ali Reza,2022,true,
 test,Reza,2018,true,
+
+Operation: return
+Title,Author,PublicationYear,Status
+Science Today,Mary Editor,2023,true,
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,true,
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,true,
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+test,Reza,2018,false,
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,false,
+
+Operation: return
+Title,Author,PublicationYear,Status
+Science Today,Mary Editor,2023,true,
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,true,
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+test,Reza,2018,true,

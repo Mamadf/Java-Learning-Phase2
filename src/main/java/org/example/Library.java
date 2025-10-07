@@ -104,4 +104,20 @@ public class Library {
         return item;
     }
 
+    public LibraryItem editReturnTime(int id , String date) {
+        LibraryItem item = itemById.get(id);
+        if (item != null) {
+            if (item.isAvailable()) {
+                item.setReturnTime(LocalDate.parse(date));
+                System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
+            } else {
+                System.out.println("Item is borrowed.");
+                return null;
+            }
+        } else {
+            System.out.println("Item not found.");
+            return null;
+        }
+        return item;
+    }
 }

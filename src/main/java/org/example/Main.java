@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -63,6 +64,9 @@ public class Main {
                     break;
                 case "sort":
                     library.sortByPublicationYear();
+                    break;
+                case "return time":
+                    returnTime(scanner , library);
                     break;
                 case "exit":
                     running = false;
@@ -132,6 +136,25 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void returnTime(Scanner scanner , Library library) {
+        String dateReg = "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
+        System.out.println("Enter Book ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter New Time (yyyy-MM-dd): ");
+        String date = scanner.nextLine();
+        boolean reg = Pattern.matches(dateReg, date);
+        if(reg) {
+            LibraryItem editItem = library.editReturnTime(id, date);
+            if (editItem != null) {
+                List<LibraryItem> items = new ArrayList<>();
+                items.add(editItem);
+                writeLibrary("change return time", items);
+            }
+        }else{
+            System.out.println("Invalid date format");
         }
     }
 }
