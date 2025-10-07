@@ -59,3 +59,22 @@ test,Ali Reza,2022,true,
 Operation: change return time
 Title,Author,PublicationYear,Status
 test,Reza,2018,true,
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+Java Basics,John Smith,2020,false
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,false
+
+Operation: return
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,true
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,true

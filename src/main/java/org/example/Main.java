@@ -55,12 +55,22 @@ public class Main {
                 case "search by author":
                     System.out.println("Enter Author: ");
                     author = scanner.nextLine();
-                    writeLibrary("search by author", library.searchByAuthor(author));
+                    List<LibraryItem> searchResult = library.searchByAuthor(author);
+                    if(!searchResult.isEmpty()) {
+                        writeLibrary("search by author", searchResult);
+                    }else {
+                        System.out.println("Author not found");
+                    }
                     break;
                 case "search by title":
                     System.out.println("Enter title: ");
                     title = scanner.nextLine();
-                    writeLibrary("search by title", library.searchByTitle(title));
+                    List<LibraryItem> searchRes = library.searchByTitle(title);
+                    if(!searchRes.isEmpty()) {
+                        writeLibrary("search by title", searchRes);
+                    }else {
+                        System.out.println("Title not found");
+                    }
                     break;
                 case "sort":
                     library.sortByPublicationYear();
@@ -81,63 +91,83 @@ public class Main {
         String fileName = "data.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
-
             boolean isHeader = true;
+
             while ((line = br.readLine()) != null) {
                 if (isHeader) {
                     isHeader = false;
                     continue;
                 }
+
                 String[] values = line.split(",");
-                String type = values[0];
-                String title = values[1];
-                String author = values[2];
-                int year = Integer.parseInt(values[3]);
-                boolean available = Boolean.parseBoolean(values[4]);
-                String privateField = values[5];
-                switch (type) {
-                    case "Book":
-                        int pages = Integer.parseInt(values[6]);
-                        library.addItem(new Book(title, author, year, available, privateField, pages));
-                        break;
-                    case "Magazine":
-                        int issue = Integer.parseInt(values[6]);
-                        library.addItem(new Magazine(title, author, year, available, privateField, issue));
-                        break;
-                    case "ReferenceBook":
-                        String edition = values[6];
-                        library.addItem(new ReferenceBook(title , author , year, available, privateField, edition));
-                        break;
-                    case "Thesis":
-                        String supervisor = values[6];
-                        library.addItem(new Thesis(title, author, year, available, privateField, supervisor));
-                        break;
+                if (values.length < 7) {
+                    System.err.println("Invalid line format: " + line);
+                    continue;
                 }
 
+                try {
+                    String type = values[0];
+                    String title = values[1];
+                    String author = values[2];
+                    int year = Integer.parseInt(values[3]);
+                    boolean available = Boolean.parseBoolean(values[4]);
+                    String privateField = values[5];
+
+                    switch (type) {
+                        case "Book":
+                            int pages = Integer.parseInt(values[6]);
+                            library.addItem(new Book(title, author, year, available, privateField, pages));
+                            break;
+                        case "Magazine":
+                            int issue = Integer.parseInt(values[6]);
+                            library.addItem(new Magazine(title, author, year, available, privateField, issue));
+                            break;
+                        case "ReferenceBook":
+                            String edition = values[6];
+                            library.addItem(new ReferenceBook(title, author, year, available, privateField, edition));
+                            break;
+                        case "Thesis":
+                            String supervisor = values[6];
+                            library.addItem(new Thesis(title, author, year, available, privateField, supervisor));
+                            break;
+                        default:
+                            System.err.println("Unknown item type: " + type);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid number format in line: " + line);
+                }
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Could not read file: " + fileName);
         }
     }
+
 
 
     public static void writeLibrary(String operation, List<LibraryItem> items) {
-        try (FileWriter writer = new FileWriter("Log.csv" , true)) {
-            writer.append("\nOperation: ").append(operation).append("\n");
+        try (FileWriter writer = new FileWriter("Log.csv", true)) {
 
+            writer.append("\nOperation: ").append(operation).append("\n");
             writer.append("Title,Author,PublicationYear,Status\n");
+
             for (LibraryItem item : items) {
-                writer.append(item.getTitle()).append(",")
-                        .append(item.getAuthor()).append(",")
-                        .append(String.valueOf(item.getPublicationYear())).append(",")
-                        .append(String.valueOf(item.isAvailable())).append(",")
-                        .append("\n");
+                try {
+                    writer.append(item.getTitle()).append(",")
+                            .append(item.getAuthor()).append(",")
+                            .append(String.valueOf(item.getPublicationYear())).append(",")
+                            .append(String.valueOf(item.isAvailable()))
+                            .append("\n");
+                } catch (Exception e) {
+                    System.err.println("Error writing item: " + item + " -> " + e.getMessage());
+                }
             }
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error writing to Log.csv: " + e.getMessage());
         }
     }
+
     public static void returnTime(Scanner scanner , Library library) {
         String dateReg = "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
         System.out.println("Enter Book ID: ");
