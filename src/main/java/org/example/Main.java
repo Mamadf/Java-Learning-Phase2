@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
+        LibraryLoanService libraryLoanService = new LibraryLoanService(library);
         int id;
         List<LibraryItem> items;
         String title , author;
@@ -29,7 +30,7 @@ public class Main {
                 case "borrow":
                     System.out.println("Enter Book ID: ");
                     id = scanner.nextInt();
-                    LibraryItem item = library.borrowItem(id);
+                    LibraryItem item = libraryLoanService.borrowItem(id);
                     if ( item != null ) {
                         items = new ArrayList<>();
                         items.add(item);
@@ -42,7 +43,7 @@ public class Main {
                     System.out.println("Enter Book ID: ");
                     id = scanner.nextInt();
                     scanner.nextLine();
-                    LibraryItem returnItem = library.returnItem(id);
+                    LibraryItem returnItem = libraryLoanService.returnItem(id);
                     if(returnItem != null) {
                         items = new ArrayList<>();
                         items.add(returnItem);
@@ -76,7 +77,7 @@ public class Main {
                     library.sortByPublicationYear();
                     break;
                 case "return time":
-                    returnTime(scanner , library);
+                    returnTime(scanner , libraryLoanService);
                     break;
                 case "exit":
                     running = false;
@@ -168,7 +169,7 @@ public class Main {
         }
     }
 
-    public static void returnTime(Scanner scanner , Library library) {
+    public static void returnTime(Scanner scanner , LibraryLoanService libraryLoanService) {
         String dateReg = "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
         System.out.println("Enter Book ID: ");
         int id = scanner.nextInt();
@@ -177,7 +178,7 @@ public class Main {
         String date = scanner.nextLine();
         boolean reg = Pattern.matches(dateReg, date);
         if(reg) {
-            LibraryItem editItem = library.editReturnTime(id, date);
+            LibraryItem editItem = libraryLoanService.editReturnTime(id, date);
             if (editItem != null) {
                 List<LibraryItem> items = new ArrayList<>();
                 items.add(editItem);

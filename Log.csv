@@ -78,3 +78,37 @@ test,Ali Reza,2022,true
 Operation: change return time
 Title,Author,PublicationYear,Status
 test,Ali Reza,2022,true
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+test,Reza,2018,false
+
+Operation: return
+Title,Author,PublicationYear,Status
+test,Reza,2018,true
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,true
+
+Operation: borrow
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,false
+
+Operation: return
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,true
+
+Operation: change return time
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,true
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,true
+test,Reza,2018,true
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,true
+test,Ali Reza,2022,true

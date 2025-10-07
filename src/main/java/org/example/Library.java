@@ -23,7 +23,6 @@ public class Library {
         LibraryItem item = itemById.remove(id);
         if (item != null) {
             items.remove(item);
-            System.out.println("Item with id " + id + " removed successfully.");
         } else {
             System.out.println("Item not found.");
         }
@@ -61,63 +60,12 @@ public class Library {
             item.display();
         }
     }
-
-    public void printBorrowedItems() {
-        for (LibraryItem item : items) {
-            if (!item.isAvailable()) {
-                item.display();
-            }
-        }
-    }
-    public LibraryItem borrowItem(int id) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (item.isAvailable()) {
-                item.setAvailable(false);
-                System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
-            } else {
-                System.out.println("Item is already borrowed.");
-                return null;
-            }
-        } else {
-            System.out.println("Item not found.");
-            return null;
-        }
-        return item;
+    public List<LibraryItem> getItems() {
+        return items;
     }
 
-    public LibraryItem returnItem(int id) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (!item.isAvailable()) {
-                item.setAvailable(true);
-                item.setReturnTime(LocalDate.now());
-                System.out.println("Item '" + item.getTitle() + "' returned successfully.");
-            } else {
-                System.out.println("Item was not borrowed.");
-                return null;
-            }
-        } else {
-            System.out.println("Item not found.");
-            return null;
-        }
-        return item;
+    public Map<Integer, LibraryItem> getItemById() {
+        return itemById;
     }
 
-    public LibraryItem editReturnTime(int id , String date) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (item.isAvailable()) {
-                item.setReturnTime(LocalDate.parse(date));
-                System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
-            } else {
-                System.out.println("Item is borrowed.");
-                return null;
-            }
-        } else {
-            System.out.println("Item not found.");
-            return null;
-        }
-        return item;
-    }
 }
