@@ -1,13 +1,9 @@
 package org.example;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +14,12 @@ public class Main {
     public static void main(String[] args) {
         Library library = new Library();
         LibraryLoanService libraryLoanService = new LibraryLoanService(library);
+        LibraryJsonHandler libraryJsonHandler = new LibraryJsonHandler(library);
         int id;
         List<LibraryItem> items;
         String title , author;
-        loadData(library);
-
+//        loadData(library); //Load from CSV file
+        libraryJsonHandler.loadFromJson("test.json");
 
 
         Scanner scanner = new Scanner(System.in);
@@ -30,6 +27,9 @@ public class Main {
         while (running) {
             String command = scanner.nextLine();
             switch (command) {
+                case "add":
+                    getAddInputData(scanner,library);
+                    break;
                 case "borrow":
                     System.out.println("Enter Book ID: ");
                     id = scanner.nextInt();
@@ -89,7 +89,7 @@ public class Main {
                     System.out.println("Invalid command");
             }
         }
-        saveToJson("test.json",  library);
+        libraryJsonHandler.saveToJson("test.json");
     }
 
     public static void loadData(Library library) {
@@ -192,12 +192,52 @@ public class Main {
             System.out.println("Invalid date format");
         }
     }
-    public static void saveToJson(String fileName , Library library) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(fileName)) {
-            gson.toJson(library.getItems(), writer);
-        } catch (IOException e) {
-            System.err.println("Error saving library: " + e.getMessage());
+    public static void getAddInputData(Scanner scanner , Library library) {
+        System.out.print("Please enter the item type: (Book, Magazine, ReferenceBook, Thesis): )");
+        String type = scanner.nextLine();
+        System.out.print("Please enter the item title: ");
+        String title = scanner.nextLine();
+        System.out.print("Please enter the item author: ");
+        String author = scanner.nextLine();
+        System.out.print("Please enter the publication year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Please enter the availability of the item: ");
+        boolean available = Boolean.parseBoolean(scanner.nextLine());
+        switch (type) {
+            case "Book":
+                System.out.print("Please enter the genre: ");
+                String genre =  scanner.nextLine();
+                System.out.print("Please enter the number of pages: ");
+                int pages = scanner.nextInt();
+                scanner.nextLine();
+                library.addItem(new Book(title, author, year, available, genre, pages));
+                break;
+            case "Magazine":
+                System.out.print("Please enter the publisher: ");
+                String publisher = scanner.nextLine();
+                System.out.print("Please enter the issue number: ");
+                int issue =scanner.nextInt();
+                scanner.nextLine();
+                library.addItem(new Magazine(title, author, year, available, publisher, issue));
+                break;
+            case "ReferenceBook":
+                System.out.print("Please enter the subject: ");
+                String subject = scanner.nextLine();
+                System.out.print("Please enter the edition: ");
+                String edition = scanner.nextLine();
+                library.addItem(new ReferenceBook(title, author, year, available, subject, edition));
+                break;
+            case "Thesis":
+                System.out.print("Please enter the university: ");
+                String university = scanner.nextLine();
+                System.out.print("Please enter the supervisor: ");
+                String supervisor = scanner.nextLine();
+                library.addItem(new Thesis(title, author, year, available, university, supervisor));
+                break;
+            default:
+                System.err.println("Unknown item type: " + type);
         }
     }
+
 }

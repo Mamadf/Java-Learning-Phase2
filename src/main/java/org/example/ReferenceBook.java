@@ -5,7 +5,7 @@ public class ReferenceBook extends LibraryItem{
     private String edition;
 
     public ReferenceBook(String title, String author, int publicationYear , boolean available, String subject, String edition) {
-        super(title, author, publicationYear , available , "Reference Book");
+        super(title, author, publicationYear , available);
         this.subject = subject;
         this.edition = edition;
     }

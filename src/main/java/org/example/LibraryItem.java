@@ -12,15 +12,13 @@ public abstract class LibraryItem {
     private String author;
     private int publicationYear;
     private boolean available;
-    private String type;
 
-    public LibraryItem(String title, String author, int publicationYear , boolean available , String type) {
-        this.id = counter++;
+    public LibraryItem(String title, String author, int publicationYear , boolean available) {
+        this.id = ++counter;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.available = available;
-        this.type = type;
     }
 
 
@@ -42,4 +40,9 @@ public abstract class LibraryItem {
     public String getReturnTime() {
         return returnTime;
     }
+
+    public static void setCounter(int counter) {
+        LibraryItem.counter = counter;
+    }
+
 }

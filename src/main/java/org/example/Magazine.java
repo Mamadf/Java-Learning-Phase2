@@ -5,7 +5,7 @@ public class Magazine extends LibraryItem{
     private int issue;
 
     public Magazine(String title, String author, int publicationYear, boolean available, String publisher, int issue) {
-        super(title, author, publicationYear , available , "Magazine");
+        super(title, author, publicationYear , available);
         this.publisher = publisher;
         this.issue = issue;
     }
