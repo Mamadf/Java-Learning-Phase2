@@ -22,4 +22,12 @@ public class Magazine extends LibraryItem{
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public int getIssue() {
+        return issue;
+    }
 }

@@ -5,7 +5,6 @@ import com.google.gson.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -15,8 +14,11 @@ public class Main {
         Library library = new Library();
         LibraryLoanService libraryLoanService = new LibraryLoanService(library);
         LibraryJsonHandler libraryJsonHandler = new LibraryJsonHandler(library);
+        ProtobufHandler protobufHandler = new ProtobufHandler(library);
 //        loadData(library); //Load from CSV file
-        libraryJsonHandler.loadFromJson("test.json");
+        protobufHandler.loadFromProto("library_data.bin");
+
+//        libraryJsonHandler.loadFromJson("test.json");
 
 
         Scanner scanner = new Scanner(System.in);
@@ -58,7 +60,9 @@ public class Main {
                     System.out.println("Invalid command");
             }
         }
-        libraryJsonHandler.saveToJson("test.json");
+//        libraryJsonHandler.saveToJson("test.json");
+        protobufHandler.saveToProto("library_data.bin");
+
     }
 
     private static void titleSearch(Scanner scanner, Library library) {
@@ -264,5 +268,4 @@ public class Main {
                 System.err.println("Unknown item type: " + type);
         }
     }
-
 }

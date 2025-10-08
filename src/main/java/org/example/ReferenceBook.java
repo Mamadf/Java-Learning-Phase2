@@ -1,6 +1,6 @@
 package org.example;
 
-public class ReferenceBook extends LibraryItem{
+public class ReferenceBook extends LibraryItem {
     private String subject;
     private String edition;
 
@@ -19,5 +19,13 @@ public class ReferenceBook extends LibraryItem{
         System.out.println("Availability: " + isAvailable() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getEdition() {
+        return edition;
     }
 }

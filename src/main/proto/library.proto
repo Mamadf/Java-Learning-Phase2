@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package org.example.proto;
+
+message Book {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  int32 publication_year = 4;
+  bool available = 5;
+  string genre = 6;
+  int32 pages = 7;
+  string return_date = 8;
+}
+
+message Magazine {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  int32 publication_year = 4;
+  bool available = 5;
+  string publisher = 6;
+  int32 issue_number = 7;
+  string return_date = 8;
+}
+
+message ReferenceBook {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  int32 publication_year = 4;
+  bool available = 5;
+  string subject = 6;
+  string edition = 7;
+  string return_date = 8;
+}
+
+message Thesis {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  int32 publication_year = 4;
+  bool available = 5;
+  string university = 6;
+  string supervisor = 7;
+  string return_date = 8;
+}
+
+message LibraryItem {
+  oneof item {
+    Book book = 1;
+    Magazine magazine = 2;
+    ReferenceBook reference_book = 3;
+    Thesis thesis = 4;
+  }
+}
+
+message Library {
+  repeated LibraryItem items = 1;
+}
