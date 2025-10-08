@@ -1,26 +1,39 @@
 [
   {
-    "type": "Book",
+    "type": "ReferenceBook",
     "data": {
-      "genre": "Programming",
-      "pages": 300,
-      "id": 1,
-      "title": "Java Basics",
-      "author": "John Smith",
-      "publicationYear": 2020,
+      "subject": "Language",
+      "edition": "13",
+      "id": 6,
+      "title": "Oxford Dictionary",
+      "author": "Oxford Press",
+      "publicationYear": 2015,
       "available": true
     }
   },
   {
     "type": "Magazine",
     "data": {
-      "publisher": "Nature Pub",
-      "issue": 12,
-      "id": 2,
-      "title": "Science Today",
-      "author": "Mary Editor",
-      "publicationYear": 2023,
-      "available": false
+      "publisher": "Tehran Uni",
+      "issue": 1,
+      "id": 5,
+      "title": "test",
+      "author": "Reza",
+      "publicationYear": 2018,
+      "available": true
+    }
+  },
+  {
+    "type": "Book",
+    "data": {
+      "genre": "Programming",
+      "pages": 300,
+      "id": 1,
+      "returnTime": "2025-10-08",
+      "title": "Java Basics",
+      "author": "John Smith",
+      "publicationYear": 2020,
+      "available": true
     }
   },
   {
@@ -42,6 +55,7 @@
       "genre": "Tehran Uni",
       "pages": 23,
       "id": 4,
+      "returnTime": "2021-10-21",
       "title": "test",
       "author": "Ali Reza",
       "publicationYear": 2022,
@@ -51,25 +65,13 @@
   {
     "type": "Magazine",
     "data": {
-      "publisher": "Tehran Uni",
-      "issue": 1,
-      "id": 5,
-      "title": "test",
-      "author": "Reza",
-      "publicationYear": 2018,
-      "available": true
-    }
-  },
-  {
-    "type": "ReferenceBook",
-    "data": {
-      "subject": "Language",
-      "edition": "13",
-      "id": 6,
-      "title": "Oxford Dictionary",
-      "author": "Oxford Press",
-      "publicationYear": 2015,
-      "available": true
+      "publisher": "Nature Pub",
+      "issue": 12,
+      "id": 2,
+      "title": "Science Today",
+      "author": "Mary Editor",
+      "publicationYear": 2023,
+      "available": false
     }
   }
 ]

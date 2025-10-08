@@ -19,13 +19,14 @@ public class Library {
     }
 
 
-    public void deleteItem(int id) {
+    public LibraryItem deleteItem(int id) {
         LibraryItem item = itemById.remove(id);
         if (item != null) {
             items.remove(item);
         } else {
             System.out.println("Item not found.");
         }
+        return item;
     }
     public LibraryItem searchById(int id) {
         return itemById.get(id);
