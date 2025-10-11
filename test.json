@@ -42,11 +42,11 @@
       "university": "Tehran Uni",
       "supervisor": "Dr. Karimi",
       "id": 3,
-      "returnTime": "2025-10-08",
+      "returnTime": "2025-10-11",
       "title": "AI in Healthcare",
       "author": "Ali Reza",
       "publicationYear": 2022,
-      "available": false
+      "available": true
     }
   },
   {
