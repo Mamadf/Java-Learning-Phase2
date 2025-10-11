@@ -18,7 +18,7 @@ public class Main {
 //        loadData(library); //Load from CSV file
         protobufHandler.loadFromProto("library_data.bin");
 
-//        libraryJsonHandler.loadFromJson("test.json");
+//        libraryJsonHandler.loadFromJson("test.json"); //Load from Json file
 
 
         Scanner scanner = new Scanner(System.in);

@@ -2,3 +2,7 @@
 Operation: borrow
 Title,Author,PublicationYear,Status
 AI in Healthcare,Ali Reza,2022,false
+
+Operation: return
+Title,Author,PublicationYear,Status
+Science Today,Mary Editor,2023,true

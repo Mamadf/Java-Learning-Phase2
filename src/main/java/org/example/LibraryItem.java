@@ -14,7 +14,7 @@ public abstract class LibraryItem {
     private boolean available;
 
     public LibraryItem(String title, String author, int publicationYear , boolean available) {
-        this.id = ++counter;
+        this.id = counter++;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;

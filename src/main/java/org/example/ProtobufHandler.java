@@ -69,10 +69,9 @@ public class ProtobufHandler {
             }
 
             libraryBuilder.build().writeTo(output);
-            System.out.println("✅ Saved to protobuf: " + fileName);
 
         } catch (IOException e) {
-            System.err.println("❌ Failed to save library: " + e.getMessage());
+            System.err.println("Failed to save library: " + e.getMessage());
         }
     }
 
@@ -81,27 +80,26 @@ public class ProtobufHandler {
             LibraryOuterClass.Library protoLib = LibraryOuterClass.Library.parseFrom(input);
             for (LibraryOuterClass.LibraryItem item : protoLib.getItemsList()) {
                 if (item.hasBook()) {
-                    var b = item.getBook();
+                    LibraryOuterClass.Book b = item.getBook();
                     library.addItem(new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
                             b.getAvailable(), b.getGenre(), b.getPages()));
                 } else if (item.hasMagazine()) {
-                    var m = item.getMagazine();
+                    LibraryOuterClass.Magazine m = item.getMagazine();
                     library.addItem(new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
                             m.getAvailable(), m.getPublisher(), m.getIssueNumber()));
                 } else if (item.hasReferenceBook()) {
-                    var r = item.getReferenceBook();
+                    LibraryOuterClass.ReferenceBook r = item.getReferenceBook();
                     library.addItem(new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
                             r.getAvailable(), r.getSubject(), r.getEdition()));
                 } else if (item.hasThesis()) {
-                    var t = item.getThesis();
+                    LibraryOuterClass.Thesis t = item.getThesis();
                     library.addItem(new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
                             t.getAvailable(), t.getUniversity(), t.getSupervisor()));
                 }
             }
-            System.out.println("✅ Loaded from protobuf: " + fileName);
 
         } catch (IOException e) {
-            System.err.println("⚠️ Could not load library: " + e.getMessage());
+            System.err.println("Could not load library: " + e.getMessage());
         }
     }
 }
