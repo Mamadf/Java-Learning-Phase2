@@ -1,5 +1,7 @@
-package org.example;
+package org.example.Threads;
 
+import org.example.Factory.LibraryItemFactory;
+import org.example.Factory.LibraryItemFactoryProducer;
 import org.example.Library.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryLoanService;
@@ -45,6 +47,9 @@ public class ThreadLibrary {
                         System.out.print("Enter Book ID: ");
                         int returnId = Integer.parseInt(scanner.nextLine());
                         requestQueue.offer(returnId + ":" + command);
+                        break;
+                    case "update":
+//                        updateLibrary(scanner , libraryManagerService);
                         break;
                     case "status":
                         libraryManagerService.printAll();
@@ -96,51 +101,20 @@ public class ThreadLibrary {
         }
     }
 
+//    private static void updateLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {
+//        System.out.println("Enter Item ID: ");
+//
+//    }
+
     public static void addToLibrary(Scanner scanner , LibraryManagerService libraryManagerService) {
-        System.out.print("Please enter the item type: (Book, Magazine, ReferenceBook, Thesis): )");
+        System.out.print("Enter item type (Book, Magazine, ReferenceBook, Thesis): ");
         String type = scanner.nextLine();
-        System.out.print("Please enter the item title: ");
-        String title = scanner.nextLine();
-        System.out.print("Please enter the item author: ");
-        String author = scanner.nextLine();
-        System.out.print("Please enter the publication year: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Please enter the availability of the item: ");
-        boolean available = Boolean.parseBoolean(scanner.nextLine());
-        switch (type) {
-            case "Book":
-                System.out.print("Please enter the genre: ");
-                String genre =  scanner.nextLine();
-                System.out.print("Please enter the number of pages: ");
-                int pages = scanner.nextInt();
-                scanner.nextLine();
-                libraryManagerService.addItem(new Book(title, author, year, available, genre, pages));
-                break;
-            case "Magazine":
-                System.out.print("Please enter the publisher: ");
-                String publisher = scanner.nextLine();
-                System.out.print("Please enter the issue number: ");
-                int issue =scanner.nextInt();
-                scanner.nextLine();
-                libraryManagerService.addItem(new Magazine(title, author, year, available, publisher, issue));
-                break;
-            case "ReferenceBook":
-                System.out.print("Please enter the subject: ");
-                String subject = scanner.nextLine();
-                System.out.print("Please enter the edition: ");
-                String edition = scanner.nextLine();
-                libraryManagerService.addItem(new ReferenceBook(title, author, year, available, subject, edition));
-                break;
-            case "Thesis":
-                System.out.print("Please enter the university: ");
-                String university = scanner.nextLine();
-                System.out.print("Please enter the supervisor: ");
-                String supervisor = scanner.nextLine();
-                libraryManagerService.addItem(new Thesis(title, author, year, available, university, supervisor));
-                break;
-            default:
-                System.err.println("Unknown item type: " + type);
+        LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(type);
+        if (factory != null) {
+            LibraryItem item = factory.createItem(scanner);
+            libraryManagerService.addItem(item);
+        } else {
+            System.out.println("Unknown item type: " + type);
         }
     }
     private static void removeFromLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {

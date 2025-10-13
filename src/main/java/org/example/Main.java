@@ -5,6 +5,7 @@ import org.example.Library.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryLoanService;
 import org.example.Service.LibraryManagerService;
+import org.example.Storage.CsvHandler;
 import org.example.Storage.LibraryJsonHandler;
 import org.example.Storage.ProtobufHandler;
 
@@ -21,8 +22,9 @@ public class Main {
         LibraryLoanService libraryLoanService = new LibraryLoanService(library);
         LibraryJsonHandler libraryJsonHandler = new LibraryJsonHandler(library);
         ProtobufHandler protobufHandler = new ProtobufHandler(library);
-//        loadData(library); //Load from CSV file
-        protobufHandler.loadFromProto("library_data.bin");
+        CsvHandler csvHandler = new CsvHandler();
+        csvHandler.loadData(libraryManagerService); //Load from CSV file
+//        protobufHandler.loadFromProto("library_data.bin");
 
 //        libraryJsonHandler.loadFromJson("test.json"); //Load from Json file
 
@@ -76,7 +78,7 @@ public class Main {
         String title = scanner.nextLine();
         List<LibraryItem> searchRes = libraryManagerService.searchByTitle(title);
         if(!searchRes.isEmpty()) {
-            writeLibrary("search by title", searchRes);
+            CsvHandler.writeLibrary("search by title", searchRes);
         }else {
             System.out.println("Title not found");
         }
@@ -87,7 +89,7 @@ public class Main {
         String author = scanner.nextLine();
         List<LibraryItem> searchResult = libraryManagerService.searchByAuthor(author);
         if(!searchResult.isEmpty()) {
-            writeLibrary("search by author", searchResult);
+            CsvHandler.writeLibrary("search by author", searchResult);
         }else {
             System.out.println("Author not found");
         }
@@ -101,7 +103,7 @@ public class Main {
         if(returnItem != null) {
             List<LibraryItem> items = new ArrayList<>();
             items.add(returnItem);
-            writeLibrary("return", items);
+            CsvHandler.writeLibrary("return", items);
         }
     }
 
@@ -112,7 +114,7 @@ public class Main {
         if ( item != null ) {
             List<LibraryItem> items = new ArrayList<>();
             items.add(item);
-            writeLibrary("borrow", items);
+            CsvHandler.writeLibrary("borrow", items);
         }
         scanner.nextLine();
     }
@@ -124,89 +126,10 @@ public class Main {
         LibraryItem item = libraryManagerService.deleteItem(id);
         List<LibraryItem> items = new ArrayList<>();
         items.add(item);
-        writeLibrary("remove" , items);
-    }
-
-    public static void loadData(LibraryManagerService libraryManagerService) {
-        String fileName = "data.csv";
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            boolean isHeader = true;
-
-            while ((line = br.readLine()) != null) {
-                if (isHeader) {
-                    isHeader = false;
-                    continue;
-                }
-
-                String[] values = line.split(",");
-                if (values.length < 7) {
-                    System.err.println("Invalid line format: " + line);
-                    continue;
-                }
-
-                try {
-                    String type = values[0];
-                    String title = values[1];
-                    String author = values[2];
-                    int year = Integer.parseInt(values[3]);
-                    boolean available = Boolean.parseBoolean(values[4]);
-                    String privateField = values[5];
-
-                    switch (type) {
-                        case "Book":
-                            int pages = Integer.parseInt(values[6]);
-                            libraryManagerService.addItem(new Book(title, author, year, available, privateField, pages));
-                            break;
-                        case "Magazine":
-                            int issue = Integer.parseInt(values[6]);
-                            libraryManagerService.addItem(new Magazine(title, author, year, available, privateField, issue));
-                            break;
-                        case "ReferenceBook":
-                            String edition = values[6];
-                            libraryManagerService.addItem(new ReferenceBook(title, author, year, available, privateField, edition));
-                            break;
-                        case "Thesis":
-                            String supervisor = values[6];
-                            libraryManagerService.addItem(new Thesis(title, author, year, available, privateField, supervisor));
-                            break;
-                        default:
-                            System.err.println("Unknown item type: " + type);
-                    }
-                } catch (NumberFormatException e) {
-                    System.err.println("Invalid number format in line: " + line);
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Could not read file: " + fileName);
-        }
+        CsvHandler.writeLibrary("remove" , items);
     }
 
 
-
-    public static void writeLibrary(String operation, List<LibraryItem> items) {
-        try (FileWriter writer = new FileWriter("Log.csv", true)) {
-
-            writer.append("\nOperation: ").append(operation).append("\n");
-            writer.append("Title,Author,PublicationYear,Status\n");
-
-            for (LibraryItem item : items) {
-                try {
-                    writer.append(item.getTitle()).append(",")
-                            .append(item.getAuthor()).append(",")
-                            .append(String.valueOf(item.getPublicationYear())).append(",")
-                            .append(String.valueOf(item.isAvailable()))
-                            .append("\n");
-                } catch (Exception e) {
-                    System.err.println("Error writing item: " + item + " -> " + e.getMessage());
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Error writing to Log.csv: " + e.getMessage());
-        }
-    }
 
     public static void returnTime(Scanner scanner , LibraryLoanService libraryLoanService) {
         String dateReg = "^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
@@ -221,7 +144,7 @@ public class Main {
             if (editItem != null) {
                 List<LibraryItem> items = new ArrayList<>();
                 items.add(editItem);
-                writeLibrary("change return time", items);
+                CsvHandler.writeLibrary("change return time", items);
             }
         }else{
             System.out.println("Invalid date format");
