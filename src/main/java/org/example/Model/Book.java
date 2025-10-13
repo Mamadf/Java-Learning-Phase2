@@ -22,5 +22,13 @@ public class Book extends LibraryItem {
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
 }
 

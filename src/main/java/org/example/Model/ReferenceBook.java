@@ -28,4 +28,12 @@ public class ReferenceBook extends LibraryItem {
     public String getEdition() {
         return edition;
     }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
 }

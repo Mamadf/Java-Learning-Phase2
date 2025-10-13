@@ -6,6 +6,7 @@ import org.example.Library.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryLoanService;
 import org.example.Service.LibraryManagerService;
+import org.example.Storage.CsvHandler;
 import org.example.Storage.ProtobufHandler;
 
 import java.io.FileWriter;
@@ -49,7 +50,7 @@ public class ThreadLibrary {
                         requestQueue.offer(returnId + ":" + command);
                         break;
                     case "update":
-//                        updateLibrary(scanner , libraryManagerService);
+                        updateLibrary(scanner , libraryManagerService);
                         break;
                     case "status":
                         libraryManagerService.printAll();
@@ -101,10 +102,21 @@ public class ThreadLibrary {
         }
     }
 
-//    private static void updateLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {
-//        System.out.println("Enter Item ID: ");
-//
-//    }
+    private static void updateLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {
+        System.out.print("Enter item ID to update: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        LibraryItem item = libraryManagerService.searchById(id);
+
+        if (item != null) {
+            String type = item.getClass().getSimpleName();
+            LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(type);
+            factory.updateItem(item, scanner);
+        } else {
+            System.out.println("❌ Item not found!");
+        }
+
+
+    }
 
     public static void addToLibrary(Scanner scanner , LibraryManagerService libraryManagerService) {
         System.out.print("Enter item type (Book, Magazine, ReferenceBook, Thesis): ");
@@ -124,29 +136,7 @@ public class ThreadLibrary {
         LibraryItem item = libraryManagerService.deleteItem(id);
         List<LibraryItem> items = new ArrayList<>();
         items.add(item);
-        writeLibrary("remove" , items);
-    }
-    public static void writeLibrary(String operation, List<LibraryItem> items) {
-        try (FileWriter writer = new FileWriter("Log.csv", true)) {
-
-            writer.append("\nOperation: ").append(operation).append("\n");
-            writer.append("Title,Author,PublicationYear,Status\n");
-
-            for (LibraryItem item : items) {
-                try {
-                    writer.append(item.getTitle()).append(",")
-                            .append(item.getAuthor()).append(",")
-                            .append(String.valueOf(item.getPublicationYear())).append(",")
-                            .append(String.valueOf(item.isAvailable()))
-                            .append("\n");
-                } catch (Exception e) {
-                    System.err.println("Error writing item: " + item + " -> " + e.getMessage());
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println("Error writing to Log.csv: " + e.getMessage());
-        }
+        CsvHandler.writeLibrary("remove" , items);
     }
 
     public static void returnTime(Scanner scanner , LibraryLoanService libraryLoanService) {
@@ -162,7 +152,7 @@ public class ThreadLibrary {
             if (editItem != null) {
                 List<LibraryItem> items = new ArrayList<>();
                 items.add(editItem);
-                writeLibrary("change return time", items);
+                CsvHandler.writeLibrary("change return time", items);
             }
         }else{
             System.out.println("Invalid date format");

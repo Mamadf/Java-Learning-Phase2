@@ -25,4 +25,12 @@ public class Thesis extends LibraryItem {
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
 }

@@ -30,4 +30,12 @@ public class Magazine extends LibraryItem {
     public int getIssue() {
         return issue;
     }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setIssue(int issue) {
+        this.issue = issue;
+    }
 }
