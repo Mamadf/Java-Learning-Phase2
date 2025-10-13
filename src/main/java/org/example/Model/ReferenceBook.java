@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Model;
 
 public class ReferenceBook extends LibraryItem {
     private String subject;

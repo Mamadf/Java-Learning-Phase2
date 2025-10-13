@@ -1,4 +1,8 @@
-package org.example;
+package org.example.Storage;
+
+import org.example.Library.LibraryData;
+import org.example.Model.Book;
+import org.example.Service.LibraryManagerService;
 
 import java.io.File;
 
@@ -6,10 +10,10 @@ public class PerformanceTest {
 
     public static void main(String[] args) {
 
-        // آماده‌سازی داده آزمایشی
-        Library library = new Library();
+        LibraryData library = new LibraryData();
+        LibraryManagerService libraryManager = new LibraryManagerService(library);
         for (int i = 0; i < 1000; i++) {
-            library.addItem(new Book(
+            libraryManager.addItem(new Book(
                     "Book " + i,
                     "Author " + (i % 100),
                     2000 + (i % 20),

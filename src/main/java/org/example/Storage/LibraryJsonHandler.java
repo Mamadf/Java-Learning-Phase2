@@ -1,6 +1,9 @@
-package org.example;
+package org.example.Storage;
 
 import com.google.gson.*;
+import org.example.Library.LibraryData;
+import org.example.Model.*;
+import org.example.Service.LibraryManagerService;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,10 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LibraryJsonHandler {
-    private Library  library;
+    private LibraryData library;
+    private LibraryManagerService libraryManagerService;
 
-    public LibraryJsonHandler(Library library) {
+    public LibraryJsonHandler(LibraryData library) {
         this.library = library;
+        this.libraryManagerService = new LibraryManagerService(library);
     }
 
     public void saveToJson(String fileName) {
@@ -60,7 +65,7 @@ public class LibraryJsonHandler {
                         continue;
                 }
 
-                library.addItem(item);
+                libraryManagerService.addItem(item);
             }
             LibraryItem.setCounter(library.getItems().size());
         } catch (FileNotFoundException e) {

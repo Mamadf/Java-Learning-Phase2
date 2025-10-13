@@ -1,8 +1,4 @@
-package org.example;
-
-import javax.xml.crypto.Data;
-import java.time.LocalDate;
-import java.util.Date;
+package org.example.Model;
 
 public abstract class LibraryItem {
     private static int counter = 1;

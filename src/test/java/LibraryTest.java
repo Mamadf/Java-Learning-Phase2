@@ -1,4 +1,7 @@
-import org.example.*;
+import org.example.Library.LibraryData;
+import org.example.Model.*;
+import org.example.Service.LibraryLoanService;
+import org.example.Service.LibraryManagerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +10,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
-    private Library library;
+    private LibraryData library;
+    private LibraryManagerService  libraryManagerService;
     private LibraryLoanService libraryLoanService;
     private LibraryItem item1;
     private LibraryItem item2;
@@ -21,8 +25,9 @@ public class LibraryTest {
     private String date;
     @BeforeEach
     void setUp() {
-        library = new Library();
+        library = new LibraryData();
         libraryLoanService = new LibraryLoanService(library);
+        libraryManagerService = new LibraryManagerService(library);
         item1 = new Book("Java Basics", "John Smith", 2020 , true,  "Programming", 300);
         item2 = new Magazine("Science Today", "Mary Editor", 2023, false,"Nature Pub" , 12);
         item3 = new Thesis("AI in Healthcare", "Ali Reza", 2022, false, "Tehran Uni", "Dr. Karimi");
@@ -39,8 +44,8 @@ public class LibraryTest {
 
     @Test
     void testAddItem() {
-        library.addItem(item1);
-        library.addItem(item2);
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
         assertEquals(2, library.getItems().size());
         assertTrue(library.getItems().contains(item1));
         assertTrue(library.getItems().contains(item1));
@@ -48,10 +53,10 @@ public class LibraryTest {
 
     @Test
     void testDeleteBooks() {
-        library.addItem(item1);
-        library.addItem(item2);
-        library.deleteItem(item1.getId());
-        library.deleteItem(item3.getId());
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
+        libraryManagerService.deleteItem(item1.getId());
+        libraryManagerService.deleteItem(item3.getId());
         assertEquals(1, library.getItems().size());
         assertFalse(library.getItems().contains(item1));
         assertTrue(library.getItems().contains(item2));
@@ -68,18 +73,18 @@ public class LibraryTest {
 
     @Test
     void testSearchBTitle() {
-        library.addItem(item1);
-        List<LibraryItem> items = library.searchByTitle(firstItemTitle);
+        libraryManagerService.addItem(item1);
+        List<LibraryItem> items = libraryManagerService.searchByTitle(firstItemTitle);
         assertEquals(1, items.size());
         assertTrue(items.contains(item1));
     }
 
     @Test
     void testSearchByTitleMultipleBooksSameTitle() {
-        library.addItem(item4);
-        library.addItem(item5);
+        libraryManagerService.addItem(item4);
+        libraryManagerService.addItem(item5);
 
-        List<LibraryItem> result = library.searchByTitle(forthItemTitle);
+        List<LibraryItem> result = libraryManagerService.searchByTitle(forthItemTitle);
 
         assertNotNull(result);
         assertEquals(2, result.size());
@@ -87,10 +92,10 @@ public class LibraryTest {
 
     @Test
     void testSearchByTitleBookNotExists() {
-        library.addItem(item1);
-        library.addItem(item2);
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
 
-        List<LibraryItem> result = library.searchByTitle(nonExistence);
+        List<LibraryItem> result = libraryManagerService.searchByTitle(nonExistence);
         assertTrue(result.isEmpty());
     }
 
@@ -127,14 +132,14 @@ public class LibraryTest {
         assertNotNull(library.getItems());
         assertEquals(0, library.getItems().size());
 
-        library.addItem(item1);
+        libraryManagerService.addItem(item1);
         assertEquals(1, library.getItems().size());
     }
 
     @Test
     void testBorrowItem(){
-        library.addItem(item1);
-        library.addItem(item2);
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
         LibraryItem resultItem = libraryLoanService.borrowItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.borrowItem(item2.getId()); //since is already borrowed
         assertEquals(false, resultItem.isAvailable());
@@ -143,8 +148,8 @@ public class LibraryTest {
 
     @Test
     void testReturnItem(){
-        library.addItem(item1);
-        library.addItem(item2);
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
         LibraryItem resultItem = libraryLoanService.returnItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.returnItem(item2.getId());
         assertEquals(true, resultItem2.isAvailable());
@@ -152,8 +157,8 @@ public class LibraryTest {
     }
     @Test
     void testReturnTime(){
-        library.addItem(item1);
-        library.addItem(item2);
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
         LibraryItem resultItem = libraryLoanService.editReturnTime(item1.getId() , date);
         LibraryItem resultItem2 = libraryLoanService.editReturnTime(item2.getId() , date);
         assertEquals(date, resultItem.getReturnTime().toString());

@@ -1,5 +1,11 @@
 package org.example;
 
+import org.example.Library.LibraryData;
+import org.example.Model.*;
+import org.example.Service.LibraryLoanService;
+import org.example.Service.LibraryManagerService;
+import org.example.Storage.ProtobufHandler;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -9,7 +15,8 @@ import java.util.regex.Pattern;
 public class ThreadLibrary {
     public static void main(String[] args) {
         ConcurrentHashMap<Integer, LibraryItem> libraryMap = new ConcurrentHashMap<>();
-        Library library = new Library();
+        LibraryData library = new LibraryData();
+        LibraryManagerService libraryManagerService = new LibraryManagerService(library);
         LibraryLoanService loanService = new LibraryLoanService(library);
 
         ProtobufHandler protobufHandler = new ProtobufHandler(library);
@@ -24,10 +31,10 @@ public class ThreadLibrary {
                 String command = scanner.nextLine();
                 switch (command) {
                     case "add" :
-                        addToLibrary(scanner ,library);
+                        addToLibrary(scanner ,libraryManagerService);
                         break;
                     case "remove":
-                        removeFromLibrary(scanner ,library);
+                        removeFromLibrary(scanner ,libraryManagerService);
                         break;
                     case "borrow":
                         System.out.print("Enter Book ID: ");
@@ -40,7 +47,7 @@ public class ThreadLibrary {
                         requestQueue.offer(returnId + ":" + command);
                         break;
                     case "status":
-                        library.printAll();
+                        libraryManagerService.printAll();
                         break;
                     case "exit" :
                         requestQueue.offer("exit");
@@ -89,7 +96,7 @@ public class ThreadLibrary {
         }
     }
 
-    public static void addToLibrary(Scanner scanner , Library library) {
+    public static void addToLibrary(Scanner scanner , LibraryManagerService libraryManagerService) {
         System.out.print("Please enter the item type: (Book, Magazine, ReferenceBook, Thesis): )");
         String type = scanner.nextLine();
         System.out.print("Please enter the item title: ");
@@ -108,7 +115,7 @@ public class ThreadLibrary {
                 System.out.print("Please enter the number of pages: ");
                 int pages = scanner.nextInt();
                 scanner.nextLine();
-                library.addItem(new Book(title, author, year, available, genre, pages));
+                libraryManagerService.addItem(new Book(title, author, year, available, genre, pages));
                 break;
             case "Magazine":
                 System.out.print("Please enter the publisher: ");
@@ -116,31 +123,31 @@ public class ThreadLibrary {
                 System.out.print("Please enter the issue number: ");
                 int issue =scanner.nextInt();
                 scanner.nextLine();
-                library.addItem(new Magazine(title, author, year, available, publisher, issue));
+                libraryManagerService.addItem(new Magazine(title, author, year, available, publisher, issue));
                 break;
             case "ReferenceBook":
                 System.out.print("Please enter the subject: ");
                 String subject = scanner.nextLine();
                 System.out.print("Please enter the edition: ");
                 String edition = scanner.nextLine();
-                library.addItem(new ReferenceBook(title, author, year, available, subject, edition));
+                libraryManagerService.addItem(new ReferenceBook(title, author, year, available, subject, edition));
                 break;
             case "Thesis":
                 System.out.print("Please enter the university: ");
                 String university = scanner.nextLine();
                 System.out.print("Please enter the supervisor: ");
                 String supervisor = scanner.nextLine();
-                library.addItem(new Thesis(title, author, year, available, university, supervisor));
+                libraryManagerService.addItem(new Thesis(title, author, year, available, university, supervisor));
                 break;
             default:
                 System.err.println("Unknown item type: " + type);
         }
     }
-    private static void removeFromLibrary(Scanner scanner, Library library) {
+    private static void removeFromLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {
         System.out.print("Please enter the Item's ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        LibraryItem item = library.deleteItem(id);
+        LibraryItem item = libraryManagerService.deleteItem(id);
         List<LibraryItem> items = new ArrayList<>();
         items.add(item);
         writeLibrary("remove" , items);

@@ -6688,7 +6688,7 @@ public final class LibraryOuterClass {
   }
 
   public interface LibraryOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.example.proto.Library)
+      // @@protoc_insertion_point(interface_extends:org.example.proto.LibraryData)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -6716,14 +6716,14 @@ public final class LibraryOuterClass {
         int index);
   }
   /**
-   * Protobuf type {@code org.example.proto.Library}
+   * Protobuf type {@code org.example.proto.LibraryData}
    */
   public  static final class Library extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:org.example.proto.Library)
+      // @@protoc_insertion_point(message_implements:org.example.proto.LibraryData)
       LibraryOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Library.newBuilder() to construct.
+    // Use LibraryData.newBuilder() to construct.
     private Library(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
@@ -6999,11 +6999,11 @@ public final class LibraryOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code org.example.proto.Library}
+     * Protobuf type {@code org.example.proto.LibraryData}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.example.proto.Library)
+        // @@protoc_insertion_point(builder_implements:org.example.proto.LibraryData)
         org.example.proto.LibraryOuterClass.LibraryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
@@ -7018,7 +7018,7 @@ public final class LibraryOuterClass {
                 org.example.proto.LibraryOuterClass.Library.class, org.example.proto.LibraryOuterClass.Library.Builder.class);
       }
 
-      // Construct using org.example.proto.LibraryOuterClass.Library.newBuilder()
+      // Construct using org.example.proto.LibraryOuterClass.LibraryData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7435,10 +7435,10 @@ public final class LibraryOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:org.example.proto.Library)
+      // @@protoc_insertion_point(builder_scope:org.example.proto.LibraryData)
     }
 
-    // @@protoc_insertion_point(class_scope:org.example.proto.Library)
+    // @@protoc_insertion_point(class_scope:org.example.proto.LibraryData)
     private static final org.example.proto.LibraryOuterClass.Library DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new org.example.proto.LibraryOuterClass.Library();

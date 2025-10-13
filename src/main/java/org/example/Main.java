@@ -1,7 +1,12 @@
 package org.example;
 
 
-import com.google.gson.*;
+import org.example.Library.LibraryData;
+import org.example.Model.*;
+import org.example.Service.LibraryLoanService;
+import org.example.Service.LibraryManagerService;
+import org.example.Storage.LibraryJsonHandler;
+import org.example.Storage.ProtobufHandler;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +16,8 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
-        Library library = new Library();
+        LibraryData library = new LibraryData();
+        LibraryManagerService libraryManagerService = new LibraryManagerService(library);
         LibraryLoanService libraryLoanService = new LibraryLoanService(library);
         LibraryJsonHandler libraryJsonHandler = new LibraryJsonHandler(library);
         ProtobufHandler protobufHandler = new ProtobufHandler(library);
@@ -27,10 +33,10 @@ public class Main {
             String command = scanner.nextLine();
             switch (command) {
                 case "add":
-                    addToLibrary(scanner,library);
+                    addToLibrary(scanner,libraryManagerService);
                     break;
                 case "remove":
-                    removeFromLibrary(scanner , library);
+                    removeFromLibrary(scanner , libraryManagerService);
                     break;
                 case "borrow":
                     borrowFromLibrary(scanner, libraryLoanService);
@@ -39,16 +45,16 @@ public class Main {
                     returnToLibrary(scanner ,libraryLoanService);
                     break;
                 case "status":
-                    library.printAll();
+                    libraryManagerService.printAll();
                     break;
                 case "search by author":
-                    authorSearch(scanner , library);
+                    authorSearch(scanner , libraryManagerService);
                     break;
                 case "search by title":
-                    titleSearch(scanner , library);
+                    titleSearch(scanner , libraryManagerService);
                     break;
                 case "sort":
-                    library.sortByPublicationYear();
+                    libraryManagerService.sortByPublicationYear();
                     break;
                 case "return time":
                     returnTime(scanner , libraryLoanService);
@@ -65,10 +71,10 @@ public class Main {
 
     }
 
-    private static void titleSearch(Scanner scanner, Library library) {
+    private static void titleSearch(Scanner scanner, LibraryManagerService libraryManagerService) {
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
-        List<LibraryItem> searchRes = library.searchByTitle(title);
+        List<LibraryItem> searchRes = libraryManagerService.searchByTitle(title);
         if(!searchRes.isEmpty()) {
             writeLibrary("search by title", searchRes);
         }else {
@@ -76,10 +82,10 @@ public class Main {
         }
     }
 
-    private static void authorSearch(Scanner scanner, Library library) {
+    private static void authorSearch(Scanner scanner, LibraryManagerService libraryManagerService) {
         System.out.println("Enter Author: ");
         String author = scanner.nextLine();
-        List<LibraryItem> searchResult = library.searchByAuthor(author);
+        List<LibraryItem> searchResult = libraryManagerService.searchByAuthor(author);
         if(!searchResult.isEmpty()) {
             writeLibrary("search by author", searchResult);
         }else {
@@ -111,17 +117,17 @@ public class Main {
         scanner.nextLine();
     }
 
-    private static void removeFromLibrary(Scanner scanner, Library library) {
+    private static void removeFromLibrary(Scanner scanner, LibraryManagerService libraryManagerService) {
         System.out.print("Please enter the Item's ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        LibraryItem item = library.deleteItem(id);
+        LibraryItem item = libraryManagerService.deleteItem(id);
         List<LibraryItem> items = new ArrayList<>();
         items.add(item);
         writeLibrary("remove" , items);
     }
 
-    public static void loadData(Library library) {
+    public static void loadData(LibraryManagerService libraryManagerService) {
         String fileName = "data.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -150,19 +156,19 @@ public class Main {
                     switch (type) {
                         case "Book":
                             int pages = Integer.parseInt(values[6]);
-                            library.addItem(new Book(title, author, year, available, privateField, pages));
+                            libraryManagerService.addItem(new Book(title, author, year, available, privateField, pages));
                             break;
                         case "Magazine":
                             int issue = Integer.parseInt(values[6]);
-                            library.addItem(new Magazine(title, author, year, available, privateField, issue));
+                            libraryManagerService.addItem(new Magazine(title, author, year, available, privateField, issue));
                             break;
                         case "ReferenceBook":
                             String edition = values[6];
-                            library.addItem(new ReferenceBook(title, author, year, available, privateField, edition));
+                            libraryManagerService.addItem(new ReferenceBook(title, author, year, available, privateField, edition));
                             break;
                         case "Thesis":
                             String supervisor = values[6];
-                            library.addItem(new Thesis(title, author, year, available, privateField, supervisor));
+                            libraryManagerService.addItem(new Thesis(title, author, year, available, privateField, supervisor));
                             break;
                         default:
                             System.err.println("Unknown item type: " + type);
@@ -221,7 +227,7 @@ public class Main {
             System.out.println("Invalid date format");
         }
     }
-    public static void addToLibrary(Scanner scanner , Library library) {
+    public static void addToLibrary(Scanner scanner , LibraryManagerService libraryManagerService) {
         System.out.print("Please enter the item type: (Book, Magazine, ReferenceBook, Thesis): )");
         String type = scanner.nextLine();
         System.out.print("Please enter the item title: ");
@@ -240,7 +246,7 @@ public class Main {
                 System.out.print("Please enter the number of pages: ");
                 int pages = scanner.nextInt();
                 scanner.nextLine();
-                library.addItem(new Book(title, author, year, available, genre, pages));
+                libraryManagerService.addItem(new Book(title, author, year, available, genre, pages));
                 break;
             case "Magazine":
                 System.out.print("Please enter the publisher: ");
@@ -248,21 +254,21 @@ public class Main {
                 System.out.print("Please enter the issue number: ");
                 int issue =scanner.nextInt();
                 scanner.nextLine();
-                library.addItem(new Magazine(title, author, year, available, publisher, issue));
+                libraryManagerService.addItem(new Magazine(title, author, year, available, publisher, issue));
                 break;
             case "ReferenceBook":
                 System.out.print("Please enter the subject: ");
                 String subject = scanner.nextLine();
                 System.out.print("Please enter the edition: ");
                 String edition = scanner.nextLine();
-                library.addItem(new ReferenceBook(title, author, year, available, subject, edition));
+                libraryManagerService.addItem(new ReferenceBook(title, author, year, available, subject, edition));
                 break;
             case "Thesis":
                 System.out.print("Please enter the university: ");
                 String university = scanner.nextLine();
                 System.out.print("Please enter the supervisor: ");
                 String supervisor = scanner.nextLine();
-                library.addItem(new Thesis(title, author, year, available, university, supervisor));
+                libraryManagerService.addItem(new Thesis(title, author, year, available, university, supervisor));
                 break;
             default:
                 System.err.println("Unknown item type: " + type);

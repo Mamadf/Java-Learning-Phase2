@@ -1,15 +1,20 @@
-package org.example;
+package org.example.Storage;
 
+import org.example.Library.LibraryData;
+import org.example.Model.*;
+import org.example.Service.LibraryManagerService;
 import org.example.proto.LibraryOuterClass;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProtobufHandler {
-    private final Library library;
+    private final LibraryData library;
+    private LibraryManagerService libraryManagerService;
 
-    public ProtobufHandler(Library library) {
+    public ProtobufHandler(LibraryData library) {
         this.library = library;
+        this.libraryManagerService = new LibraryManagerService(library);
     }
 
     public void saveToProto(String fileName) {
@@ -81,19 +86,19 @@ public class ProtobufHandler {
             for (LibraryOuterClass.LibraryItem item : protoLib.getItemsList()) {
                 if (item.hasBook()) {
                     LibraryOuterClass.Book b = item.getBook();
-                    library.addItem(new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
+                    libraryManagerService.addItem(new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
                             b.getAvailable(), b.getGenre(), b.getPages()));
                 } else if (item.hasMagazine()) {
                     LibraryOuterClass.Magazine m = item.getMagazine();
-                    library.addItem(new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
+                    libraryManagerService.addItem(new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
                             m.getAvailable(), m.getPublisher(), m.getIssueNumber()));
                 } else if (item.hasReferenceBook()) {
                     LibraryOuterClass.ReferenceBook r = item.getReferenceBook();
-                    library.addItem(new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
+                    libraryManagerService.addItem(new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
                             r.getAvailable(), r.getSubject(), r.getEdition()));
                 } else if (item.hasThesis()) {
                     LibraryOuterClass.Thesis t = item.getThesis();
-                    library.addItem(new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
+                    libraryManagerService.addItem(new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
                             t.getAvailable(), t.getUniversity(), t.getSupervisor()));
                 }
             }
