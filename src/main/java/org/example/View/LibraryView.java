@@ -104,4 +104,8 @@ public class LibraryView {
     public void sort() {
         managerService.sortByPublicationYear();
     }
+
+    public void showBorrowedItems() {
+        loanService.printBorrowedItems();
+    }
 }

@@ -1,3 +1,4 @@
+import org.example.Factory.BookFactory;
 import org.example.Repository.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryLoanService;
@@ -6,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,12 +66,23 @@ public class LibraryTest {
 
 //    @Test
 //    void testUpdateBooks() {
-//        library.addItem(item1);
-//        library.updateBook(item1 , item2);
+//        libraryManagerService.addItem(item1);
+//        libraryManagerService.update();
 //        assertEquals(1, library.getItems().size());
 //        assertEquals(secondBookTitle, item1.getTitle());
 //    }
-//
+
+    @Test
+    void testBookFactoryCreatesBook() {
+        String input = "Java Basics\nJohn Smith\n2020\ntrue\nProgramming\n300\n";
+        Scanner scanner = new Scanner(input);
+
+        BookFactory factory = new BookFactory();
+        LibraryItem item = factory.createItem(scanner);
+
+        assertEquals("Java Basics", item.getTitle());
+        assertTrue(item instanceof Book);
+    }
 
     @Test
     void testSearchBTitle() {
@@ -99,34 +112,49 @@ public class LibraryTest {
         assertTrue(result.isEmpty());
     }
 
-    //    @Test
-//    void testSearchByAuthor() {
-//        library.addItem(item2);
-//        library.addItem(book4);
-//
-//        MyLinkedList<Book> result = library.searchByAuthor(secondBookAuthor);
-//
-//        MyLinkedList<Book> result2 = library.searchByAuthor(nonExistence);
-//
-//        assertNull(result2);
-//        assertNotNull(result);
-//        assertEquals(2, result.size());
-//    }
-//
-//    @Test
-//    void testSortedByPublicationYear() {
-//        library.addItem(book3); // 1960
-//        library.addItem(item1); // 1925
-//        library.addItem(item2); // 1949
-//
-//        library.sortedByPublicationYear();
-//        MyLinkedList<Book> sortedBooks = library.getItems();
-//        assertEquals(3, sortedBooks.size());
-//        assertEquals(year1, sortedBooks.get(0).getPublicationYear());
-//        assertEquals(year2, sortedBooks.get(1).getPublicationYear());
-//        assertEquals(year3, sortedBooks.get(2).getPublicationYear());
-//    }
-//
+
+    @Test
+    void testSearchByAuthor() {
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
+        libraryManagerService.addItem(item3);
+        libraryManagerService.addItem(item4);
+        libraryManagerService.addItem(item5);
+        libraryManagerService.addItem(item6);
+
+        List<LibraryItem> result = libraryManagerService.searchByAuthor("Ali Reza");
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(item3));
+        assertTrue(result.contains(item4));
+        result = libraryManagerService.searchByAuthor(nonExistence);
+        assertTrue(result.isEmpty());
+    }
+
+
+    @Test
+    void testSortByPublicationYear() {
+        libraryManagerService.addItem(item1);
+        libraryManagerService.addItem(item2);
+        libraryManagerService.addItem(item3);
+        libraryManagerService.addItem(item4);
+        libraryManagerService.addItem(item5);
+        libraryManagerService.addItem(item6);
+
+        libraryManagerService.sortByPublicationYear();
+        List<LibraryItem> sorted = library.getItems();
+
+        for (int i = 0; i < sorted.size() - 1; i++) {
+            int currentYear = sorted.get(i).getPublicationYear();
+            int nextYear = sorted.get(i + 1).getPublicationYear();
+            assertTrue(currentYear <= nextYear);
+        }
+
+        assertEquals(2015, sorted.get(0).getPublicationYear());
+        assertEquals(2023, sorted.get(sorted.size() - 1).getPublicationYear());
+    }
+
+
     @Test
     void testgetItems() {
         assertNotNull(library.getItems());
