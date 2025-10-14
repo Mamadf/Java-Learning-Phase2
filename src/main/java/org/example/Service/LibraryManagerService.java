@@ -1,6 +1,6 @@
 package org.example.Service;
 
-import org.example.Library.LibraryData;
+import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
 
 import java.util.*;

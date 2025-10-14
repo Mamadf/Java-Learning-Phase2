@@ -1,7 +1,7 @@
 package org.example.Storage;
 
 import com.google.gson.*;
-import org.example.Library.LibraryData;
+import org.example.Repository.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryManagerService;
 

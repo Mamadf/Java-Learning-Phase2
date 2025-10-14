@@ -1,6 +1,6 @@
 package org.example.Storage;
 
-import org.example.Library.LibraryData;
+import org.example.Repository.LibraryData;
 import org.example.Model.Book;
 import org.example.Service.LibraryManagerService;
 
