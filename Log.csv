@@ -14,3 +14,22 @@ test,Ali Reza,2022,true
 Operation: remove
 Title,Author,PublicationYear,Status
 Java Basics,John Smith,2020,true
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,true
+test,Ali Reza,2022,true
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,true
+test,Ali Reza,2022,true
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,true
+test,Ali Reza,2022,true
+
+Operation: remove
+Title,Author,PublicationYear,Status
+Science Today,Mary Editor,2023,false

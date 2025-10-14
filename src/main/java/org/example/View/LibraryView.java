@@ -57,7 +57,7 @@ public class LibraryView {
     }
 
     public void updateReturnTime(Scanner scanner) {
-        System.out.print("Enter book ID: ");
+        System.out.print("Enter Item ID: ");
         int id = scanner.nextInt(); scanner.nextLine();
         System.out.print("Enter new return date (yyyy-MM-dd): ");
         String date = scanner.nextLine();
@@ -69,17 +69,39 @@ public class LibraryView {
     }
 
     public void borrowItem(Scanner scanner, BlockingQueue<String> requestQueue) {
-        System.out.print("Enter Book ID: ");
+        System.out.print("Enter Item ID: ");
         String id = scanner.nextLine();
         requestQueue.offer(id + ":borrow");
     }
 
     public void returnItem(Scanner scanner, BlockingQueue<String> requestQueue) {
-        System.out.print("Enter Book ID: ");
+        System.out.print("Enter Item ID: ");
         String returnId = scanner.nextLine();
         requestQueue.offer(returnId + ":return");
     }
-    public static synchronized void println(String msg) {
-        System.out.println(msg);
+
+    public void titleSearch(Scanner scanner) {
+        System.out.println("Enter title: ");
+        String title = scanner.nextLine();
+        List<LibraryItem> searchRes = managerService.searchByTitle(title);
+        if(!searchRes.isEmpty()) {
+            CsvHandler.writeLibrary("search by title", searchRes);
+        }else {
+            System.out.println("❌ Title not found");
+        }
+    }
+    public void authorSearch(Scanner scanner) {
+        System.out.println("Enter Author: ");
+        String author = scanner.nextLine();
+        List<LibraryItem> searchResult = managerService.searchByAuthor(author);
+        if(!searchResult.isEmpty()) {
+            CsvHandler.writeLibrary("search by author", searchResult);
+        }else {
+            System.out.println("❌ Author not found");
+        }
+    }
+
+    public void sort() {
+        managerService.sortByPublicationYear();
     }
 }
