@@ -1,6 +1,6 @@
-package org.example;
+package org.example.Model;
 
-public class Magazine extends LibraryItem{
+public class Magazine extends LibraryItem {
     private String publisher;
     private int issue;
 
@@ -29,5 +29,13 @@ public class Magazine extends LibraryItem{
 
     public int getIssue() {
         return issue;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setIssue(int issue) {
+        this.issue = issue;
     }
 }

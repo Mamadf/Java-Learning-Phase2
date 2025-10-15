@@ -1,6 +1,6 @@
-package org.example;
+package org.example.Model;
 
-public class Thesis extends LibraryItem{
+public class Thesis extends LibraryItem {
     private String  university;
     private String supervisor;
 
@@ -24,5 +24,13 @@ public class Thesis extends LibraryItem{
         System.out.println("Availability: " + isAvailable() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
     }
 }

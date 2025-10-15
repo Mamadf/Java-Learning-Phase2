@@ -1,16 +1,18 @@
-package org.example;
+package org.example.Service;
+
+import org.example.Repository.LibraryData;
+import org.example.Model.LibraryItem;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class LibraryLoanService {
-    private Library library;
+    private LibraryData library;
 
     private List<LibraryItem> items;
     private Map<Integer, LibraryItem> itemById;
-    public LibraryLoanService(Library library) {
+    public LibraryLoanService(LibraryData library) {
         this.library = library;
         items = library.getItems();
         itemById = library.getItemById();

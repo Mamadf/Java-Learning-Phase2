@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Model;
 
 public class Book extends LibraryItem {
     private String genre;
@@ -21,6 +21,14 @@ public class Book extends LibraryItem {
         System.out.println("Availability: " + isAvailable() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
     }
 }
 

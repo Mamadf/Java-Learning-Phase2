@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Model;
 
 public class ReferenceBook extends LibraryItem {
     private String subject;
@@ -27,5 +27,13 @@ public class ReferenceBook extends LibraryItem {
 
     public String getEdition() {
         return edition;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
     }
 }
