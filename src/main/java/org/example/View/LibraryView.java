@@ -14,10 +14,12 @@ import java.util.regex.Pattern;
 public class LibraryView {
     private final LibraryManagerService managerService;
     private final LibraryLoanService loanService;
+    private CsvHandler csvHandler;
 
     public LibraryView(LibraryManagerService managerService, LibraryLoanService loanService) {
         this.managerService = managerService;
         this.loanService = loanService;
+        csvHandler = new CsvHandler();
     }
 
     public void addItem(Scanner scanner) {
@@ -49,7 +51,7 @@ public class LibraryView {
         int id = Integer.parseInt(scanner.nextLine());
         LibraryItem removed = managerService.deleteItem(id);
         if (removed != null)
-            CsvHandler.writeLibrary("remove", List.of(removed));
+            csvHandler.writeLibrary("remove", List.of(removed));
     }
 
     public void printAll() {
@@ -85,7 +87,7 @@ public class LibraryView {
         String title = scanner.nextLine();
         List<LibraryItem> searchRes = managerService.searchByTitle(title);
         if(!searchRes.isEmpty()) {
-            CsvHandler.writeLibrary("search by title", searchRes);
+            csvHandler.writeLibrary("search by title", searchRes);
         }else {
             System.out.println("❌ Title not found");
         }
@@ -95,7 +97,7 @@ public class LibraryView {
         String author = scanner.nextLine();
         List<LibraryItem> searchResult = managerService.searchByAuthor(author);
         if(!searchResult.isEmpty()) {
-            CsvHandler.writeLibrary("search by author", searchResult);
+            csvHandler.writeLibrary("search by author", searchResult);
         }else {
             System.out.println("❌ Author not found");
         }

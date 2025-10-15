@@ -67,7 +67,7 @@ public class LibraryJsonHandler {
 
                 libraryManagerService.addItem(item);
             }
-            LibraryItem.setCounter(library.getItems().size());
+            LibraryItem.setCounter(library.getItems().size()+1);
         } catch (FileNotFoundException e) {
             System.out.println("No existing library file found — starting new library.");
         } catch (IOException e) {

@@ -170,8 +170,10 @@ public class LibraryTest {
         libraryManagerService.addItem(item2);
         LibraryItem resultItem = libraryLoanService.borrowItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.borrowItem(item2.getId()); //since is already borrowed
+        LibraryItem resultItem3 = libraryLoanService.borrowItem(1000);
         assertEquals(false, resultItem.isAvailable());
         assertNull(resultItem2);
+        assertNull(resultItem3);
     }
 
     @Test
@@ -180,9 +182,13 @@ public class LibraryTest {
         libraryManagerService.addItem(item2);
         LibraryItem resultItem = libraryLoanService.returnItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.returnItem(item2.getId());
+        LibraryItem resultItem3= libraryLoanService.returnItem(1000);
         assertEquals(true, resultItem2.isAvailable());
         assertNull(resultItem);
+        assertNull(resultItem3);
     }
+//    @Test
+//    void borrowed
     @Test
     void testReturnTime(){
         libraryManagerService.addItem(item1);

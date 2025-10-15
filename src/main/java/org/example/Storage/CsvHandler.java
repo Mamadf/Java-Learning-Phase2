@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CsvHandler {
 
-    public static void loadData(LibraryManagerService libraryManagerService) {
+    public void loadData(LibraryManagerService libraryManagerService) {
         String fileName = "data.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -66,7 +66,7 @@ public class CsvHandler {
             System.err.println("Could not read file: " + fileName);
         }
     }
-    public static void writeLibrary(String operation, List<LibraryItem> items) {
+    public void writeLibrary(String operation, List<LibraryItem> items) {
         try (FileWriter writer = new FileWriter("Log.csv", true)) {
 
             writer.append("\nOperation: ").append(operation).append("\n");

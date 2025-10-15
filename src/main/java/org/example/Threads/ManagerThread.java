@@ -1,5 +1,6 @@
 package org.example.Threads;
 
+import org.example.Config.AppConfig;
 import org.example.Service.LibraryLoanService;
 import org.example.Storage.ProtobufHandler;
 
@@ -8,12 +9,12 @@ import java.util.concurrent.BlockingQueue;
 public class ManagerThread extends Thread {
     private final BlockingQueue<String> requestQueue;
     private final LibraryLoanService loanService;
-    private final ProtobufHandler protobufHandler;
+    private final AppConfig appConfig;
 
-    public ManagerThread(BlockingQueue<String> requestQueue, LibraryLoanService loanService, ProtobufHandler protobufHandler) {
+    public ManagerThread(BlockingQueue<String> requestQueue, LibraryLoanService loanService , AppConfig appConfig) {
         this.requestQueue = requestQueue;
         this.loanService = loanService;
-        this.protobufHandler = protobufHandler;
+        this.appConfig = appConfig;
     }
 
     @Override
@@ -23,7 +24,8 @@ public class ManagerThread extends Thread {
             while (running) {
                 String request = requestQueue.take();
                 if (request.equals("exit")) {
-                    protobufHandler.saveToProto("library_data.bin");
+//                    protobufHandler.saveToProto("library_data.bin");
+                    appConfig.saveData();
                     running = false;
                     continue;
                 }
