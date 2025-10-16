@@ -3,6 +3,7 @@ package org.example.Repository;
 import org.example.Model.LibraryItem;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LibraryData {
     private List<LibraryItem> items;
@@ -10,7 +11,7 @@ public class LibraryData {
 
     public LibraryData() {
         items = new ArrayList<>();
-        itemById = new HashMap<>();
+        itemById = new ConcurrentHashMap<>();
     }
 
     public List<LibraryItem> getItems() {
