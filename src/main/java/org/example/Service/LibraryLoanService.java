@@ -30,7 +30,7 @@ public class LibraryLoanService {
         if (item != null) {
             if (item.getStatus() == ItemStatus.EXIST) {
                 item.setStatus(ItemStatus.BORROWED);
-                System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
+                System.out.println("✅ Item '" + item.getTitle() + "' borrowed successfully.");
             } else {
                 System.out.println("Item is already borrowed.");
                 return null;
@@ -48,7 +48,7 @@ public class LibraryLoanService {
             if (item.getStatus() == ItemStatus.BORROWED) {
                 item.setStatus(ItemStatus.EXIST);
                 item.setReturnTime(LocalDate.now().toString());
-                System.out.println("Item '" + item.getTitle() + "' returned successfully.");
+                System.out.println("✅ Item '" + item.getTitle() + "' returned successfully.");
             } else {
                 System.out.println("Item was not borrowed.");
                 return null;
@@ -65,7 +65,7 @@ public class LibraryLoanService {
         if (item != null) {
             if (item.getStatus() == ItemStatus.EXIST) {
                 item.setReturnTime(date);
-                System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
+                System.out.println("✅ Item '" + item.getTitle() + "' return time has been set successfully.");
             } else {
                 System.out.println("Item is borrowed.");
                 return null;
