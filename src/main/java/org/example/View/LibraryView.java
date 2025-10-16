@@ -29,6 +29,7 @@ public class LibraryView {
         if (factory != null) {
             LibraryItem item = factory.createItem(scanner);
             managerService.addItem(item);
+            System.out.println("✅ Item added successfully!");
         } else {
             System.out.println("❌ Unknown item type!");
         }
@@ -50,8 +51,10 @@ public class LibraryView {
         System.out.print("Enter item ID: ");
         int id = Integer.parseInt(scanner.nextLine());
         LibraryItem removed = managerService.deleteItem(id);
-        if (removed != null)
+        if (removed != null) {
             csvHandler.writeLibrary("remove", List.of(removed));
+            System.out.println("✅ Item removed successfully!");
+        }
     }
 
     public void printAll() {

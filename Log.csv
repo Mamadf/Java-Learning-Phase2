@@ -51,3 +51,11 @@ newte,tes,2014,EXIST
 Operation: remove
 Title,Author,PublicationYear,Status
 ,,2020,BORROWED
+
+Operation: remove
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
+
+Operation: remove
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
