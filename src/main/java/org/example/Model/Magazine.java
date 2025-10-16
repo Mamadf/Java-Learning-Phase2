@@ -4,8 +4,8 @@ public class Magazine extends LibraryItem {
     private String publisher;
     private int issue;
 
-    public Magazine(String title, String author, int publicationYear, boolean available, String publisher, int issue) {
-        super(title, author, publicationYear , available);
+    public Magazine(String title, String author, int publicationYear, ItemStatus status, String publisher, int issue) {
+        super(title, author, publicationYear , status);
         this.publisher = publisher;
         this.issue = issue;
     }
@@ -18,7 +18,7 @@ public class Magazine extends LibraryItem {
         System.out.println("Magazine: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("issue number: " + issue + ", publisher: " + publisher);
-        System.out.println("Availability: " + isAvailable() );
+        System.out.println("Status: " + getStatus() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }

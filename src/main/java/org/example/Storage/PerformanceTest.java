@@ -1,5 +1,6 @@
 package org.example.Storage;
 
+import org.example.Model.ItemStatus;
 import org.example.Repository.LibraryData;
 import org.example.Model.Book;
 import org.example.Service.LibraryManagerService;
@@ -17,7 +18,7 @@ public class PerformanceTest {
                     "Book " + i,
                     "Author " + (i % 100),
                     2000 + (i % 20),
-                    true,
+                    ItemStatus.EXIST,
                     "Genre " + (i % 5),
                     200 + i
             ));

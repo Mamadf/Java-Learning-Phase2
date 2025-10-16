@@ -1,5 +1,6 @@
 package org.example.Service;
 
+import org.example.Model.ItemStatus;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
 
@@ -19,7 +20,7 @@ public class LibraryLoanService {
     }
     public void printBorrowedItems() {
         for (LibraryItem item : items) {
-            if (!item.isAvailable()) {
+            if (item.getStatus() == ItemStatus.BORROWED) {
                 item.display();
             }
         }
@@ -27,8 +28,8 @@ public class LibraryLoanService {
     public LibraryItem borrowItem(int id) {
         LibraryItem item = itemById.get(id);
         if (item != null) {
-            if (item.isAvailable()) {
-                item.setAvailable(false);
+            if (item.getStatus() == ItemStatus.EXIST) {
+                item.setStatus(ItemStatus.BORROWED);
                 System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
             } else {
                 System.out.println("Item is already borrowed.");
@@ -44,8 +45,8 @@ public class LibraryLoanService {
     public LibraryItem returnItem(int id) {
         LibraryItem item = itemById.get(id);
         if (item != null) {
-            if (!item.isAvailable()) {
-                item.setAvailable(true);
+            if (item.getStatus() == ItemStatus.BORROWED) {
+                item.setStatus(ItemStatus.EXIST);
                 item.setReturnTime(LocalDate.now().toString());
                 System.out.println("Item '" + item.getTitle() + "' returned successfully.");
             } else {
@@ -62,7 +63,7 @@ public class LibraryLoanService {
     public LibraryItem editReturnTime(int id , String date) {
         LibraryItem item = itemById.get(id);
         if (item != null) {
-            if (item.isAvailable()) {
+            if (item.getStatus() == ItemStatus.EXIST) {
                 item.setReturnTime(date);
                 System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
             } else {

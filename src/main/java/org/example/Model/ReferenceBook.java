@@ -4,8 +4,8 @@ public class ReferenceBook extends LibraryItem {
     private String subject;
     private String edition;
 
-    public ReferenceBook(String title, String author, int publicationYear , boolean available, String subject, String edition) {
-        super(title, author, publicationYear , available);
+    public ReferenceBook(String title, String author, int publicationYear , ItemStatus status, String subject, String edition) {
+        super(title, author, publicationYear , status);
         this.subject = subject;
         this.edition = edition;
     }
@@ -16,7 +16,7 @@ public class ReferenceBook extends LibraryItem {
         System.out.println("ReferenceBook: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("Subject: " + subject + ", edition: " + edition);
-        System.out.println("Availability: " + isAvailable() );
+        System.out.println("Status: " + getStatus() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }

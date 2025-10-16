@@ -26,7 +26,7 @@ public class FactoryTest {
     @Test
     void testBookFactoryCreateAndUpdate() {
         // Create
-        String createInput = "Java Basics\nJohn Smith\n2020\ntrue\nProgramming\n300\n";
+        String createInput = "Java Basics\nJohn Smith\n2020\nEXIST\nProgramming\n300\n";
         Scanner createScanner = new Scanner(new ByteArrayInputStream(createInput.getBytes()));
         LibraryItem book = bookFactory.createItem(createScanner);
 
@@ -34,7 +34,7 @@ public class FactoryTest {
         assertEquals("Java Basics", book.getTitle());
         assertEquals("John Smith", book.getAuthor());
         assertEquals(2020, book.getPublicationYear());
-        assertTrue(book.isAvailable());
+        assertEquals(ItemStatus.EXIST, book.getStatus());
         assertEquals("Programming", ((Book) book).getGenre());
         assertEquals(300, ((Book) book).getPages());
 
@@ -52,7 +52,7 @@ public class FactoryTest {
 
     @Test
     void testMagazineFactoryCreateAndUpdate() {
-        String createInput = "Science Today\nMary Editor\n2023\nfalse\nNature Pub\n12\n";
+        String createInput = "Science Today\nMary Editor\n2023\nBORROWED\nNature Pub\n12\n";
         Scanner createScanner = new Scanner(new ByteArrayInputStream(createInput.getBytes()));
         LibraryItem magazine = magazineFactory.createItem(createScanner);
 
@@ -60,7 +60,7 @@ public class FactoryTest {
         assertEquals("Science Today", magazine.getTitle());
         assertEquals("Mary Editor", magazine.getAuthor());
         assertEquals(2023, magazine.getPublicationYear());
-        assertFalse(magazine.isAvailable());
+        assertEquals(ItemStatus.BORROWED, magazine.getStatus());
         assertEquals("Nature Pub", ((Magazine) magazine).getPublisher());
         assertEquals(12, ((Magazine) magazine).getIssue());
 
@@ -77,7 +77,7 @@ public class FactoryTest {
 
     @Test
     void testReferenceBookFactoryCreateAndUpdate() {
-        String createInput = "Oxford Dictionary\nOxford Press\n2015\ntrue\nLanguage\n13\n";
+        String createInput = "Oxford Dictionary\nOxford Press\n2015\nEXIST\nLanguage\n13\n";
         Scanner createScanner = new Scanner(new ByteArrayInputStream(createInput.getBytes()));
         LibraryItem referenceBook = referenceBookFactory.createItem(createScanner);
 
@@ -85,7 +85,7 @@ public class FactoryTest {
         assertEquals("Oxford Dictionary", referenceBook.getTitle());
         assertEquals("Oxford Press", referenceBook.getAuthor());
         assertEquals(2015, referenceBook.getPublicationYear());
-        assertTrue(referenceBook.isAvailable());
+        assertEquals(ItemStatus.EXIST,referenceBook.getStatus());
         assertEquals("Language", ((ReferenceBook) referenceBook).getSubject());
         assertEquals("13", ((ReferenceBook) referenceBook).getEdition());
 
@@ -102,7 +102,7 @@ public class FactoryTest {
 
     @Test
     void testThesisFactoryCreateAndUpdate() {
-        String createInput = "AI in Healthcare\nAli Reza\n2022\nfalse\nTehran Uni\nDr. Karimi\n";
+        String createInput = "AI in Healthcare\nAli Reza\n2022\nBORROWED\nTehran Uni\nDr. Karimi\n";
         Scanner createScanner = new Scanner(new ByteArrayInputStream(createInput.getBytes()));
         LibraryItem thesis = thesisFactory.createItem(createScanner);
 
@@ -110,7 +110,7 @@ public class FactoryTest {
         assertEquals("AI in Healthcare", thesis.getTitle());
         assertEquals("Ali Reza", thesis.getAuthor());
         assertEquals(2022, thesis.getPublicationYear());
-        assertFalse(thesis.isAvailable());
+        assertEquals(ItemStatus.BORROWED, thesis.getStatus());
         assertEquals("Tehran Uni", ((Thesis) thesis).getUniversity());
         assertEquals("Dr. Karimi", ((Thesis) thesis).getSupervisor());
 

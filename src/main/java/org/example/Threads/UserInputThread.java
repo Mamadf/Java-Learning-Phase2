@@ -51,6 +51,7 @@ public class UserInputThread extends Thread {
                     break;
                 case "sort":
                     view.sort();
+                    break;
                 case "borrowed item":
                     view.showBorrowedItems();
                     break;

@@ -30,12 +30,12 @@ public class LibraryTest {
         library = new LibraryData();
         libraryLoanService = new LibraryLoanService(library);
         libraryManagerService = new LibraryManagerService(library);
-        item1 = new Book("Java Basics", "John Smith", 2020 , true,  "Programming", 300);
-        item2 = new Magazine("Science Today", "Mary Editor", 2023, false,"Nature Pub" , 12);
-        item3 = new Thesis("AI in Healthcare", "Ali Reza", 2022, false, "Tehran Uni", "Dr. Karimi");
-        item4 = new Book("test", "Ali Reza", 2022, true,"Tehran Uni", 23);
-        item5 = new Magazine("test", "Reza", 2018, true, "Tehran Uni", 1);
-        item6 = new ReferenceBook("Oxford Dictionary", "Oxford Press", 2015,true , "Language", "13");
+        item1 = new Book("Java Basics", "John Smith", 2020 , ItemStatus.EXIST,  "Programming", 300);
+        item2 = new Magazine("Science Today", "Mary Editor", 2023, ItemStatus.BORROWED,"Nature Pub" , 12);
+        item3 = new Thesis("AI in Healthcare", "Ali Reza", 2022, ItemStatus.BORROWED, "Tehran Uni", "Dr. Karimi");
+        item4 = new Book("test", "Ali Reza", 2022, ItemStatus.EXIST,"Tehran Uni", 23);
+        item5 = new Magazine("test", "Reza", 2018, ItemStatus.EXIST, "Tehran Uni", 1);
+        item6 = new ReferenceBook("Oxford Dictionary", "Oxford Press", 2015,ItemStatus.BANNED , "Language", "13");
         date = "2023-12-03";
 
         firstItemTitle = "Java Basics";
@@ -74,7 +74,7 @@ public class LibraryTest {
 
     @Test
     void testBookFactoryCreatesBook() {
-        String input = "Java Basics\nJohn Smith\n2020\ntrue\nProgramming\n300\n";
+        String input = "Java Basics\nJohn Smith\n2020\nEXIST\nProgramming\n300\n";
         Scanner scanner = new Scanner(input);
 
         BookFactory factory = new BookFactory();
@@ -171,7 +171,7 @@ public class LibraryTest {
         LibraryItem resultItem = libraryLoanService.borrowItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.borrowItem(item2.getId()); //since is already borrowed
         LibraryItem resultItem3 = libraryLoanService.borrowItem(1000);
-        assertEquals(false, resultItem.isAvailable());
+        assertEquals(ItemStatus.BORROWED, resultItem.getStatus());
         assertNull(resultItem2);
         assertNull(resultItem3);
     }
@@ -183,7 +183,7 @@ public class LibraryTest {
         LibraryItem resultItem = libraryLoanService.returnItem(item1.getId());
         LibraryItem resultItem2 = libraryLoanService.returnItem(item2.getId());
         LibraryItem resultItem3= libraryLoanService.returnItem(1000);
-        assertEquals(true, resultItem2.isAvailable());
+        assertEquals(ItemStatus.EXIST, resultItem2.getStatus());
         assertNull(resultItem);
         assertNull(resultItem3);
     }

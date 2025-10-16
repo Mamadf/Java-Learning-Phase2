@@ -24,7 +24,6 @@ public class ManagerThread extends Thread {
             while (running) {
                 String request = requestQueue.take();
                 if (request.equals("exit")) {
-//                    protobufHandler.saveToProto("library_data.bin");
                     appConfig.saveData();
                     running = false;
                     continue;
