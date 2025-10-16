@@ -7,27 +7,30 @@ public abstract class LibraryItem {
     private String title;
     private String author;
     private int publicationYear;
-    private boolean available;
+    private ItemStatus status;
 
-    public LibraryItem(String title, String author, int publicationYear , boolean available) {
+
+    public LibraryItem(String title, String author, int publicationYear , ItemStatus status) {
         this.id = counter++;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
-        this.available = available;
+        this.status = status;
     }
 
 
     public int getId() { return id; }
-    public boolean isAvailable() { return available; }
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
+
+    public ItemStatus getStatus() {
+        return status;
+    }
+
     public int getPublicationYear() { return publicationYear; }
     public abstract void display();
 
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
+
 
     public void setReturnTime(String returnTime) {
         this.returnTime = returnTime;
@@ -46,6 +49,10 @@ public abstract class LibraryItem {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setStatus(ItemStatus status) {
+        this.status = status;
     }
 
     public void setPublicationYear(int publicationYear) {

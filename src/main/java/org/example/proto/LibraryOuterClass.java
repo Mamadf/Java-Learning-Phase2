@@ -14,6 +14,119 @@ public final class LibraryOuterClass {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  /**
+   * Protobuf enum {@code org.example.proto.ItemStatus}
+   */
+  public enum ItemStatus
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>EXIST = 0;</code>
+     */
+    EXIST(0),
+    /**
+     * <code>BORROWED = 1;</code>
+     */
+    BORROWED(1),
+    /**
+     * <code>BANNED = 2;</code>
+     */
+    BANNED(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>EXIST = 0;</code>
+     */
+    public static final int EXIST_VALUE = 0;
+    /**
+     * <code>BORROWED = 1;</code>
+     */
+    public static final int BORROWED_VALUE = 1;
+    /**
+     * <code>BANNED = 2;</code>
+     */
+    public static final int BANNED_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static ItemStatus valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static ItemStatus forNumber(int value) {
+      switch (value) {
+        case 0: return EXIST;
+        case 1: return BORROWED;
+        case 2: return BANNED;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<ItemStatus>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        ItemStatus> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<ItemStatus>() {
+            public ItemStatus findValueByNumber(int number) {
+              return ItemStatus.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return org.example.proto.LibraryOuterClass.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final ItemStatus[] VALUES = values();
+
+    public static ItemStatus valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private ItemStatus(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:org.example.proto.ItemStatus)
+  }
+
   public interface BookOrBuilder extends
       // @@protoc_insertion_point(interface_extends:org.example.proto.Book)
       com.google.protobuf.MessageOrBuilder {
@@ -55,10 +168,15 @@ public final class LibraryOuterClass {
     int getPublicationYear();
 
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    boolean getAvailable();
+    int getStatusValue();
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    org.example.proto.LibraryOuterClass.ItemStatus getStatus();
 
     /**
      * <code>string genre = 6;</code>
@@ -105,6 +223,7 @@ public final class LibraryOuterClass {
     private Book() {
       title_ = "";
       author_ = "";
+      status_ = 0;
       genre_ = "";
       returnDate_ = "";
     }
@@ -162,8 +281,9 @@ public final class LibraryOuterClass {
               break;
             }
             case 40: {
+              int rawValue = input.readEnum();
 
-              available_ = input.readBool();
+              status_ = rawValue;
               break;
             }
             case 50: {
@@ -307,14 +427,23 @@ public final class LibraryOuterClass {
       return publicationYear_;
     }
 
-    public static final int AVAILABLE_FIELD_NUMBER = 5;
-    private boolean available_;
+    public static final int STATUS_FIELD_NUMBER = 5;
+    private int status_;
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    public boolean getAvailable() {
-      return available_;
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+      @SuppressWarnings("deprecation")
+      org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+      return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
     }
 
     public static final int GENRE_FIELD_NUMBER = 6;
@@ -425,8 +554,8 @@ public final class LibraryOuterClass {
       if (publicationYear_ != 0) {
         output.writeInt32(4, publicationYear_);
       }
-      if (available_ != false) {
-        output.writeBool(5, available_);
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
+        output.writeEnum(5, status_);
       }
       if (!getGenreBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, genre_);
@@ -460,9 +589,9 @@ public final class LibraryOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, publicationYear_);
       }
-      if (available_ != false) {
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, available_);
+          .computeEnumSize(5, status_);
       }
       if (!getGenreBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, genre_);
@@ -497,8 +626,7 @@ public final class LibraryOuterClass {
           .equals(other.getAuthor())) return false;
       if (getPublicationYear()
           != other.getPublicationYear()) return false;
-      if (getAvailable()
-          != other.getAvailable()) return false;
+      if (status_ != other.status_) return false;
       if (!getGenre()
           .equals(other.getGenre())) return false;
       if (getPages()
@@ -524,9 +652,8 @@ public final class LibraryOuterClass {
       hash = (53 * hash) + getAuthor().hashCode();
       hash = (37 * hash) + PUBLICATION_YEAR_FIELD_NUMBER;
       hash = (53 * hash) + getPublicationYear();
-      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAvailable());
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + status_;
       hash = (37 * hash) + GENRE_FIELD_NUMBER;
       hash = (53 * hash) + getGenre().hashCode();
       hash = (37 * hash) + PAGES_FIELD_NUMBER;
@@ -674,7 +801,7 @@ public final class LibraryOuterClass {
 
         publicationYear_ = 0;
 
-        available_ = false;
+        status_ = 0;
 
         genre_ = "";
 
@@ -712,7 +839,7 @@ public final class LibraryOuterClass {
         result.title_ = title_;
         result.author_ = author_;
         result.publicationYear_ = publicationYear_;
-        result.available_ = available_;
+        result.status_ = status_;
         result.genre_ = genre_;
         result.pages_ = pages_;
         result.returnDate_ = returnDate_;
@@ -778,8 +905,8 @@ public final class LibraryOuterClass {
         if (other.getPublicationYear() != 0) {
           setPublicationYear(other.getPublicationYear());
         }
-        if (other.getAvailable() != false) {
-          setAvailable(other.getAvailable());
+        if (other.status_ != 0) {
+          setStatusValue(other.getStatusValue());
         }
         if (!other.getGenre().isEmpty()) {
           genre_ = other.genre_;
@@ -1033,32 +1160,54 @@ public final class LibraryOuterClass {
         return this;
       }
 
-      private boolean available_ ;
+      private int status_ = 0;
       /**
-       * <code>bool available = 5;</code>
-       * @return The available.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The enum numeric value on the wire for status.
        */
-      public boolean getAvailable() {
-        return available_;
+      public int getStatusValue() {
+        return status_;
       }
       /**
-       * <code>bool available = 5;</code>
-       * @param value The available to set.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The enum numeric value on the wire for status to set.
        * @return This builder for chaining.
        */
-      public Builder setAvailable(boolean value) {
-        
-        available_ = value;
+      public Builder setStatusValue(int value) {
+        status_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool available = 5;</code>
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The status.
+       */
+      public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+        @SuppressWarnings("deprecation")
+        org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+        return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The status to set.
        * @return This builder for chaining.
        */
-      public Builder clearAvailable() {
+      public Builder setStatus(org.example.proto.LibraryOuterClass.ItemStatus value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        available_ = false;
+        status_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -1338,10 +1487,15 @@ public final class LibraryOuterClass {
     int getPublicationYear();
 
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    boolean getAvailable();
+    int getStatusValue();
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    org.example.proto.LibraryOuterClass.ItemStatus getStatus();
 
     /**
      * <code>string publisher = 6;</code>
@@ -1388,6 +1542,7 @@ public final class LibraryOuterClass {
     private Magazine() {
       title_ = "";
       author_ = "";
+      status_ = 0;
       publisher_ = "";
       returnDate_ = "";
     }
@@ -1445,8 +1600,9 @@ public final class LibraryOuterClass {
               break;
             }
             case 40: {
+              int rawValue = input.readEnum();
 
-              available_ = input.readBool();
+              status_ = rawValue;
               break;
             }
             case 50: {
@@ -1590,14 +1746,23 @@ public final class LibraryOuterClass {
       return publicationYear_;
     }
 
-    public static final int AVAILABLE_FIELD_NUMBER = 5;
-    private boolean available_;
+    public static final int STATUS_FIELD_NUMBER = 5;
+    private int status_;
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    public boolean getAvailable() {
-      return available_;
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+      @SuppressWarnings("deprecation")
+      org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+      return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
     }
 
     public static final int PUBLISHER_FIELD_NUMBER = 6;
@@ -1708,8 +1873,8 @@ public final class LibraryOuterClass {
       if (publicationYear_ != 0) {
         output.writeInt32(4, publicationYear_);
       }
-      if (available_ != false) {
-        output.writeBool(5, available_);
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
+        output.writeEnum(5, status_);
       }
       if (!getPublisherBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, publisher_);
@@ -1743,9 +1908,9 @@ public final class LibraryOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, publicationYear_);
       }
-      if (available_ != false) {
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, available_);
+          .computeEnumSize(5, status_);
       }
       if (!getPublisherBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, publisher_);
@@ -1780,8 +1945,7 @@ public final class LibraryOuterClass {
           .equals(other.getAuthor())) return false;
       if (getPublicationYear()
           != other.getPublicationYear()) return false;
-      if (getAvailable()
-          != other.getAvailable()) return false;
+      if (status_ != other.status_) return false;
       if (!getPublisher()
           .equals(other.getPublisher())) return false;
       if (getIssueNumber()
@@ -1807,9 +1971,8 @@ public final class LibraryOuterClass {
       hash = (53 * hash) + getAuthor().hashCode();
       hash = (37 * hash) + PUBLICATION_YEAR_FIELD_NUMBER;
       hash = (53 * hash) + getPublicationYear();
-      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAvailable());
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + status_;
       hash = (37 * hash) + PUBLISHER_FIELD_NUMBER;
       hash = (53 * hash) + getPublisher().hashCode();
       hash = (37 * hash) + ISSUE_NUMBER_FIELD_NUMBER;
@@ -1957,7 +2120,7 @@ public final class LibraryOuterClass {
 
         publicationYear_ = 0;
 
-        available_ = false;
+        status_ = 0;
 
         publisher_ = "";
 
@@ -1995,7 +2158,7 @@ public final class LibraryOuterClass {
         result.title_ = title_;
         result.author_ = author_;
         result.publicationYear_ = publicationYear_;
-        result.available_ = available_;
+        result.status_ = status_;
         result.publisher_ = publisher_;
         result.issueNumber_ = issueNumber_;
         result.returnDate_ = returnDate_;
@@ -2061,8 +2224,8 @@ public final class LibraryOuterClass {
         if (other.getPublicationYear() != 0) {
           setPublicationYear(other.getPublicationYear());
         }
-        if (other.getAvailable() != false) {
-          setAvailable(other.getAvailable());
+        if (other.status_ != 0) {
+          setStatusValue(other.getStatusValue());
         }
         if (!other.getPublisher().isEmpty()) {
           publisher_ = other.publisher_;
@@ -2316,32 +2479,54 @@ public final class LibraryOuterClass {
         return this;
       }
 
-      private boolean available_ ;
+      private int status_ = 0;
       /**
-       * <code>bool available = 5;</code>
-       * @return The available.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The enum numeric value on the wire for status.
        */
-      public boolean getAvailable() {
-        return available_;
+      public int getStatusValue() {
+        return status_;
       }
       /**
-       * <code>bool available = 5;</code>
-       * @param value The available to set.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The enum numeric value on the wire for status to set.
        * @return This builder for chaining.
        */
-      public Builder setAvailable(boolean value) {
-        
-        available_ = value;
+      public Builder setStatusValue(int value) {
+        status_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool available = 5;</code>
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The status.
+       */
+      public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+        @SuppressWarnings("deprecation")
+        org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+        return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The status to set.
        * @return This builder for chaining.
        */
-      public Builder clearAvailable() {
+      public Builder setStatus(org.example.proto.LibraryOuterClass.ItemStatus value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        available_ = false;
+        status_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -2621,10 +2806,15 @@ public final class LibraryOuterClass {
     int getPublicationYear();
 
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    boolean getAvailable();
+    int getStatusValue();
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    org.example.proto.LibraryOuterClass.ItemStatus getStatus();
 
     /**
      * <code>string subject = 6;</code>
@@ -2677,6 +2867,7 @@ public final class LibraryOuterClass {
     private ReferenceBook() {
       title_ = "";
       author_ = "";
+      status_ = 0;
       subject_ = "";
       edition_ = "";
       returnDate_ = "";
@@ -2735,8 +2926,9 @@ public final class LibraryOuterClass {
               break;
             }
             case 40: {
+              int rawValue = input.readEnum();
 
-              available_ = input.readBool();
+              status_ = rawValue;
               break;
             }
             case 50: {
@@ -2881,14 +3073,23 @@ public final class LibraryOuterClass {
       return publicationYear_;
     }
 
-    public static final int AVAILABLE_FIELD_NUMBER = 5;
-    private boolean available_;
+    public static final int STATUS_FIELD_NUMBER = 5;
+    private int status_;
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    public boolean getAvailable() {
-      return available_;
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+      @SuppressWarnings("deprecation")
+      org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+      return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
     }
 
     public static final int SUBJECT_FIELD_NUMBER = 6;
@@ -3025,8 +3226,8 @@ public final class LibraryOuterClass {
       if (publicationYear_ != 0) {
         output.writeInt32(4, publicationYear_);
       }
-      if (available_ != false) {
-        output.writeBool(5, available_);
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
+        output.writeEnum(5, status_);
       }
       if (!getSubjectBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, subject_);
@@ -3060,9 +3261,9 @@ public final class LibraryOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, publicationYear_);
       }
-      if (available_ != false) {
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, available_);
+          .computeEnumSize(5, status_);
       }
       if (!getSubjectBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, subject_);
@@ -3096,8 +3297,7 @@ public final class LibraryOuterClass {
           .equals(other.getAuthor())) return false;
       if (getPublicationYear()
           != other.getPublicationYear()) return false;
-      if (getAvailable()
-          != other.getAvailable()) return false;
+      if (status_ != other.status_) return false;
       if (!getSubject()
           .equals(other.getSubject())) return false;
       if (!getEdition()
@@ -3123,9 +3323,8 @@ public final class LibraryOuterClass {
       hash = (53 * hash) + getAuthor().hashCode();
       hash = (37 * hash) + PUBLICATION_YEAR_FIELD_NUMBER;
       hash = (53 * hash) + getPublicationYear();
-      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAvailable());
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + status_;
       hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
       hash = (53 * hash) + getSubject().hashCode();
       hash = (37 * hash) + EDITION_FIELD_NUMBER;
@@ -3273,7 +3472,7 @@ public final class LibraryOuterClass {
 
         publicationYear_ = 0;
 
-        available_ = false;
+        status_ = 0;
 
         subject_ = "";
 
@@ -3311,7 +3510,7 @@ public final class LibraryOuterClass {
         result.title_ = title_;
         result.author_ = author_;
         result.publicationYear_ = publicationYear_;
-        result.available_ = available_;
+        result.status_ = status_;
         result.subject_ = subject_;
         result.edition_ = edition_;
         result.returnDate_ = returnDate_;
@@ -3377,8 +3576,8 @@ public final class LibraryOuterClass {
         if (other.getPublicationYear() != 0) {
           setPublicationYear(other.getPublicationYear());
         }
-        if (other.getAvailable() != false) {
-          setAvailable(other.getAvailable());
+        if (other.status_ != 0) {
+          setStatusValue(other.getStatusValue());
         }
         if (!other.getSubject().isEmpty()) {
           subject_ = other.subject_;
@@ -3633,32 +3832,54 @@ public final class LibraryOuterClass {
         return this;
       }
 
-      private boolean available_ ;
+      private int status_ = 0;
       /**
-       * <code>bool available = 5;</code>
-       * @return The available.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The enum numeric value on the wire for status.
        */
-      public boolean getAvailable() {
-        return available_;
+      public int getStatusValue() {
+        return status_;
       }
       /**
-       * <code>bool available = 5;</code>
-       * @param value The available to set.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The enum numeric value on the wire for status to set.
        * @return This builder for chaining.
        */
-      public Builder setAvailable(boolean value) {
-        
-        available_ = value;
+      public Builder setStatusValue(int value) {
+        status_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool available = 5;</code>
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The status.
+       */
+      public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+        @SuppressWarnings("deprecation")
+        org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+        return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The status to set.
        * @return This builder for chaining.
        */
-      public Builder clearAvailable() {
+      public Builder setStatus(org.example.proto.LibraryOuterClass.ItemStatus value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        available_ = false;
+        status_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -3984,10 +4205,15 @@ public final class LibraryOuterClass {
     int getPublicationYear();
 
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    boolean getAvailable();
+    int getStatusValue();
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    org.example.proto.LibraryOuterClass.ItemStatus getStatus();
 
     /**
      * <code>string university = 6;</code>
@@ -4040,6 +4266,7 @@ public final class LibraryOuterClass {
     private Thesis() {
       title_ = "";
       author_ = "";
+      status_ = 0;
       university_ = "";
       supervisor_ = "";
       returnDate_ = "";
@@ -4098,8 +4325,9 @@ public final class LibraryOuterClass {
               break;
             }
             case 40: {
+              int rawValue = input.readEnum();
 
-              available_ = input.readBool();
+              status_ = rawValue;
               break;
             }
             case 50: {
@@ -4244,14 +4472,23 @@ public final class LibraryOuterClass {
       return publicationYear_;
     }
 
-    public static final int AVAILABLE_FIELD_NUMBER = 5;
-    private boolean available_;
+    public static final int STATUS_FIELD_NUMBER = 5;
+    private int status_;
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The enum numeric value on the wire for status.
      */
-    public boolean getAvailable() {
-      return available_;
+    public int getStatusValue() {
+      return status_;
+    }
+    /**
+     * <code>.org.example.proto.ItemStatus status = 5;</code>
+     * @return The status.
+     */
+    public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+      @SuppressWarnings("deprecation")
+      org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+      return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
     }
 
     public static final int UNIVERSITY_FIELD_NUMBER = 6;
@@ -4388,8 +4625,8 @@ public final class LibraryOuterClass {
       if (publicationYear_ != 0) {
         output.writeInt32(4, publicationYear_);
       }
-      if (available_ != false) {
-        output.writeBool(5, available_);
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
+        output.writeEnum(5, status_);
       }
       if (!getUniversityBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 6, university_);
@@ -4423,9 +4660,9 @@ public final class LibraryOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, publicationYear_);
       }
-      if (available_ != false) {
+      if (status_ != org.example.proto.LibraryOuterClass.ItemStatus.EXIST.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, available_);
+          .computeEnumSize(5, status_);
       }
       if (!getUniversityBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, university_);
@@ -4459,8 +4696,7 @@ public final class LibraryOuterClass {
           .equals(other.getAuthor())) return false;
       if (getPublicationYear()
           != other.getPublicationYear()) return false;
-      if (getAvailable()
-          != other.getAvailable()) return false;
+      if (status_ != other.status_) return false;
       if (!getUniversity()
           .equals(other.getUniversity())) return false;
       if (!getSupervisor()
@@ -4486,9 +4722,8 @@ public final class LibraryOuterClass {
       hash = (53 * hash) + getAuthor().hashCode();
       hash = (37 * hash) + PUBLICATION_YEAR_FIELD_NUMBER;
       hash = (53 * hash) + getPublicationYear();
-      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAvailable());
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + status_;
       hash = (37 * hash) + UNIVERSITY_FIELD_NUMBER;
       hash = (53 * hash) + getUniversity().hashCode();
       hash = (37 * hash) + SUPERVISOR_FIELD_NUMBER;
@@ -4636,7 +4871,7 @@ public final class LibraryOuterClass {
 
         publicationYear_ = 0;
 
-        available_ = false;
+        status_ = 0;
 
         university_ = "";
 
@@ -4674,7 +4909,7 @@ public final class LibraryOuterClass {
         result.title_ = title_;
         result.author_ = author_;
         result.publicationYear_ = publicationYear_;
-        result.available_ = available_;
+        result.status_ = status_;
         result.university_ = university_;
         result.supervisor_ = supervisor_;
         result.returnDate_ = returnDate_;
@@ -4740,8 +4975,8 @@ public final class LibraryOuterClass {
         if (other.getPublicationYear() != 0) {
           setPublicationYear(other.getPublicationYear());
         }
-        if (other.getAvailable() != false) {
-          setAvailable(other.getAvailable());
+        if (other.status_ != 0) {
+          setStatusValue(other.getStatusValue());
         }
         if (!other.getUniversity().isEmpty()) {
           university_ = other.university_;
@@ -4996,32 +5231,54 @@ public final class LibraryOuterClass {
         return this;
       }
 
-      private boolean available_ ;
+      private int status_ = 0;
       /**
-       * <code>bool available = 5;</code>
-       * @return The available.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The enum numeric value on the wire for status.
        */
-      public boolean getAvailable() {
-        return available_;
+      public int getStatusValue() {
+        return status_;
       }
       /**
-       * <code>bool available = 5;</code>
-       * @param value The available to set.
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The enum numeric value on the wire for status to set.
        * @return This builder for chaining.
        */
-      public Builder setAvailable(boolean value) {
-        
-        available_ = value;
+      public Builder setStatusValue(int value) {
+        status_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool available = 5;</code>
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return The status.
+       */
+      public org.example.proto.LibraryOuterClass.ItemStatus getStatus() {
+        @SuppressWarnings("deprecation")
+        org.example.proto.LibraryOuterClass.ItemStatus result = org.example.proto.LibraryOuterClass.ItemStatus.valueOf(status_);
+        return result == null ? org.example.proto.LibraryOuterClass.ItemStatus.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @param value The status to set.
        * @return This builder for chaining.
        */
-      public Builder clearAvailable() {
+      public Builder setStatus(org.example.proto.LibraryOuterClass.ItemStatus value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
         
-        available_ = false;
+        status_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.example.proto.ItemStatus status = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -6688,7 +6945,7 @@ public final class LibraryOuterClass {
   }
 
   public interface LibraryOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.example.proto.LibraryData)
+      // @@protoc_insertion_point(interface_extends:org.example.proto.Library)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -6716,14 +6973,14 @@ public final class LibraryOuterClass {
         int index);
   }
   /**
-   * Protobuf type {@code org.example.proto.LibraryData}
+   * Protobuf type {@code org.example.proto.Library}
    */
   public  static final class Library extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:org.example.proto.LibraryData)
+      // @@protoc_insertion_point(message_implements:org.example.proto.Library)
       LibraryOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use LibraryData.newBuilder() to construct.
+    // Use Library.newBuilder() to construct.
     private Library(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
@@ -6999,11 +7256,11 @@ public final class LibraryOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code org.example.proto.LibraryData}
+     * Protobuf type {@code org.example.proto.Library}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.example.proto.LibraryData)
+        // @@protoc_insertion_point(builder_implements:org.example.proto.Library)
         org.example.proto.LibraryOuterClass.LibraryOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
@@ -7018,7 +7275,7 @@ public final class LibraryOuterClass {
                 org.example.proto.LibraryOuterClass.Library.class, org.example.proto.LibraryOuterClass.Library.Builder.class);
       }
 
-      // Construct using org.example.proto.LibraryOuterClass.LibraryData.newBuilder()
+      // Construct using org.example.proto.LibraryOuterClass.Library.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7435,10 +7692,10 @@ public final class LibraryOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:org.example.proto.LibraryData)
+      // @@protoc_insertion_point(builder_scope:org.example.proto.Library)
     }
 
-    // @@protoc_insertion_point(class_scope:org.example.proto.LibraryData)
+    // @@protoc_insertion_point(class_scope:org.example.proto.Library)
     private static final org.example.proto.LibraryOuterClass.Library DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new org.example.proto.LibraryOuterClass.Library();
@@ -7514,30 +7771,34 @@ public final class LibraryOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rlibrary.proto\022\021org.example.proto\"\221\001\n\004B" +
+      "\n\rlibrary.proto\022\021org.example.proto\"\255\001\n\004B" +
       "ook\022\n\n\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\016\n\006author" +
-      "\030\003 \001(\t\022\030\n\020publication_year\030\004 \001(\005\022\021\n\tavai" +
-      "lable\030\005 \001(\010\022\r\n\005genre\030\006 \001(\t\022\r\n\005pages\030\007 \001(" +
-      "\005\022\023\n\013return_date\030\010 \001(\t\"\240\001\n\010Magazine\022\n\n\002i" +
-      "d\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\016\n\006author\030\003 \001(\t\022\030" +
-      "\n\020publication_year\030\004 \001(\005\022\021\n\tavailable\030\005 " +
-      "\001(\010\022\021\n\tpublisher\030\006 \001(\t\022\024\n\014issue_number\030\007" +
-      " \001(\005\022\023\n\013return_date\030\010 \001(\t\"\236\001\n\rReferenceB" +
-      "ook\022\n\n\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\016\n\006author" +
-      "\030\003 \001(\t\022\030\n\020publication_year\030\004 \001(\005\022\021\n\tavai" +
-      "lable\030\005 \001(\010\022\017\n\007subject\030\006 \001(\t\022\017\n\007edition\030" +
-      "\007 \001(\t\022\023\n\013return_date\030\010 \001(\t\"\235\001\n\006Thesis\022\n\n" +
-      "\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\016\n\006author\030\003 \001(\t" +
-      "\022\030\n\020publication_year\030\004 \001(\005\022\021\n\tavailable\030" +
-      "\005 \001(\010\022\022\n\nuniversity\030\006 \001(\t\022\022\n\nsupervisor\030" +
-      "\007 \001(\t\022\023\n\013return_date\030\010 \001(\t\"\330\001\n\013LibraryIt" +
-      "em\022\'\n\004book\030\001 \001(\0132\027.org.example.proto.Boo" +
-      "kH\000\022/\n\010magazine\030\002 \001(\0132\033.org.example.prot" +
-      "o.MagazineH\000\022:\n\016reference_book\030\003 \001(\0132 .o" +
-      "rg.example.proto.ReferenceBookH\000\022+\n\006thes" +
-      "is\030\004 \001(\0132\031.org.example.proto.ThesisH\000B\006\n" +
-      "\004item\"8\n\007Library\022-\n\005items\030\001 \003(\0132\036.org.ex" +
-      "ample.proto.LibraryItemb\006proto3"
+      "\030\003 \001(\t\022\030\n\020publication_year\030\004 \001(\005\022-\n\006stat" +
+      "us\030\005 \001(\0162\035.org.example.proto.ItemStatus\022" +
+      "\r\n\005genre\030\006 \001(\t\022\r\n\005pages\030\007 \001(\005\022\023\n\013return_" +
+      "date\030\010 \001(\t\"\274\001\n\010Magazine\022\n\n\002id\030\001 \001(\005\022\r\n\005t" +
+      "itle\030\002 \001(\t\022\016\n\006author\030\003 \001(\t\022\030\n\020publicatio" +
+      "n_year\030\004 \001(\005\022-\n\006status\030\005 \001(\0162\035.org.examp" +
+      "le.proto.ItemStatus\022\021\n\tpublisher\030\006 \001(\t\022\024" +
+      "\n\014issue_number\030\007 \001(\005\022\023\n\013return_date\030\010 \001(" +
+      "\t\"\272\001\n\rReferenceBook\022\n\n\002id\030\001 \001(\005\022\r\n\005title" +
+      "\030\002 \001(\t\022\016\n\006author\030\003 \001(\t\022\030\n\020publication_ye" +
+      "ar\030\004 \001(\005\022-\n\006status\030\005 \001(\0162\035.org.example.p" +
+      "roto.ItemStatus\022\017\n\007subject\030\006 \001(\t\022\017\n\007edit" +
+      "ion\030\007 \001(\t\022\023\n\013return_date\030\010 \001(\t\"\271\001\n\006Thesi" +
+      "s\022\n\n\002id\030\001 \001(\005\022\r\n\005title\030\002 \001(\t\022\016\n\006author\030\003" +
+      " \001(\t\022\030\n\020publication_year\030\004 \001(\005\022-\n\006status" +
+      "\030\005 \001(\0162\035.org.example.proto.ItemStatus\022\022\n" +
+      "\nuniversity\030\006 \001(\t\022\022\n\nsupervisor\030\007 \001(\t\022\023\n" +
+      "\013return_date\030\010 \001(\t\"\330\001\n\013LibraryItem\022\'\n\004bo" +
+      "ok\030\001 \001(\0132\027.org.example.proto.BookH\000\022/\n\010m" +
+      "agazine\030\002 \001(\0132\033.org.example.proto.Magazi" +
+      "neH\000\022:\n\016reference_book\030\003 \001(\0132 .org.examp" +
+      "le.proto.ReferenceBookH\000\022+\n\006thesis\030\004 \001(\013" +
+      "2\031.org.example.proto.ThesisH\000B\006\n\004item\"8\n" +
+      "\007Library\022-\n\005items\030\001 \003(\0132\036.org.example.pr" +
+      "oto.LibraryItem*1\n\nItemStatus\022\t\n\005EXIST\020\000" +
+      "\022\014\n\010BORROWED\020\001\022\n\n\006BANNED\020\002b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -7548,25 +7809,25 @@ public final class LibraryOuterClass {
     internal_static_org_example_proto_Book_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_example_proto_Book_descriptor,
-        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Available", "Genre", "Pages", "ReturnDate", });
+        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Status", "Genre", "Pages", "ReturnDate", });
     internal_static_org_example_proto_Magazine_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_org_example_proto_Magazine_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_example_proto_Magazine_descriptor,
-        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Available", "Publisher", "IssueNumber", "ReturnDate", });
+        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Status", "Publisher", "IssueNumber", "ReturnDate", });
     internal_static_org_example_proto_ReferenceBook_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_org_example_proto_ReferenceBook_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_example_proto_ReferenceBook_descriptor,
-        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Available", "Subject", "Edition", "ReturnDate", });
+        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Status", "Subject", "Edition", "ReturnDate", });
     internal_static_org_example_proto_Thesis_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_org_example_proto_Thesis_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_example_proto_Thesis_descriptor,
-        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Available", "University", "Supervisor", "ReturnDate", });
+        new java.lang.String[] { "Id", "Title", "Author", "PublicationYear", "Status", "University", "Supervisor", "ReturnDate", });
     internal_static_org_example_proto_LibraryItem_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_org_example_proto_LibraryItem_fieldAccessorTable = new

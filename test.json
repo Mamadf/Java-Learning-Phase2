@@ -8,7 +8,7 @@
       "title": "Oxford Dictionary",
       "author": "Oxford Press",
       "publicationYear": 2015,
-      "available": true
+      "status": "BORROWED"
     }
   },
   {
@@ -20,7 +20,7 @@
       "title": "test",
       "author": "Reza",
       "publicationYear": 2018,
-      "available": true
+      "status": "EXIST"
     }
   },
   {
@@ -33,7 +33,7 @@
       "title": "Java Basics",
       "author": "John Smith",
       "publicationYear": 2020,
-      "available": true
+      "status": "EXIST"
     }
   },
   {
@@ -46,7 +46,7 @@
       "title": "AI in Healthcare",
       "author": "Ali Reza",
       "publicationYear": 2022,
-      "available": true
+      "status": "EXIST"
     }
   },
   {
@@ -59,7 +59,7 @@
       "title": "test",
       "author": "Ali Reza",
       "publicationYear": 2022,
-      "available": true
+      "status": "BANNED"
     }
   },
   {
@@ -71,7 +71,19 @@
       "title": "Science Today",
       "author": "Mary Editor",
       "publicationYear": 2023,
-      "available": false
+      "status": "BORROWED"
+    }
+  },
+  {
+    "type": "Thesis",
+    "data": {
+      "university": "sharif",
+      "supervisor": "sfadf",
+      "id": 7,
+      "title": "OP",
+      "author": "po",
+      "publicationYear": 2018,
+      "status": "EXIST"
     }
   }
 ]

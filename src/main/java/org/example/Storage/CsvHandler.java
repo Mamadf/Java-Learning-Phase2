@@ -34,25 +34,25 @@ public class CsvHandler {
                     String title = values[1];
                     String author = values[2];
                     int year = Integer.parseInt(values[3]);
-                    boolean available = Boolean.parseBoolean(values[4]);
+                    ItemStatus status = ItemStatus.valueOf(values[4]);
                     String privateField = values[5];
 
                     switch (type) {
                         case "Book":
                             int pages = Integer.parseInt(values[6]);
-                            libraryManagerService.addItem(new Book(title, author, year, available, privateField, pages));
+                            libraryManagerService.addItem(new Book(title, author, year, status, privateField, pages));
                             break;
                         case "Magazine":
                             int issue = Integer.parseInt(values[6]);
-                            libraryManagerService.addItem(new Magazine(title, author, year, available, privateField, issue));
+                            libraryManagerService.addItem(new Magazine(title, author, year, status, privateField, issue));
                             break;
                         case "ReferenceBook":
                             String edition = values[6];
-                            libraryManagerService.addItem(new ReferenceBook(title, author, year, available, privateField, edition));
+                            libraryManagerService.addItem(new ReferenceBook(title, author, year, status, privateField, edition));
                             break;
                         case "Thesis":
                             String supervisor = values[6];
-                            libraryManagerService.addItem(new Thesis(title, author, year, available, privateField, supervisor));
+                            libraryManagerService.addItem(new Thesis(title, author, year, status, privateField, supervisor));
                             break;
                         default:
                             System.err.println("Unknown item type: " + type);
@@ -77,7 +77,7 @@ public class CsvHandler {
                     writer.append(item.getTitle()).append(",")
                             .append(item.getAuthor()).append(",")
                             .append(String.valueOf(item.getPublicationYear())).append(",")
-                            .append(String.valueOf(item.isAvailable()))
+                            .append(String.valueOf(item.getStatus()))
                             .append("\n");
                 } catch (Exception e) {
                     System.err.println("Error writing item: " + item + " -> " + e.getMessage());

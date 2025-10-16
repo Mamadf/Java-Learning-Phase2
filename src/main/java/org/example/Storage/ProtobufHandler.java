@@ -31,7 +31,7 @@ public class ProtobufHandler {
                             .setTitle(b.getTitle())
                             .setAuthor(b.getAuthor())
                             .setPublicationYear(b.getPublicationYear())
-                            .setAvailable(b.isAvailable())
+                            .setStatus(LibraryOuterClass.ItemStatus.valueOf(b.getStatus().name()))
                             .setGenre(b.getGenre())
                             .setPages(b.getPages())
                             .setReturnDate(b.getReturnTime() == null ? "" : b.getReturnTime()));
@@ -42,7 +42,7 @@ public class ProtobufHandler {
                             .setTitle(m.getTitle())
                             .setAuthor(m.getAuthor())
                             .setPublicationYear(m.getPublicationYear())
-                            .setAvailable(m.isAvailable())
+                            .setStatus(LibraryOuterClass.ItemStatus.valueOf(m.getStatus().name()))
                             .setPublisher(m.getPublisher())
                             .setIssueNumber(m.getIssue())
                             .setReturnDate(m.getReturnTime() == null ? "" : m.getReturnTime()));
@@ -53,7 +53,7 @@ public class ProtobufHandler {
                             .setTitle(r.getTitle())
                             .setAuthor(r.getAuthor())
                             .setPublicationYear(r.getPublicationYear())
-                            .setAvailable(r.isAvailable())
+                            .setStatus(LibraryOuterClass.ItemStatus.valueOf(r.getStatus().name()))
                             .setSubject(r.getSubject())
                             .setEdition(r.getEdition())
                             .setReturnDate(r.getReturnTime() == null ? "" : r.getReturnTime()));
@@ -64,7 +64,7 @@ public class ProtobufHandler {
                             .setTitle(t.getTitle())
                             .setAuthor(t.getAuthor())
                             .setPublicationYear(t.getPublicationYear())
-                            .setAvailable(t.isAvailable())
+                            .setStatus(LibraryOuterClass.ItemStatus.valueOf(t.getStatus().name()))
                             .setUniversity(t.getUniversity())
                             .setSupervisor(t.getSupervisor())
                             .setReturnDate(t.getReturnTime() == null ? "" : t.getReturnTime()));
@@ -87,19 +87,19 @@ public class ProtobufHandler {
                 if (item.hasBook()) {
                     LibraryOuterClass.Book b = item.getBook();
                     libraryManagerService.addItem(new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
-                            b.getAvailable(), b.getGenre(), b.getPages()));
+                            ItemStatus.valueOf(b.getStatus().name()), b.getGenre(), b.getPages()));
                 } else if (item.hasMagazine()) {
                     LibraryOuterClass.Magazine m = item.getMagazine();
                     libraryManagerService.addItem(new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
-                            m.getAvailable(), m.getPublisher(), m.getIssueNumber()));
+                            ItemStatus.valueOf(m.getStatus().name()), m.getPublisher(), m.getIssueNumber()));
                 } else if (item.hasReferenceBook()) {
                     LibraryOuterClass.ReferenceBook r = item.getReferenceBook();
                     libraryManagerService.addItem(new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
-                            r.getAvailable(), r.getSubject(), r.getEdition()));
+                            ItemStatus.valueOf(r.getStatus().name()), r.getSubject(), r.getEdition()));
                 } else if (item.hasThesis()) {
                     LibraryOuterClass.Thesis t = item.getThesis();
                     libraryManagerService.addItem(new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
-                            t.getAvailable(), t.getUniversity(), t.getSupervisor()));
+                            ItemStatus.valueOf(t.getStatus().name()), t.getUniversity(), t.getSupervisor()));
                 }
             }
 

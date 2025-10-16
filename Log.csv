@@ -33,3 +33,17 @@ test,Ali Reza,2022,true
 Operation: remove
 Title,Author,PublicationYear,Status
 Science Today,Mary Editor,2023,false
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,null
+test,Ali Reza,2022,null
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,null
+test,Ali Reza,2022,null
+
+Operation: remove
+Title,Author,PublicationYear,Status
+newte,tes,2014,EXIST

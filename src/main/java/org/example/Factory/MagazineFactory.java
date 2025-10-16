@@ -1,6 +1,7 @@
 package org.example.Factory;
 
 import org.example.Model.Book;
+import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Model.Magazine;
 
@@ -16,13 +17,13 @@ public class MagazineFactory implements LibraryItemFactory{
         String author = scanner.nextLine();
         System.out.print("Enter publication year: ");
         int year = Integer.parseInt(scanner.nextLine());
-        System.out.print("Is it available? (true/false): ");
-        boolean available = Boolean.parseBoolean(scanner.nextLine());
+        System.out.print("Enter the Status (EXIST/BORROWED/BANNED): ");
+        ItemStatus status = ItemStatus.valueOf((scanner.nextLine()));
         System.out.print("Enter publisher: ");
         String publisher = scanner.nextLine();
         System.out.print("Enter number of issue: ");
         int issue = Integer.parseInt(scanner.nextLine());
-        return new Magazine(title, author, year, available, publisher, issue);
+        return new Magazine(title, author, year, status, publisher, issue);
     }
 
     @Override

@@ -4,8 +4,8 @@ public class Book extends LibraryItem {
     private String genre;
     private int pages;
 
-    public Book(String title, String author, int publicationYear, boolean available , String genre, int pages) {
-        super(title, author, publicationYear, available);
+    public Book(String title, String author, int publicationYear, ItemStatus status , String genre, int pages) {
+        super(title, author, publicationYear, status);
         this.genre = genre;
         this.pages = pages;
     }
@@ -18,7 +18,7 @@ public class Book extends LibraryItem {
         System.out.println("Book: " + getTitle() + " by " + getAuthor());
         System.out.println("Year: " + getPublicationYear());
         System.out.println("Genre: " + genre + ", Pages: " + pages);
-        System.out.println("Availability: " + isAvailable() );
+        System.out.println("Status: " + getStatus() );
         System.out.println("Return Date: " + getReturnTime() );
         System.out.println("------------------------");
     }
