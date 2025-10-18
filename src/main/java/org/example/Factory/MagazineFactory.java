@@ -17,8 +17,7 @@ public class MagazineFactory implements LibraryItemFactory{
         String author = scanner.nextLine();
         System.out.print("Enter publication year: ");
         int year = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter the Status (EXIST/BORROWED/BANNED): ");
-        ItemStatus status = ItemStatus.valueOf((scanner.nextLine()));
+        ItemStatus status = ItemStatus.EXIST;
         System.out.print("Enter publisher: ");
         String publisher = scanner.nextLine();
         System.out.print("Enter number of issue: ");

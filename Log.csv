@@ -47,3 +47,18 @@ test,Ali Reza,2022,null
 Operation: remove
 Title,Author,PublicationYear,Status
 newte,tes,2014,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+OP,po,2018,EXIST
+OP,po,2018,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+OP,po,2018,BORROWED
+OP,po,2018,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+OP,po,2018,BORROWED
+OP,po,2018,EXIST
