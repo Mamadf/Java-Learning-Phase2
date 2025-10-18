@@ -6,6 +6,7 @@ import org.example.Model.LibraryItem;
 import org.example.Service.LibraryManagerService;
 import org.example.Service.LibraryLoanService;
 import org.example.Storage.CsvHandler;
+import org.example.utils.CheckValidation;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
@@ -36,7 +37,7 @@ public class LibraryView {
 
     public void updateItem(Scanner scanner) {
         System.out.print("Enter item ID to update: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = CheckValidation.getValidInt(scanner);
         LibraryItem item = managerService.searchById(id);
         if (item == null) {
             System.out.println("❌ Item not found!");
@@ -48,7 +49,7 @@ public class LibraryView {
 
     public void removeItem(Scanner scanner) {
         System.out.print("Enter item ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = CheckValidation.getValidInt(scanner);
         LibraryItem removed = managerService.deleteItem(id);
         if (removed != null)
             csvHandler.writeLibrary("remove", List.of(removed));
@@ -60,31 +61,27 @@ public class LibraryView {
 
     public void updateReturnTime(Scanner scanner) {
         System.out.print("Enter Item ID: ");
-        int id = scanner.nextInt(); scanner.nextLine();
+        int id = CheckValidation.getValidInt(scanner);
         System.out.print("Enter new return date (yyyy-MM-dd): ");
-        String date = scanner.nextLine();
-        if (!Pattern.matches("^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$", date)) {
-            System.out.println("❌ Invalid date format");
-            return;
-        }
+        String date = CheckValidation.getValidDate(scanner);
         loanService.editReturnTime(id, date);
     }
 
     public void borrowItem(Scanner scanner, BlockingQueue<String> requestQueue) {
         System.out.print("Enter Item ID: ");
-        String id = scanner.nextLine();
+        int id = CheckValidation.getValidInt(scanner);
         requestQueue.offer(id + ":borrow");
     }
 
     public void returnItem(Scanner scanner, BlockingQueue<String> requestQueue) {
         System.out.print("Enter Item ID: ");
-        String returnId = scanner.nextLine();
-        requestQueue.offer(returnId + ":return");
+        int id = CheckValidation.getValidInt(scanner);
+        requestQueue.offer(id + ":return");
     }
 
     public void titleSearch(Scanner scanner) {
         System.out.println("Enter title: ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         List<LibraryItem> searchRes = managerService.searchByTitle(title);
         if(!searchRes.isEmpty()) {
             csvHandler.writeLibrary("search by title", searchRes);
@@ -94,7 +91,7 @@ public class LibraryView {
     }
     public void authorSearch(Scanner scanner) {
         System.out.println("Enter Author: ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         List<LibraryItem> searchResult = managerService.searchByAuthor(author);
         if(!searchResult.isEmpty()) {
             csvHandler.writeLibrary("search by author", searchResult);
@@ -109,5 +106,27 @@ public class LibraryView {
 
     public void showBorrowedItems() {
         loanService.printBorrowedItems();
+    }
+
+    public void help() {
+        System.out.println(
+                "Available commands:\n" +
+                        "---------------------------------\n" +
+                        "add              → Add a new item to the library\n" +
+                        "remove           → Remove an existing item by ID\n" +
+                        "update           → Update the details of an existing item\n" +
+                        "get all assets   → Display all items in the library\n" +
+                        "borrow           → Borrow an item by ID\n" +
+                        "return           → Return a borrowed item\n" +
+                        "return time      → Update the return time for a existing item\n" +
+                        "search by title  → Search items by title\n" +
+                        "search by author → Search items by author\n" +
+                        "sort             → Sort all items by publication year\n" +
+                        "borrowed item    → Show all borrowed items\n" +
+                        "help             → Show this help message\n" +
+                        "exit             → Save data and exit the program\n" +
+                        "---------------------------------\n" +
+                        "Tip: Type command names exactly as shown above."
+        );
     }
 }

@@ -17,7 +17,7 @@ public class UserInputThread extends Thread {
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter command: add, remove, borrow, return, update, status , borrowed item, search by title, search by author, sort , help, exit");
+        System.out.println("Enter command: add, remove, borrow, return, update, get all assets , borrowed item, search by title, search by author, sort , help, exit");
         boolean running = true;
         while (running) {
             String command = scanner.nextLine();
@@ -31,7 +31,7 @@ public class UserInputThread extends Thread {
                 case "update" :
                     view.updateItem(scanner);
                     break;
-                case "status" :
+                case "get all assets" :
                     view.printAll();
                     break;
                 case "borrow" :
@@ -56,7 +56,7 @@ public class UserInputThread extends Thread {
                     view.showBorrowedItems();
                     break;
                 case "help" :
-                    System.out.println("commands list: search by title, search by author, sort , help, add, remove, borrow, return, update, status, exit");
+                    view.help();
                     break;
                 case "exit" :
                     requestQueue.offer("exit");

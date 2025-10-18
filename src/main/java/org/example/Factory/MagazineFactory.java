@@ -4,6 +4,7 @@ import org.example.Model.Book;
 import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Model.Magazine;
+import org.example.utils.CheckValidation;
 
 import java.util.Scanner;
 
@@ -12,16 +13,16 @@ public class MagazineFactory implements LibraryItemFactory{
     @Override
     public LibraryItem createItem(Scanner scanner) {
         System.out.print("Enter title: ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter author: ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter publication year: ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
         ItemStatus status = ItemStatus.EXIST;
         System.out.print("Enter publisher: ");
         String publisher = scanner.nextLine();
         System.out.print("Enter number of issue: ");
-        int issue = Integer.parseInt(scanner.nextLine());
+        int issue = CheckValidation.getValidInt(scanner);
         return new Magazine(title, author, year, status, publisher, issue);
     }
 
@@ -30,16 +31,16 @@ public class MagazineFactory implements LibraryItemFactory{
         Magazine magazine = (Magazine) libraryItem;
 
         System.out.print("Enter new title (" + magazine.getTitle() + "): ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         magazine.setTitle(title);
 
         System.out.print("Enter new author (" + magazine.getAuthor() + "): ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         magazine.setAuthor(author);
 
 
         System.out.print("Enter new publication year (" + magazine.getPublicationYear() + "): ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
         magazine.setPublicationYear(year);
 
         System.out.print("Enter new publisher (" + magazine.getPublisher() + "): ");
@@ -47,8 +48,8 @@ public class MagazineFactory implements LibraryItemFactory{
         magazine.setPublisher(publisher);
 
         System.out.print("Enter new issue (" + magazine.getIssue() + "): ");
-        String issue = scanner.nextLine();
-        magazine.setIssue(Integer.parseInt(issue));
+        int issue = CheckValidation.getValidInt(scanner);
+        magazine.setIssue(issue);
 
         System.out.println("✅ Magazine updated successfully!");
     }
