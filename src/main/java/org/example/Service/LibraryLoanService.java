@@ -30,10 +30,12 @@ public class LibraryLoanService {
         if (item != null) {
             if (item.getStatus() == ItemStatus.EXIST) {
                 item.setStatus(ItemStatus.BORROWED);
-                System.out.println("✅ Item '" + item.getTitle() + "' borrowed successfully.");
-            } else {
+                System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
+            } else if(item.getStatus() == ItemStatus.BORROWED) {
                 System.out.println("Item is already borrowed.");
                 return null;
+            }else {
+                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
         } else {
             System.out.println("Item not found.");
@@ -48,10 +50,12 @@ public class LibraryLoanService {
             if (item.getStatus() == ItemStatus.BORROWED) {
                 item.setStatus(ItemStatus.EXIST);
                 item.setReturnTime(LocalDate.now().toString());
-                System.out.println("✅ Item '" + item.getTitle() + "' returned successfully.");
-            } else {
+                System.out.println("Item '" + item.getTitle() + "' returned successfully.");
+            } else if(item.getStatus() == ItemStatus.EXIST) {
                 System.out.println("Item was not borrowed.");
                 return null;
+            }else {
+                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
         } else {
             System.out.println("Item not found.");
@@ -65,10 +69,12 @@ public class LibraryLoanService {
         if (item != null) {
             if (item.getStatus() == ItemStatus.EXIST) {
                 item.setReturnTime(date);
-                System.out.println("✅ Item '" + item.getTitle() + "' return time has been set successfully.");
-            } else {
-                System.out.println("Item is borrowed.");
+                System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
+            } else if(item.getStatus() == ItemStatus.BORROWED) {
+                System.out.println("Item is borrowed, you can't change return time");
                 return null;
+            }else{
+                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
         } else {
             System.out.println("Item not found.");

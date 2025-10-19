@@ -5,6 +5,7 @@ import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Model.ReferenceBook;
 import org.example.Model.Thesis;
+import org.example.utils.CheckValidation;
 
 import java.util.Scanner;
 
@@ -13,16 +14,15 @@ public class ReferenceBookFactory implements LibraryItemFactory{
     @Override
     public LibraryItem createItem(Scanner scanner) {
         System.out.print("Enter title: ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter author: ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter publication year: ");
-        int year = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter the Status (EXIST/BORROWED/BANNED): ");
-        ItemStatus status = ItemStatus.valueOf(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
+        ItemStatus status = ItemStatus.EXIST;
         System.out.print("Enter subject: ");
         String subject = scanner.nextLine();
-        System.out.print("Enter number of edition: ");
+        System.out.print("Enter edition: ");
         String edition = scanner.nextLine();
         return new ReferenceBook(title, author, year, status, subject, edition);
     }
@@ -32,16 +32,16 @@ public class ReferenceBookFactory implements LibraryItemFactory{
         ReferenceBook referenceBook = (ReferenceBook) libraryItem;
 
         System.out.print("Enter new title (" + referenceBook.getTitle() + "): ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         referenceBook.setTitle(title);
 
         System.out.print("Enter new author (" + referenceBook.getAuthor() + "): ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         referenceBook.setAuthor(author);
 
 
         System.out.print("Enter new publication year (" + referenceBook.getPublicationYear() + "): ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
         referenceBook.setPublicationYear(year);
 
         System.out.print("Enter new subject (" + referenceBook.getSubject() + "): ");
