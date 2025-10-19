@@ -48,14 +48,17 @@ Operation: remove
 Title,Author,PublicationYear,Status
 newte,tes,2014,EXIST
 
-Operation: remove
+Operation: search by title
 Title,Author,PublicationYear,Status
-,,2020,BORROWED
+OP,po,2018,EXIST
+OP,po,2018,EXIST
 
-Operation: remove
+Operation: search by title
 Title,Author,PublicationYear,Status
-HHH,hhh,2021,BANNED
+OP,po,2018,BORROWED
+OP,po,2018,EXIST
 
-Operation: remove
+Operation: search by author
 Title,Author,PublicationYear,Status
-HHH,hhh,2021,BANNED
+OP,po,2018,BORROWED
+OP,po,2018,EXIST

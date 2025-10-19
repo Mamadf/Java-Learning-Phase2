@@ -5,6 +5,7 @@ import org.example.Model.Book;
 import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Model.Thesis;
+import org.example.utils.CheckValidation;
 
 import java.util.Scanner;
 
@@ -13,16 +14,15 @@ public class ThesisFactory implements LibraryItemFactory{
     @Override
     public LibraryItem createItem(Scanner scanner) {
         System.out.print("Enter title: ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter author: ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         System.out.print("Enter publication year: ");
-        int year = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter the Status (EXIST/BORROWED/BANNED): ");
-        ItemStatus status = ItemStatus.valueOf(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
+        ItemStatus status = ItemStatus.EXIST;
         System.out.print("Enter university: ");
         String university = scanner.nextLine();
-        System.out.print("Enter number of supervisor: ");
+        System.out.print("Enter supervisor: ");
         String supervisor = scanner.nextLine();
         return new Thesis(title, author, year, status, university, supervisor);
     }
@@ -32,16 +32,16 @@ public class ThesisFactory implements LibraryItemFactory{
         Thesis thesis = (Thesis) libraryItem;
 
         System.out.print("Enter new title (" + thesis.getTitle() + "): ");
-        String title = scanner.nextLine();
+        String title = CheckValidation.getNonEmptyString(scanner);
         thesis.setTitle(title);
 
         System.out.print("Enter new author (" + thesis.getAuthor() + "): ");
-        String author = scanner.nextLine();
+        String author = CheckValidation.getNonEmptyString(scanner);
         thesis.setAuthor(author);
 
 
         System.out.print("Enter new publication year (" + thesis.getPublicationYear() + "): ");
-        int year = Integer.parseInt(scanner.nextLine());
+        int year = CheckValidation.getValidInt(scanner);
         thesis.setPublicationYear(year);
 
         System.out.print("Enter new university (" + thesis.getUniversity() + "): ");
