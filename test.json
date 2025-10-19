@@ -85,5 +85,17 @@
       "publicationYear": 2018,
       "status": "EXIST"
     }
+  },
+  {
+    "type": "Thesis",
+    "data": {
+      "university": "faf",
+      "supervisor": "afd",
+      "id": 8,
+      "title": "fsaf",
+      "author": "afaf",
+      "publicationYear": 123,
+      "status": "EXIST"
+    }
   }
 ]
