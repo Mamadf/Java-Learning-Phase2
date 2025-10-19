@@ -2,3 +2,4 @@ Type,Id,Title,Author,PublicationYear,Status,ReturnDate,Extra1,Extra2
 Magazine,1,National Geographic,Various,2020,BORROWED,2024-10-01,NatGeo,120
 ReferenceBook,2,Oxford Dictionary,Oxford Press,2015,BORROWED,2024-12-10,Language,13
 Thesis,3,faf,afadf,2012,BORROWED,,fadf,12
+Magazine,4,afda,afag,2012,EXIST,,fda,12

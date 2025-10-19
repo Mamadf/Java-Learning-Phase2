@@ -109,5 +109,17 @@
       "publicationYear": 2013,
       "status": "BORROWED"
     }
+  },
+  {
+    "type": "Book",
+    "data": {
+      "genre": "bfdg",
+      "pages": 33,
+      "id": 10,
+      "title": "fggrge",
+      "author": "grew",
+      "publicationYear": 2016,
+      "status": "EXIST"
+    }
   }
 ]

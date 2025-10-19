@@ -4,10 +4,7 @@ import org.example.Model.*;
 import org.example.Repository.LibraryData;
 import org.example.Service.LibraryManagerService;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class CsvHandler implements  StorageHandler {
@@ -34,7 +31,7 @@ public class CsvHandler implements  StorageHandler {
                     continue;
                 }
 
-                String[] values = line.split(",", -1); // keep empty cells
+                String[] values = line.split(",", -1);
 
                 if (values.length < 8) {
                     System.err.println("Invalid line: " + line);
@@ -96,76 +93,70 @@ public class CsvHandler implements  StorageHandler {
 
 
     @Override
-    public void saveData(String fileName) {
-        if (library == null) {
-            System.out.println("❌ Library data is null, cannot save CSV.");
-            return;
-        }
+    public void saveData(String filename) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            // Write header
+            bw.write("Type,Id,Title,Author,PublicationYear,Status,ReturnDate,Extra1,Extra2");
+            bw.newLine();
 
-        List<LibraryItem> items = library.getItems();
+            for (LibraryItem item : library.getItems()) {
+                StringBuilder sb = new StringBuilder();
 
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.append("Type,Id,Title,Author,PublicationYear,Status,Extra1,Extra2,ReturnDate\n");
-
-            for (LibraryItem item : items) {
                 if (item instanceof Book) {
                     Book b = (Book) item;
-                    writer.append("Book,")
-                            .append(String.valueOf(b.getId())).append(",")
-                            .append(b.getTitle()).append(",")
-                            .append(b.getAuthor()).append(",")
-                            .append(String.valueOf(b.getPublicationYear())).append(",")
-                            .append(b.getStatus().name()).append(",")
-                            .append(b.getGenre()).append(",")
-                            .append(String.valueOf(b.getPages())).append(",")
-                            .append(b.getReturnTime() == null ? "" : b.getReturnTime())
-                            .append("\n");
+                    sb.append("Book").append(",");
+                    sb.append(b.getId()).append(",");
+                    sb.append(b.getTitle()).append(",");
+                    sb.append(b.getAuthor()).append(",");
+                    sb.append(b.getPublicationYear()).append(",");
+                    sb.append(b.getStatus()).append(",");
+                    sb.append(b.getReturnTime() != null ? b.getReturnTime() : "").append(",");
+                    sb.append(b.getGenre()).append(",");
+                    sb.append(b.getPages());
 
                 } else if (item instanceof Magazine) {
                     Magazine m = (Magazine) item;
-                    writer.append("Magazine,")
-                            .append(String.valueOf(m.getId())).append(",")
-                            .append(m.getTitle()).append(",")
-                            .append(m.getAuthor()).append(",")
-                            .append(String.valueOf(m.getPublicationYear())).append(",")
-                            .append(m.getStatus().name()).append(",")
-                            .append(m.getPublisher()).append(",")
-                            .append(String.valueOf(m.getIssue())).append(",")
-                            .append(m.getReturnTime() == null ? "" : m.getReturnTime())
-                            .append("\n");
+                    sb.append("Magazine").append(",");
+                    sb.append(m.getId()).append(",");
+                    sb.append(m.getTitle()).append(",");
+                    sb.append(m.getAuthor()).append(",");
+                    sb.append(m.getPublicationYear()).append(",");
+                    sb.append(m.getStatus()).append(",");
+                    sb.append(m.getReturnTime() != null ? m.getReturnTime() : "").append(",");
+                    sb.append(m.getPublisher()).append(",");
+                    sb.append(m.getIssue());
 
                 } else if (item instanceof ReferenceBook) {
                     ReferenceBook r = (ReferenceBook) item;
-                    writer.append("ReferenceBook,")
-                            .append(String.valueOf(r.getId())).append(",")
-                            .append(r.getTitle()).append(",")
-                            .append(r.getAuthor()).append(",")
-                            .append(String.valueOf(r.getPublicationYear())).append(",")
-                            .append(r.getStatus().name()).append(",")
-                            .append(r.getSubject()).append(",")
-                            .append(r.getEdition()).append(",")
-                            .append(r.getReturnTime() == null ? "" : r.getReturnTime())
-                            .append("\n");
+                    sb.append("ReferenceBook").append(",");
+                    sb.append(r.getId()).append(",");
+                    sb.append(r.getTitle()).append(",");
+                    sb.append(r.getAuthor()).append(",");
+                    sb.append(r.getPublicationYear()).append(",");
+                    sb.append(r.getStatus()).append(",");
+                    sb.append(r.getReturnTime() != null ? r.getReturnTime() : "").append(",");
+                    sb.append(r.getSubject()).append(",");
+                    sb.append(r.getEdition());
 
                 } else if (item instanceof Thesis) {
                     Thesis t = (Thesis) item;
-                    writer.append("Thesis,")
-                            .append(String.valueOf(t.getId())).append(",")
-                            .append(t.getTitle()).append(",")
-                            .append(t.getAuthor()).append(",")
-                            .append(String.valueOf(t.getPublicationYear())).append(",")
-                            .append(t.getStatus().name()).append(",")
-                            .append(t.getReturnTime() == null ? "" : t.getReturnTime()).append(",")
-                            .append(t.getUniversity()).append(",")
-                            .append(t.getSupervisor())
-                            .append("\n");
+                    sb.append("Thesis").append(",");
+                    sb.append(t.getId()).append(",");
+                    sb.append(t.getTitle()).append(",");
+                    sb.append(t.getAuthor()).append(",");
+                    sb.append(t.getPublicationYear()).append(",");
+                    sb.append(t.getStatus()).append(",");
+                    sb.append(t.getReturnTime() != null ? t.getReturnTime() : "").append(",");
+                    sb.append(t.getUniversity()).append(",");
+                    sb.append(t.getSupervisor());
                 }
+
+                bw.write(sb.toString());
+                bw.newLine();
             }
 
-            System.out.println("✅ Data successfully saved to CSV file: " + fileName);
-
         } catch (IOException e) {
-            System.err.println("❌ Failed to save CSV: " + e.getMessage());
+            System.err.println("Error writing CSV file: " + e.getMessage());
         }
     }
 
