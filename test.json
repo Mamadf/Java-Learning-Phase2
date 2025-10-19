@@ -85,5 +85,29 @@
       "publicationYear": 2018,
       "status": "EXIST"
     }
+  },
+  {
+    "type": "Magazine",
+    "data": {
+      "publisher": "fasda",
+      "issue": 2,
+      "id": 8,
+      "title": "fadsf",
+      "author": "sdfa",
+      "publicationYear": 2011,
+      "status": "BORROWED"
+    }
+  },
+  {
+    "type": "Thesis",
+    "data": {
+      "university": "fafa",
+      "supervisor": "fadfa",
+      "id": 9,
+      "title": "fadsfa",
+      "author": "fadfa",
+      "publicationYear": 2013,
+      "status": "BORROWED"
+    }
   }
 ]

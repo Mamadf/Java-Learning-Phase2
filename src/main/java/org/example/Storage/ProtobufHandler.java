@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ProtobufHandler {
+public class ProtobufHandler implements StorageHandler {
     private final LibraryData library;
     private LibraryManagerService libraryManagerService;
 
@@ -17,7 +17,8 @@ public class ProtobufHandler {
         this.libraryManagerService = new LibraryManagerService(library);
     }
 
-    public void saveToProto(String fileName) {
+    @Override
+    public void saveData(String fileName) {
         try (FileOutputStream output = new FileOutputStream(fileName)) {
             LibraryOuterClass.Library.Builder libraryBuilder = LibraryOuterClass.Library.newBuilder();
 
@@ -80,7 +81,8 @@ public class ProtobufHandler {
         }
     }
 
-    public void loadFromProto(String fileName) {
+    @Override
+    public void loadData(String fileName) {
         try (FileInputStream input = new FileInputStream(fileName)) {
             LibraryOuterClass.Library protoLib = LibraryOuterClass.Library.parseFrom(input);
             for (LibraryOuterClass.LibraryItem item : protoLib.getItemsList()) {

@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class LibraryJsonHandler {
+public class LibraryJsonHandler implements StorageHandler {
     private LibraryData library;
     private LibraryManagerService libraryManagerService;
 
@@ -19,7 +19,8 @@ public class LibraryJsonHandler {
         this.libraryManagerService = new LibraryManagerService(library);
     }
 
-    public void saveToJson(String fileName) {
+    @Override
+    public void saveData(String fileName) {
         try (FileWriter writer = new FileWriter(fileName)) {
             JsonArray jsonArray = new JsonArray();
             for (LibraryItem item : library.getItems()) {
@@ -34,7 +35,8 @@ public class LibraryJsonHandler {
         }
     }
 
-    public void loadFromJson(String fileName) {
+    @Override
+    public void loadData(String fileName) {
         try (FileReader reader = new FileReader(fileName)) {
             JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
             library.getItems().clear();
