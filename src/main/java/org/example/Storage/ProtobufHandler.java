@@ -88,20 +88,29 @@ public class ProtobufHandler implements StorageHandler {
             for (LibraryOuterClass.LibraryItem item : protoLib.getItemsList()) {
                 if (item.hasBook()) {
                     LibraryOuterClass.Book b = item.getBook();
-                    libraryManagerService.addItem(new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
-                            ItemStatus.valueOf(b.getStatus().name()), b.getGenre(), b.getPages()));
+                    Book book = new Book(b.getTitle(), b.getAuthor(), b.getPublicationYear(),
+                            ItemStatus.valueOf(b.getStatus().name()), b.getGenre(), b.getPages());
+                    libraryManagerService.addItem(book);
+                    if (!b.getReturnDate().isEmpty()) book.setReturnTime(b.getReturnDate());
+
                 } else if (item.hasMagazine()) {
                     LibraryOuterClass.Magazine m = item.getMagazine();
-                    libraryManagerService.addItem(new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
-                            ItemStatus.valueOf(m.getStatus().name()), m.getPublisher(), m.getIssueNumber()));
+                    Magazine magazine = new Magazine(m.getTitle(), m.getAuthor(), m.getPublicationYear(),
+                            ItemStatus.valueOf(m.getStatus().name()), m.getPublisher(), m.getIssueNumber());
+                    libraryManagerService.addItem(magazine);
+                    if (!m.getReturnDate().isEmpty()) magazine.setReturnTime(m.getReturnDate());
                 } else if (item.hasReferenceBook()) {
                     LibraryOuterClass.ReferenceBook r = item.getReferenceBook();
-                    libraryManagerService.addItem(new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
-                            ItemStatus.valueOf(r.getStatus().name()), r.getSubject(), r.getEdition()));
+                    ReferenceBook referenceBook = new ReferenceBook(r.getTitle(), r.getAuthor(), r.getPublicationYear(),
+                            ItemStatus.valueOf(r.getStatus().name()), r.getSubject(), r.getEdition());
+                    libraryManagerService.addItem(referenceBook);
+                    if (!r.getReturnDate().isEmpty()) referenceBook.setReturnTime(r.getReturnDate());
                 } else if (item.hasThesis()) {
                     LibraryOuterClass.Thesis t = item.getThesis();
-                    libraryManagerService.addItem(new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
-                            ItemStatus.valueOf(t.getStatus().name()), t.getUniversity(), t.getSupervisor()));
+                    Thesis thesis = new Thesis(t.getTitle(), t.getAuthor(), t.getPublicationYear(),
+                            ItemStatus.valueOf(t.getStatus().name()), t.getUniversity(), t.getSupervisor());
+                    libraryManagerService.addItem(thesis);
+                    if (!t.getReturnDate().isEmpty()) thesis.setReturnTime(t.getReturnDate());
                 }
             }
 
