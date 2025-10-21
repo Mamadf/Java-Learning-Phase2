@@ -1,5 +1,6 @@
 package org.example.Config;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Factory.StorageFactory;
 import org.example.Repository.LibraryData;
 import org.example.Service.*;
@@ -26,7 +27,7 @@ public class AppConfig {
                 props.load(input);
             }
         } catch (IOException e) {
-            System.out.println("Could not load config.properties: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
 
 

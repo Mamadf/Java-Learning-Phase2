@@ -1,6 +1,7 @@
 package org.example.Storage;
 
 import com.google.gson.*;
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Repository.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryManagerService;
@@ -31,7 +32,7 @@ public class LibraryJsonHandler implements StorageHandler {
             }
             new GsonBuilder().setPrettyPrinting().create().toJson(jsonArray, writer);
         } catch (IOException e) {
-            e.printStackTrace();
+            GlobalExceptionHandler.handle(e);
         }
     }
 
@@ -71,9 +72,9 @@ public class LibraryJsonHandler implements StorageHandler {
             }
             LibraryItem.setCounter(library.getItems().size()+1);
         } catch (FileNotFoundException e) {
-            System.out.println("No existing library file found — starting new library.");
+            GlobalExceptionHandler.handle(e);
         } catch (IOException e) {
-            System.err.println("Error reading library: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
     }
 }

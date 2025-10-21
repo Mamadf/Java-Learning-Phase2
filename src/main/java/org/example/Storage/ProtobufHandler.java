@@ -1,5 +1,6 @@
 package org.example.Storage;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Repository.LibraryData;
 import org.example.Model.*;
 import org.example.Service.LibraryManagerService;
@@ -77,7 +78,7 @@ public class ProtobufHandler implements StorageHandler {
             libraryBuilder.build().writeTo(output);
 
         } catch (IOException e) {
-            System.err.println("Failed to save library: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
     }
 
@@ -115,7 +116,7 @@ public class ProtobufHandler implements StorageHandler {
             }
 
         } catch (IOException e) {
-            System.err.println("Could not load library: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
     }
 }

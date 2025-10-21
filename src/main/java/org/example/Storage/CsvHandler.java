@@ -1,5 +1,6 @@
 package org.example.Storage;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Model.*;
 import org.example.Repository.LibraryData;
 import org.example.Service.LibraryManagerService;
@@ -81,13 +82,12 @@ public class CsvHandler implements  StorageHandler {
                     }
 
                 } catch (Exception e) {
-                    System.err.println("Error parsing line: " + line);
-                    e.printStackTrace();
+                    GlobalExceptionHandler.handle(e);
                 }
             }
 
         } catch (IOException e) {
-            System.err.println("Could not read file: " + filename);
+            GlobalExceptionHandler.handle(e);
         }
     }
 
@@ -95,7 +95,6 @@ public class CsvHandler implements  StorageHandler {
     @Override
     public void saveData(String filename) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            // Write header
             bw.write("Type,Id,Title,Author,PublicationYear,Status,ReturnDate,Extra1,Extra2");
             bw.newLine();
 
@@ -156,7 +155,7 @@ public class CsvHandler implements  StorageHandler {
             }
 
         } catch (IOException e) {
-            System.err.println("Error writing CSV file: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
     }
 
@@ -174,12 +173,12 @@ public class CsvHandler implements  StorageHandler {
                             .append(String.valueOf(item.getStatus()))
                             .append("\n");
                 } catch (Exception e) {
-                    System.err.println("Error writing item: " + item + " -> " + e.getMessage());
+                    GlobalExceptionHandler.handle(e);
                 }
             }
 
         } catch (IOException e) {
-            System.err.println("Error writing to Log.csv: " + e.getMessage());
+            GlobalExceptionHandler.handle(e);
         }
     }
 }

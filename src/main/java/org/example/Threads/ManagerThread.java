@@ -1,6 +1,7 @@
 package org.example.Threads;
 
 import org.example.Config.AppConfig;
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Service.LibraryLoanService;
 import org.example.Storage.ProtobufHandler;
 
@@ -42,7 +43,7 @@ public class ManagerThread extends Thread {
                 }
             }
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            GlobalExceptionHandler.handle(e);
         }
     }
 }
