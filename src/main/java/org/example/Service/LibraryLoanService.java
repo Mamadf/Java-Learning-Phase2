@@ -18,7 +18,7 @@ public class LibraryLoanService {
         items = library.getItems();
         itemById = library.getItemById();
     }
-    public void printBorrowedItems() {
+    public synchronized void printBorrowedItems() {
         for (LibraryItem item : items) {
             if (item.getStatus() == ItemStatus.BORROWED) {
                 item.display();
@@ -26,60 +26,66 @@ public class LibraryLoanService {
         }
     }
     public LibraryItem borrowItem(int id) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (item.getStatus() == ItemStatus.EXIST) {
-                item.setStatus(ItemStatus.BORROWED);
-                System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
-            } else if(item.getStatus() == ItemStatus.BORROWED) {
-                System.out.println("Item is already borrowed.");
+        synchronized (library) {
+            LibraryItem item = itemById.get(id);
+            if (item != null) {
+                if (item.getStatus() == ItemStatus.EXIST) {
+                    item.setStatus(ItemStatus.BORROWED);
+                    System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
+                } else if (item.getStatus() == ItemStatus.BORROWED) {
+                    System.out.println("Item is already borrowed.");
+                    return null;
+                } else {
+                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                }
+            } else {
+                System.out.println("Item not found.");
                 return null;
-            }else {
-                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
-        } else {
-            System.out.println("Item not found.");
-            return null;
+            return item;
         }
-        return item;
     }
 
     public LibraryItem returnItem(int id) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (item.getStatus() == ItemStatus.BORROWED) {
-                item.setStatus(ItemStatus.EXIST);
-                item.setReturnTime(LocalDate.now().toString());
-                System.out.println("Item '" + item.getTitle() + "' returned successfully.");
-            } else if(item.getStatus() == ItemStatus.EXIST) {
-                System.out.println("Item was not borrowed.");
+        synchronized (library) {
+            LibraryItem item = itemById.get(id);
+            if (item != null) {
+                if (item.getStatus() == ItemStatus.BORROWED) {
+                    item.setStatus(ItemStatus.EXIST);
+                    item.setReturnTime(LocalDate.now().toString());
+                    System.out.println("Item '" + item.getTitle() + "' returned successfully.");
+                } else if (item.getStatus() == ItemStatus.EXIST) {
+                    System.out.println("Item was not borrowed.");
+                    return null;
+                } else {
+                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                }
+            } else {
+                System.out.println("Item not found.");
                 return null;
-            }else {
-                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
-        } else {
-            System.out.println("Item not found.");
-            return null;
+            return item;
         }
-        return item;
     }
 
     public LibraryItem editReturnTime(int id , String date) {
-        LibraryItem item = itemById.get(id);
-        if (item != null) {
-            if (item.getStatus() == ItemStatus.EXIST) {
-                item.setReturnTime(date);
-                System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
-            } else if(item.getStatus() == ItemStatus.BORROWED) {
-                System.out.println("Item is borrowed, you can't change return time");
+        synchronized (library) {
+            LibraryItem item = itemById.get(id);
+            if (item != null) {
+                if (item.getStatus() == ItemStatus.EXIST) {
+                    item.setReturnTime(date);
+                    System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
+                } else if (item.getStatus() == ItemStatus.BORROWED) {
+                    System.out.println("Item is borrowed, you can't change return time");
+                    return null;
+                } else {
+                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                }
+            } else {
+                System.out.println("Item not found.");
                 return null;
-            }else{
-                System.out.println("Item '" + item.getTitle() + "' is banned.");
             }
-        } else {
-            System.out.println("Item not found.");
-            return null;
+            return item;
         }
-        return item;
     }
 }
