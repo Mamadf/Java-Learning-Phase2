@@ -23,26 +23,30 @@ public class ManagerThread extends Thread {
         try {
             boolean running = true;
             while (running) {
-                String request = requestQueue.take();
-                if (request.equals("exit")) {
-                    appConfig.saveData();
-                    running = false;
-                    continue;
-                }
-                String[] parts = request.split(":");
-                int id = Integer.parseInt(parts[0]);
-                String action = parts[1];
+                try {
+                    String request = requestQueue.take();
+                    if (request.equals("exit")) {
+                        appConfig.saveData();
+                        running = false;
+                        continue;
+                    }
+                    String[] parts = request.split(":");
+                    int id = Integer.parseInt(parts[0]);
+                    String action = parts[1];
 
-                switch (action) {
-                    case "borrow" :
-                        loanService.borrowItem(id);
-                        break;
-                    case "return" :
-                        loanService.returnItem(id);
-                        break;
+                    switch (action) {
+                        case "borrow":
+                            loanService.borrowItem(id);
+                            break;
+                        case "return":
+                            loanService.returnItem(id);
+                            break;
+                    }
+                }catch (Exception e){
+                    GlobalExceptionHandler.handle(e);
                 }
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             GlobalExceptionHandler.handle(e);
         }
     }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class GlobalExceptionHandler {
 
-    public static void handle(Exception e) {
+    public static void handle(Throwable e) {
         if (e instanceof NumberFormatException) {
             System.out.println("❌ Invalid number! Please enter an integer.");
         } else if (e instanceof IllegalArgumentException) {

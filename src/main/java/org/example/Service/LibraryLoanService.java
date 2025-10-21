@@ -18,10 +18,12 @@ public class LibraryLoanService {
         items = library.getItems();
         itemById = library.getItemById();
     }
-    public synchronized void printBorrowedItems() {
-        for (LibraryItem item : items) {
-            if (item.getStatus() == ItemStatus.BORROWED) {
-                item.display();
+    public void printBorrowedItems() {
+        synchronized (library) {
+            for (LibraryItem item : items) {
+                if (item.getStatus() == ItemStatus.BORROWED) {
+                    item.display();
+                }
             }
         }
     }
