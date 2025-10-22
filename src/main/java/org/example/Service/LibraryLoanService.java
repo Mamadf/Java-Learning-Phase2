@@ -7,8 +7,11 @@ import org.example.Model.LibraryItem;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class LibraryLoanService {
+    private static final Logger logger = Logger.getLogger(LibraryLoanService.class.getName());
+
     private LibraryData library;
 
     private List<LibraryItem> items;
@@ -33,12 +36,12 @@ public class LibraryLoanService {
             if (item != null) {
                 if (item.getStatus() == ItemStatus.EXIST) {
                     item.setStatus(ItemStatus.BORROWED);
-                    System.out.println("Item '" + item.getTitle() + "' borrowed successfully.");
+                    logger.info("Item '" + item.getTitle() + "' borrowed successfully.");
                 } else if (item.getStatus() == ItemStatus.BORROWED) {
-                    System.out.println("Item is already borrowed.");
+                    logger.warning("Item is already borrowed.");
                     return null;
                 } else {
-                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                    logger.warning("Item '" + item.getTitle() + "' is banned.");
                 }
             } else {
                 System.out.println("Item not found.");
@@ -55,12 +58,12 @@ public class LibraryLoanService {
                 if (item.getStatus() == ItemStatus.BORROWED) {
                     item.setStatus(ItemStatus.EXIST);
                     item.setReturnTime(LocalDate.now().toString());
-                    System.out.println("Item '" + item.getTitle() + "' returned successfully.");
+                    logger.info("Item '" + item.getTitle() + "' returned successfully.");
                 } else if (item.getStatus() == ItemStatus.EXIST) {
-                    System.out.println("Item was not borrowed.");
+                    logger.warning("Item was not borrowed.");
                     return null;
                 } else {
-                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                    logger.warning("Item '" + item.getTitle() + "' is banned.");
                 }
             } else {
                 System.out.println("Item not found.");
@@ -76,12 +79,12 @@ public class LibraryLoanService {
             if (item != null) {
                 if (item.getStatus() == ItemStatus.EXIST) {
                     item.setReturnTime(date);
-                    System.out.println("Item '" + item.getTitle() + "' return time has been set successfully.");
+                    logger.info("Item '" + item.getTitle() + "' return time has been set successfully.");
                 } else if (item.getStatus() == ItemStatus.BORROWED) {
-                    System.out.println("Item is borrowed, you can't change return time");
+                    logger.warning("Item is borrowed, you can't change return time");
                     return null;
                 } else {
-                    System.out.println("Item '" + item.getTitle() + "' is banned.");
+                    logger.warning("Item '" + item.getTitle() + "' is banned.");
                 }
             } else {
                 System.out.println("Item not found.");

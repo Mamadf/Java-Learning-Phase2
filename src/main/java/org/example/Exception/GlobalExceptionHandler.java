@@ -2,25 +2,27 @@ package org.example.Exception;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class GlobalExceptionHandler {
+    private static final Logger logger = Logger.getLogger(GlobalExceptionHandler.class.getName());
 
     public static void handle(Throwable e) {
         if (e instanceof NumberFormatException) {
-            System.out.println("❌ Invalid number! Please enter an integer.");
+            logger.warning("❌ Invalid number! Please enter an integer.");
         } else if (e instanceof IllegalArgumentException) {
-            System.out.println(e.getMessage());
+            logger.warning(e.getMessage());
         } else if (e instanceof NullPointerException) {
-            System.out.println("❌ Something went wrong (missing value).");
+            logger.severe("❌ Something went wrong (missing value).");
         }else if(e instanceof FileNotFoundException){
-            System.out.println("❌ No existing library file found — starting new library.");
+            logger.info("No existing library file found — starting new library.");
         }else if (e instanceof IOException) {
-            System.out.println("❌ File error: " + e.getMessage());
+            logger.severe("❌ File error: " + e.getMessage());
         } else if (e instanceof InterruptedException) {
-            System.out.println("❌ Thread interrupted: " + e.getMessage());
+            logger.warning("❌ Thread interrupted: " + e.getMessage());
             Thread.currentThread().interrupt();
         } else {
-            System.out.println("❌ Unexpected error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            logger.severe("❌ Unexpected error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
     }
 

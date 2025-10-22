@@ -8,13 +8,16 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
 
 
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
 
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            System.err.println("Unhandled exception in thread " + t.getName());
+            logger.severe("Unhandled exception in thread " + t.getName());
             GlobalExceptionHandler.handle(e);
         });
         AppConfig config = new AppConfig();

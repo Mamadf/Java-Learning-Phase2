@@ -8,6 +8,7 @@ import org.example.Storage.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class AppConfig {
 
@@ -18,11 +19,13 @@ public class AppConfig {
     private final String storageType;
     private final String storagePath;
 
+    private static final Logger logger = Logger.getLogger(AppConfig.class.getName());
+
     public AppConfig() {
         Properties props = new Properties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                System.out.println("Could not find config.properties in resources folder.");
+                logger.warning("Could not find config.properties in resources folder.");
             } else {
                 props.load(input);
             }
