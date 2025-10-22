@@ -1,17 +1,34 @@
 package org.example.Service;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
+import org.example.Service.SearchStrategies.SearchStrategy;
 
 import java.util.*;
 
 public class LibraryManagerService {
     private final LibraryData libraryData;
+    private SearchStrategy searchStrategy;
+
 
     public LibraryManagerService(LibraryData libraryData) {
         this.libraryData = libraryData;
     }
 
+
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy;
+    }
+
+    public List<LibraryItem> search(String query) {
+        try{
+            return searchStrategy.search(query);
+        }catch (NullPointerException e){
+            GlobalExceptionHandler.handle(e);
+            return null;
+        }
+    }
     public void addItem(LibraryItem item) {
         synchronized (libraryData) {
             libraryData.getItems().add(item);
@@ -34,32 +51,6 @@ public class LibraryManagerService {
     public LibraryItem searchById(int id) {
         synchronized (libraryData) {
             return libraryData.getItemById().get(id);
-        }
-    }
-
-    public List<LibraryItem> searchByTitle(String title) {
-        synchronized(libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
-                if (item.getTitle().equalsIgnoreCase(title)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
-        }
-    }
-
-    public  List<LibraryItem> searchByAuthor(String author) {
-        synchronized (libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
-                if (item.getAuthor().equalsIgnoreCase(author)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
         }
     }
 

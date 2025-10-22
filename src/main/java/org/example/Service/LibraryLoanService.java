@@ -21,15 +21,7 @@ public class LibraryLoanService {
         items = library.getItems();
         itemById = library.getItemById();
     }
-    public void printBorrowedItems() {
-        synchronized (library) {
-            for (LibraryItem item : items) {
-                if (item.getStatus() == ItemStatus.BORROWED) {
-                    item.display();
-                }
-            }
-        }
-    }
+
     public LibraryItem borrowItem(int id) {
         synchronized (library) {
             LibraryItem item = itemById.get(id);

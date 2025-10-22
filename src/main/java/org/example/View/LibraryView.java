@@ -2,9 +2,14 @@ package org.example.View;
 
 import org.example.Factory.LibraryItemFactory;
 import org.example.Factory.LibraryItemFactoryProducer;
+import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Service.LibraryManagerService;
 import org.example.Service.LibraryLoanService;
+import org.example.Service.SearchStrategies.AuthorSearchStrategy;
+import org.example.Service.SearchStrategies.PublicationYearSearch;
+import org.example.Service.SearchStrategies.StatusSearchStrategy;
+import org.example.Service.SearchStrategies.TitleSearchStrategy;
 import org.example.Storage.CsvHandler;
 import org.example.utils.CheckValidation;
 
@@ -84,7 +89,8 @@ public class LibraryView {
     public void titleSearch(Scanner scanner) {
         System.out.println("Enter title: ");
         String title = CheckValidation.getNonEmptyString(scanner);
-        List<LibraryItem> searchRes = managerService.searchByTitle(title);
+        managerService.setSearchStrategy(new TitleSearchStrategy());
+        List<LibraryItem> searchRes = managerService.search(title);
         if(!searchRes.isEmpty()) {
             CsvHandler.writeLibrary("search by title", searchRes);
         }else {
@@ -94,21 +100,54 @@ public class LibraryView {
     public void authorSearch(Scanner scanner) {
         System.out.println("Enter Author: ");
         String author = CheckValidation.getNonEmptyString(scanner);
-        List<LibraryItem> searchResult = managerService.searchByAuthor(author);
-        if(!searchResult.isEmpty()) {
-            CsvHandler.writeLibrary("search by author", searchResult);
+        managerService.setSearchStrategy(new AuthorSearchStrategy());
+        List<LibraryItem> searchRes = managerService.search(author);
+        if(!searchRes.isEmpty()) {
+            CsvHandler.writeLibrary("search by author", searchRes);
         }else {
             System.out.println("❌ Author not found");
         }
     }
 
+
+    public void yearSearch(Scanner scanner) {
+        System.out.println("Enter Publication Year: ");
+        int year = CheckValidation.getValidInt(scanner);
+        managerService.setSearchStrategy(new PublicationYearSearch());
+        List<LibraryItem> searchRes = managerService.search(String.valueOf(year));
+        if(!searchRes.isEmpty()) {
+            CsvHandler.writeLibrary("search by year", searchRes);
+        }else {
+            System.out.println("❌ There is no Item in this year");
+        }
+    }
+
+
+    public void statusSearch(Scanner scanner) {
+        boolean running = true;
+        String itemStatus = null;
+        while (running) {
+            System.out.print("Enter item status (EXIST / BORROWED / BANNED): ");
+            itemStatus = scanner.nextLine().trim().toUpperCase();
+            if(CheckValidation.isValidItemStatus(itemStatus)){
+                running = false;
+            }else {
+                System.out.println("❌ Invalid status! Please enter one of: EXIST, BORROWED, BANNED");
+
+            }
+        }
+        managerService.setSearchStrategy(new StatusSearchStrategy());
+        List<LibraryItem> searchRes = managerService.search(itemStatus);
+        if(!searchRes.isEmpty()) {
+            CsvHandler.writeLibrary("search by author", searchRes);
+        }else {
+            System.out.println("❌ There is no Item with this status");
+        }
+    }
     public void sort() {
         managerService.sortByPublicationYear();
     }
 
-    public void showBorrowedItems() {
-        loanService.printBorrowedItems();
-    }
 
     public void help() {
         System.out.println(
@@ -123,6 +162,8 @@ public class LibraryView {
                         "return time      → Update the return time for a existing item\n" +
                         "search by title  → Search items by title\n" +
                         "search by author → Search items by author\n" +
+                        "search by year   → Search items by publication year\n" +
+                        "search by status → Search items by status(exist, borrowed, banned)\n" +
                         "sort             → Sort all items by publication year\n" +
                         "borrowed item    → Show all borrowed items\n" +
                         "help             → Show this help message\n" +
@@ -131,4 +172,5 @@ public class LibraryView {
                         "Tip: Type command names exactly as shown above."
         );
     }
+
 }
