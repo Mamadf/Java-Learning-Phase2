@@ -1,6 +1,8 @@
 package org.example.Service;
 
 import org.example.Model.ItemStatus;
+import org.example.Observer.Notifier;
+import org.example.Observer.User;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
 
@@ -50,7 +52,10 @@ public class LibraryLoanService {
                 if (item.getStatus() == ItemStatus.BORROWED) {
                     item.setStatus(ItemStatus.EXIST);
                     item.setReturnTime(LocalDate.now().toString());
+                    Notifier notifier = new Notifier();
+                    notifier.notifyObservers("Item '" + item.getTitle() + "' returned successfully.");
                     logger.info("Item '" + item.getTitle() + "' returned successfully.");
+
                 } else if (item.getStatus() == ItemStatus.EXIST) {
                     logger.warning("Item was not borrowed.");
                     return null;
