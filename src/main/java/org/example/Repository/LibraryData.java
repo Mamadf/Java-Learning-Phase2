@@ -4,13 +4,14 @@ import org.example.Model.LibraryItem;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LibraryData {
     private List<LibraryItem> items;
     private Map<Integer, LibraryItem> itemById;
 
     public LibraryData() {
-        items = new ArrayList<>();
+        items = new CopyOnWriteArrayList<>();
         itemById = new ConcurrentHashMap<>();
     }
 

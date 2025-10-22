@@ -1,5 +1,7 @@
 package org.example.utils;
 
+import org.example.Exception.GlobalExceptionHandler;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -14,7 +16,7 @@ public class CheckValidation {
                 String input = scanner.nextLine().trim();
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("❌ Invalid number! Please enter an integer.");
+                GlobalExceptionHandler.handle(e);
             }
         }
     }

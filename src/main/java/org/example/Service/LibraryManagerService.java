@@ -13,53 +13,67 @@ public class LibraryManagerService {
     }
 
     public void addItem(LibraryItem item) {
-        libraryData.getItems().add(item);
-        libraryData.getItemById().put(item.getId(), item);
+        synchronized (libraryData) {
+            libraryData.getItems().add(item);
+            libraryData.getItemById().put(item.getId(), item);
+        }
     }
 
     public LibraryItem deleteItem(int id) {
-        LibraryItem item = libraryData.getItemById().remove(id);
-        if (item != null) {
-            libraryData.getItems().remove(item);
-        } else {
-            System.out.println("Item not found.");
+        synchronized (libraryData) {
+            LibraryItem item = libraryData.getItemById().remove(id);
+            if (item != null) {
+                libraryData.getItems().remove(item);
+            } else {
+                System.out.println("Item not found.");
+            }
+            return item;
         }
-        return item;
     }
 
     public LibraryItem searchById(int id) {
-        return libraryData.getItemById().get(id);
+        synchronized (libraryData) {
+            return libraryData.getItemById().get(id);
+        }
     }
 
     public List<LibraryItem> searchByTitle(String title) {
-        List<LibraryItem> result = new ArrayList<>();
-        for (LibraryItem item : libraryData.getItems()) {
-            if (item.getTitle().equalsIgnoreCase(title)) {
-                item.display();
-                result.add(item);
+        synchronized(libraryData) {
+            List<LibraryItem> result = new ArrayList<>();
+            for (LibraryItem item : libraryData.getItems()) {
+                if (item.getTitle().equalsIgnoreCase(title)) {
+                    item.display();
+                    result.add(item);
+                }
             }
+            return result;
         }
-        return result;
     }
 
-    public List<LibraryItem> searchByAuthor(String author) {
-        List<LibraryItem> result = new ArrayList<>();
-        for (LibraryItem item : libraryData.getItems()) {
-            if (item.getAuthor().equalsIgnoreCase(author)) {
-                item.display();
-                result.add(item);
+    public  List<LibraryItem> searchByAuthor(String author) {
+        synchronized (libraryData) {
+            List<LibraryItem> result = new ArrayList<>();
+            for (LibraryItem item : libraryData.getItems()) {
+                if (item.getAuthor().equalsIgnoreCase(author)) {
+                    item.display();
+                    result.add(item);
+                }
             }
+            return result;
         }
-        return result;
     }
 
     public void sortByPublicationYear() {
-        libraryData.getItems().sort(Comparator.comparingInt(LibraryItem::getPublicationYear));
+        synchronized (libraryData) {
+            libraryData.getItems().sort(Comparator.comparingInt(LibraryItem::getPublicationYear));
+        }
     }
 
     public void printAll() {
-        for (LibraryItem item : libraryData.getItems()) {
-            item.display();
+        synchronized (libraryData) {
+            for (LibraryItem item : libraryData.getItems()) {
+                item.display();
+            }
         }
     }
 }

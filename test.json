@@ -87,14 +87,38 @@
     }
   },
   {
+    "type": "Magazine",
+    "data": {
+      "publisher": "fasda",
+      "issue": 2,
+      "id": 8,
+      "title": "fadsf",
+      "author": "sdfa",
+      "publicationYear": 2011,
+      "status": "BORROWED"
+    }
+  },
+  {
     "type": "Thesis",
     "data": {
-      "university": "faf",
-      "supervisor": "afd",
-      "id": 8,
-      "title": "fsaf",
-      "author": "afaf",
-      "publicationYear": 123,
+      "university": "fafa",
+      "supervisor": "fadfa",
+      "id": 9,
+      "title": "fadsfa",
+      "author": "fadfa",
+      "publicationYear": 2013,
+      "status": "BORROWED"
+    }
+  },
+  {
+    "type": "Book",
+    "data": {
+      "genre": "bfdg",
+      "pages": 33,
+      "id": 10,
+      "title": "fggrge",
+      "author": "grew",
+      "publicationYear": 2016,
       "status": "EXIST"
     }
   }

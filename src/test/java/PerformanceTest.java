@@ -1,9 +1,9 @@
-package org.example.Storage;
-
 import org.example.Model.ItemStatus;
 import org.example.Repository.LibraryData;
 import org.example.Model.Book;
 import org.example.Service.LibraryManagerService;
+import org.example.Storage.LibraryJsonHandler;
+import org.example.Storage.ProtobufHandler;
 
 import java.io.File;
 
@@ -28,13 +28,13 @@ public class PerformanceTest {
         ProtobufHandler protoHandler = new ProtobufHandler(library);
 
         long startJson = System.nanoTime();
-        jsonHandler.saveToJson("benchmark.json");
+        jsonHandler.saveData("benchmark.json");
         long endJson = System.nanoTime();
         long jsonTime = endJson - startJson;
         long jsonSize = new File("benchmark.json").length();
 
         long startProto = System.nanoTime();
-        protoHandler.saveToProto("benchmark.bin");
+        protoHandler.saveData("benchmark.bin");
         long endProto = System.nanoTime();
         long protoTime = endProto - startProto;
         long protoSize = new File("benchmark.bin").length();
@@ -47,11 +47,11 @@ public class PerformanceTest {
         System.out.println("PROTO File Size: " + protoSize + " bytes");
 
         long startJsonLoad = System.nanoTime();
-        jsonHandler.loadFromJson("benchmark.json");
+        jsonHandler.loadData("benchmark.json");
         long endJsonLoad = System.nanoTime();
 
         long startProtoLoad = System.nanoTime();
-        protoHandler.loadFromProto("benchmark.bin");
+        protoHandler.loadData("benchmark.bin");
         long endProtoLoad = System.nanoTime();
 
         System.out.printf("JSON Load Time: %.3f ms%n", (endJsonLoad - startJsonLoad) / 1_000_000.0);

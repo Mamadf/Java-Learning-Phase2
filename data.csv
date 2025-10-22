@@ -1,7 +1,5 @@
-Type,Title,Author,Year,Available,SpecificField1,SpecificField2
-Book,Java Basics,John Smith,2020,true,Programming,300
-Magazine,Science Today,Mary Editor,2023,false,Nature Pub,12
-Thesis,AI in Healthcare,Ali Reza,2022,false,Tehran Uni,Dr. Karimi
-Book,test,Ali Reza,2022,true,Tehran Uni,23
-Magazine,test,Reza,2018,true,Tehran Uni,1
-ReferenceBook,Oxford Dictionary,Oxford Press,2015,true,Language,13
+Type,Id,Title,Author,PublicationYear,Status,ReturnDate,Extra1,Extra2
+Magazine,1,National Geographic,Various,2020,BORROWED,2024-10-01,NatGeo,120
+ReferenceBook,2,Oxford Dictionary,Oxford Press,2015,BORROWED,2024-12-10,Language,13
+Thesis,3,faf,afadf,2012,BORROWED,,fadf,12
+Magazine,4,afda,afag,2012,EXIST,,fda,12

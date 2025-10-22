@@ -15,12 +15,11 @@ import java.util.regex.Pattern;
 public class LibraryView {
     private final LibraryManagerService managerService;
     private final LibraryLoanService loanService;
-    private CsvHandler csvHandler;
+
 
     public LibraryView(LibraryManagerService managerService, LibraryLoanService loanService) {
         this.managerService = managerService;
         this.loanService = loanService;
-        csvHandler = new CsvHandler();
     }
 
     public void addItem(Scanner scanner) {
@@ -53,7 +52,7 @@ public class LibraryView {
         int id = CheckValidation.getValidInt(scanner);
         LibraryItem removed = managerService.deleteItem(id);
         if (removed != null) {
-            csvHandler.writeLibrary("remove", List.of(removed));
+            CsvHandler.writeLibrary("remove", List.of(removed));
             System.out.println("✅ Item removed successfully!");
         }
     }
@@ -87,7 +86,7 @@ public class LibraryView {
         String title = CheckValidation.getNonEmptyString(scanner);
         List<LibraryItem> searchRes = managerService.searchByTitle(title);
         if(!searchRes.isEmpty()) {
-            csvHandler.writeLibrary("search by title", searchRes);
+            CsvHandler.writeLibrary("search by title", searchRes);
         }else {
             System.out.println("❌ Title not found");
         }
@@ -97,7 +96,7 @@ public class LibraryView {
         String author = CheckValidation.getNonEmptyString(scanner);
         List<LibraryItem> searchResult = managerService.searchByAuthor(author);
         if(!searchResult.isEmpty()) {
-            csvHandler.writeLibrary("search by author", searchResult);
+            CsvHandler.writeLibrary("search by author", searchResult);
         }else {
             System.out.println("❌ Author not found");
         }
