@@ -15,8 +15,8 @@ public class LibraryJsonHandler implements StorageHandler {
     private LibraryData library;
     private LibraryManagerService libraryManagerService;
 
-    public LibraryJsonHandler(LibraryData library) {
-        this.library = library;
+    public LibraryJsonHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 

@@ -13,8 +13,8 @@ public class ProtobufHandler implements StorageHandler {
     private final LibraryData library;
     private LibraryManagerService libraryManagerService;
 
-    public ProtobufHandler(LibraryData library) {
-        this.library = library;
+    public ProtobufHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 

@@ -15,8 +15,8 @@ public class CsvHandler implements  StorageHandler {
     private LibraryManagerService libraryManagerService;
 
 
-    public CsvHandler(LibraryData library) {
-        this.library = library;
+    public CsvHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 

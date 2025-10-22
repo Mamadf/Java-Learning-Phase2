@@ -36,19 +36,16 @@ public class AppConfig {
 
         this.storageType = props.getProperty("storage.type", "proto");
         this.storagePath = props.getProperty("storage.path", "library_data.bin");
-        this.libraryData = new LibraryData();
+        this.libraryData = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(libraryData);
         this.libraryLoanService = new LibraryLoanService(libraryData);
-        this.activeStorageHandler = StorageFactory.createStorageHandler(storageType, storagePath, libraryData);
+        this.activeStorageHandler = StorageFactory.createStorageHandler(storageType, storagePath);
     }
 
     public void saveData(){
         activeStorageHandler.saveData(storagePath);
     }
 
-    public LibraryData getLibraryData() {
-        return libraryData;
-    }
 
     public LibraryManagerService getLibraryManagerService() {
         return libraryManagerService;

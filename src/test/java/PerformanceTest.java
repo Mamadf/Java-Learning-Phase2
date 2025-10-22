@@ -11,7 +11,7 @@ public class PerformanceTest {
 
     public static void main(String[] args) {
 
-        LibraryData library = new LibraryData();
+        LibraryData library = LibraryData.getInstance();
         LibraryManagerService libraryManager = new LibraryManagerService(library);
         for (int i = 0; i < 1000; i++) {
             libraryManager.addItem(new Book(
@@ -24,8 +24,8 @@ public class PerformanceTest {
             ));
         }
 
-        LibraryJsonHandler jsonHandler = new LibraryJsonHandler(library);
-        ProtobufHandler protoHandler = new ProtobufHandler(library);
+        LibraryJsonHandler jsonHandler = new LibraryJsonHandler();
+        ProtobufHandler protoHandler = new ProtobufHandler();
 
         long startJson = System.nanoTime();
         jsonHandler.saveData("benchmark.json");
