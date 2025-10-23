@@ -97,8 +97,7 @@ public class CsvHandler implements  StorageHandler {
             for (LibraryItem item : library.getItems()) {
                 StringBuilder sb = new StringBuilder();
 
-                if (item instanceof Book) {
-                    Book b = (Book) item;
+                if (item instanceof Book b) {
                     sb.append("Book").append(",");
                     sb.append(b.getId()).append(",");
                     sb.append(b.getTitle()).append(",");
@@ -109,8 +108,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(b.getGenre()).append(",");
                     sb.append(b.getPages());
 
-                } else if (item instanceof Magazine) {
-                    Magazine m = (Magazine) item;
+                } else if (item instanceof Magazine m) {
                     sb.append("Magazine").append(",");
                     sb.append(m.getId()).append(",");
                     sb.append(m.getTitle()).append(",");
@@ -121,8 +119,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(m.getPublisher()).append(",");
                     sb.append(m.getIssue());
 
-                } else if (item instanceof ReferenceBook) {
-                    ReferenceBook r = (ReferenceBook) item;
+                } else if (item instanceof ReferenceBook r) {
                     sb.append("ReferenceBook").append(",");
                     sb.append(r.getId()).append(",");
                     sb.append(r.getTitle()).append(",");
@@ -133,8 +130,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(r.getSubject()).append(",");
                     sb.append(r.getEdition());
 
-                } else if (item instanceof Thesis) {
-                    Thesis t = (Thesis) item;
+                } else if (item instanceof Thesis t) {
                     sb.append("Thesis").append(",");
                     sb.append(t.getId()).append(",");
                     sb.append(t.getTitle()).append(",");
