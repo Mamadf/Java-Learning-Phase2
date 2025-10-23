@@ -43,7 +43,7 @@ public class LibraryView {
     public void updateItem(Scanner scanner) {
         System.out.print("Enter item ID to update: ");
         int id = CheckValidation.getValidInt(scanner);
-        LibraryItem item = managerService.searchById(id);
+        var item = managerService.searchById(id);
         if (item == null) {
             System.out.println("❌ Item not found!");
             return;
@@ -55,7 +55,7 @@ public class LibraryView {
     public void removeItem(Scanner scanner) {
         System.out.print("Enter item ID: ");
         int id = CheckValidation.getValidInt(scanner);
-        LibraryItem removed = managerService.deleteItem(id);
+        var removed = managerService.deleteItem(id);
         if (removed != null) {
             CsvHandler.writeLibrary("remove", List.of(removed));
             System.out.println("✅ Item removed successfully!");
@@ -90,7 +90,7 @@ public class LibraryView {
         System.out.println("Enter title: ");
         String title = CheckValidation.getNonEmptyString(scanner);
         managerService.setSearchStrategy(new TitleSearchStrategy());
-        List<LibraryItem> searchRes = managerService.search(title);
+        var searchRes = managerService.search(title);
         if(!searchRes.isEmpty()) {
             CsvHandler.writeLibrary("search by title", searchRes);
         }else {
@@ -101,7 +101,7 @@ public class LibraryView {
         System.out.println("Enter Author: ");
         String author = CheckValidation.getNonEmptyString(scanner);
         managerService.setSearchStrategy(new AuthorSearchStrategy());
-        List<LibraryItem> searchRes = managerService.search(author);
+        var searchRes = managerService.search(author);
         if(!searchRes.isEmpty()) {
             CsvHandler.writeLibrary("search by author", searchRes);
         }else {
@@ -114,7 +114,7 @@ public class LibraryView {
         System.out.println("Enter Publication Year: ");
         int year = CheckValidation.getValidInt(scanner);
         managerService.setSearchStrategy(new PublicationYearSearch());
-        List<LibraryItem> searchRes = managerService.search(String.valueOf(year));
+        var searchRes = managerService.search(String.valueOf(year));
         if(!searchRes.isEmpty()) {
             CsvHandler.writeLibrary("search by year", searchRes);
         }else {
@@ -137,7 +137,7 @@ public class LibraryView {
             }
         }
         managerService.setSearchStrategy(new StatusSearchStrategy());
-        List<LibraryItem> searchRes = managerService.search(itemStatus);
+        var searchRes = managerService.search(itemStatus);
         if(!searchRes.isEmpty()) {
             CsvHandler.writeLibrary("search by author", searchRes);
         }else {

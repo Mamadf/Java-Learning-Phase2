@@ -26,7 +26,7 @@ public class LibraryLoanService {
 
     public LibraryItem borrowItem(int id) {
         synchronized (library) {
-            LibraryItem item = itemById.get(id);
+            var item = itemById.get(id);
             if (item != null) {
                 if (item.getStatus() == ItemStatus.EXIST) {
                     item.setStatus(ItemStatus.BORROWED);
@@ -47,7 +47,7 @@ public class LibraryLoanService {
 
     public LibraryItem returnItem(int id) {
         synchronized (library) {
-            LibraryItem item = itemById.get(id);
+            var item = itemById.get(id);
             if (item != null) {
                 if (item.getStatus() == ItemStatus.BORROWED) {
                     item.setStatus(ItemStatus.EXIST);
@@ -72,7 +72,7 @@ public class LibraryLoanService {
 
     public LibraryItem editReturnTime(int id , String date) {
         synchronized (library) {
-            LibraryItem item = itemById.get(id);
+            var item = itemById.get(id);
             if (item != null) {
                 if (item.getStatus() == ItemStatus.EXIST) {
                     item.setReturnTime(date);

@@ -17,7 +17,7 @@ public class TitleSearchStrategy implements SearchStrategy{
     public List<LibraryItem> search(String title) {
         synchronized(libraryData) {
             List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
+            for (var item : libraryData.getItems()) {
                 if (item.getTitle().equalsIgnoreCase(title)) {
                     item.display();
                     result.add(item);

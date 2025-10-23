@@ -18,7 +18,7 @@ public class StatusSearchStrategy implements SearchStrategy {
     public List<LibraryItem> search(String query) {
         synchronized(libraryData) {
             List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
+            for (var item : libraryData.getItems()) {
                 if (item.getStatus() == ItemStatus.valueOf(query)) {
                     item.display();
                     result.add(item);

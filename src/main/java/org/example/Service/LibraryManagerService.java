@@ -38,7 +38,7 @@ public class LibraryManagerService {
 
     public LibraryItem deleteItem(int id) {
         synchronized (libraryData) {
-            LibraryItem item = libraryData.getItemById().remove(id);
+            var item = libraryData.getItemById().remove(id);
             if (item != null) {
                 libraryData.getItems().remove(item);
             } else {
@@ -62,7 +62,7 @@ public class LibraryManagerService {
 
     public void printAll() {
         synchronized (libraryData) {
-            for (LibraryItem item : libraryData.getItems()) {
+            for (var item : libraryData.getItems()) {
                 item.display();
             }
         }

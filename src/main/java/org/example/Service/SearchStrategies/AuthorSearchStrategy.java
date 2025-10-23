@@ -17,7 +17,7 @@ public class AuthorSearchStrategy implements SearchStrategy {
     public List<LibraryItem> search(String author) {
         synchronized (libraryData) {
             List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
+            for (var item : libraryData.getItems()) {
                 if (item.getAuthor().equalsIgnoreCase(author)) {
                     item.display();
                     result.add(item);

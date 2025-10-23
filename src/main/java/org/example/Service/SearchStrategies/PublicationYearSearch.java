@@ -17,7 +17,7 @@ public class PublicationYearSearch implements SearchStrategy{
     public List<LibraryItem> search(String year) {
         synchronized(libraryData) {
             List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
+            for (var item : libraryData.getItems()) {
                 if (item.getPublicationYear() == Integer.parseInt(year)) {
                     item.display();
                     result.add(item);
