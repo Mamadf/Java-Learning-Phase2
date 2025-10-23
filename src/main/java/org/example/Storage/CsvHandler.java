@@ -51,33 +51,29 @@ public class CsvHandler implements  StorageHandler {
                     String extra2 = values.length > 8 ? values[8].trim() : "";
 
                     switch (type) {
-                        case "Book": {
+                        case "Book"-> {
                             int pages = extra2.isEmpty() ? 0 : Integer.parseInt(extra2);
                             Book book = new Book( title, author, publicationYear, status, extra1, pages);
                             if (!returnDate.isEmpty()) book.setReturnTime(returnDate);
                             libraryManagerService.addItem(book);
-                            break;
                         }
-                        case "Magazine": {
+                        case "Magazine"-> {
                             int issue = extra2.isEmpty() ? 0 : Integer.parseInt(extra2);
                             Magazine magazine = new Magazine( title, author, publicationYear, status, extra1, issue);
                             if (!returnDate.isEmpty()) magazine.setReturnTime(returnDate);
                             libraryManagerService.addItem(magazine);
-                            break;
                         }
-                        case "ReferenceBook": {
+                        case "ReferenceBook"-> {
                             ReferenceBook ref = new ReferenceBook( title, author, publicationYear, status, extra1, extra2);
                             if (!returnDate.isEmpty()) ref.setReturnTime(returnDate);
                             libraryManagerService.addItem(ref);
-                            break;
                         }
-                        case "Thesis": {
+                        case "Thesis"-> {
                             Thesis thesis = new Thesis( title, author, publicationYear, status, extra1, extra2);
                             if (!returnDate.isEmpty()) thesis.setReturnTime(returnDate);
                             libraryManagerService.addItem(thesis);
-                            break;
                         }
-                        default:
+                        default->
                             System.err.println("Unknown item type: " + type);
                     }
 

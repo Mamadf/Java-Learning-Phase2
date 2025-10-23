@@ -35,12 +35,8 @@ public class ManagerThread extends Thread {
                     String action = parts[1];
 
                     switch (action) {
-                        case "borrow":
-                            loanService.borrowItem(id);
-                            break;
-                        case "return":
-                            loanService.returnItem(id);
-                            break;
+                        case "borrow"-> loanService.borrowItem(id);
+                        case "return"-> loanService.returnItem(id);
                     }
                 }catch (Exception e){
                     GlobalExceptionHandler.handle(e);

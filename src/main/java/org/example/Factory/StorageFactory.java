@@ -13,17 +13,10 @@ public class StorageFactory {
 
         StorageHandler handler;
         switch (storageType) {
-            case "json":
-                handler = new LibraryJsonHandler();
-                break;
-            case "proto":
-                handler = new ProtobufHandler();
-                break;
-            case "csv":
-                handler = new CsvHandler();
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported storage type: " + storageType);
+            case "json"-> handler = new LibraryJsonHandler();
+            case "proto"-> handler = new ProtobufHandler();
+            case "csv"-> handler = new CsvHandler();
+            default-> throw new IllegalArgumentException("Unsupported storage type: " + storageType);
         }
         handler.loadData(storagePath);
         return handler;
