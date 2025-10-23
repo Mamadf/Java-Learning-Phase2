@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class Thesis extends LibraryItem {
+public final class Thesis extends LibraryItem {
     private String  university;
     private String supervisor;
 

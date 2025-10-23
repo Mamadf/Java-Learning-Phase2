@@ -4,6 +4,7 @@ import org.example.Factory.LibraryItemFactory;
 import org.example.Factory.LibraryItemFactoryProducer;
 import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
+import org.example.Repository.LibraryData;
 import org.example.Service.LibraryManagerService;
 import org.example.Service.LibraryLoanService;
 import org.example.Service.SearchStrategies.AuthorSearchStrategy;
@@ -15,6 +16,7 @@ import org.example.utils.CheckValidation;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 
 public class LibraryView {
@@ -173,4 +175,16 @@ public class LibraryView {
         );
     }
 
+    public void showTitleAndAuthor() {
+        BiConsumer<LibraryItem, StringBuilder> titleAuthorPrinter = (item, sb) ->
+                sb.append("Title: ").append(item.getTitle())
+                        .append(", Author: ").append(item.getAuthor())
+                        .append("\n");
+
+        StringBuilder output = new StringBuilder();
+        for (LibraryItem item :LibraryData.getInstance().getItems() ) {
+            titleAuthorPrinter.accept(item, output);
+        }
+        System.out.print(output.toString());
+    }
 }

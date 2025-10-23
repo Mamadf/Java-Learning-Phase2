@@ -38,6 +38,7 @@ public class UserInputThread extends Thread {
                         case "sort" -> view.sort();
                         case "search by status"-> view.statusSearch(scanner);
                         case "search by year"-> view.yearSearch(scanner);
+                        case "get all assets --short" -> view.showTitleAndAuthor();
                         case "help"-> view.help();
                         case "exit"->{
                             requestQueue.offer("exit");

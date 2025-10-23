@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public abstract class LibraryItem {
+public sealed abstract class LibraryItem permits Book, Thesis, ReferenceBook, Magazine {
     private static int counter = 1;
     private int id;
     private String returnTime;

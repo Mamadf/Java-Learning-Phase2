@@ -12,7 +12,7 @@ public class LibraryData {
     private Map<Integer, LibraryItem> itemById;
 
     public LibraryData() {
-        items = new CopyOnWriteArrayList<>();
+        items = new ArrayList<>();
         itemById = new ConcurrentHashMap<>();
     }
 
