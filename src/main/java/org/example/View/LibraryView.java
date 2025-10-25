@@ -155,21 +155,22 @@ public class LibraryView {
         System.out.println(
                 "Available commands:\n" +
                         "---------------------------------\n" +
-                        "add              → Add a new item to the library\n" +
-                        "remove           → Remove an existing item by ID\n" +
-                        "update           → Update the details of an existing item\n" +
-                        "get all assets   → Display all items in the library\n" +
-                        "borrow           → Borrow an item by ID\n" +
-                        "return           → Return a borrowed item\n" +
-                        "return time      → Update the return time for a existing item\n" +
-                        "search by title  → Search items by title\n" +
-                        "search by author → Search items by author\n" +
-                        "search by year   → Search items by publication year\n" +
-                        "search by status → Search items by status(exist, borrowed, banned)\n" +
-                        "sort             → Sort all items by publication year\n" +
-                        "borrowed item    → Show all borrowed items\n" +
-                        "help             → Show this help message\n" +
-                        "exit             → Save data and exit the program\n" +
+                        "add                    → Add a new item to the library\n" +
+                        "remove                 → Remove an existing item by ID\n" +
+                        "update                 → Update the details of an existing item\n" +
+                        "get all assets         → Display all items in the library\n" +
+                        "get all assets --short → Display summary of items in the library\n" +
+                        "borrow                 → Borrow an item by ID\n" +
+                        "return                 → Return a borrowed item\n" +
+                        "return time            → Update the return time for a existing item\n" +
+                        "search by title        → Search items by title\n" +
+                        "search by author       → Search items by author\n" +
+                        "search by year         → Search items by publication year\n" +
+                        "search by status       → Search items by status(exist, borrowed, banned)\n" +
+                        "sort                   → Sort all items by publication year\n" +
+                        "borrowed item          → Show all borrowed items\n" +
+                        "help                   → Show this help message\n" +
+                        "exit                   → Save data and exit the program\n" +
                         "---------------------------------\n" +
                         "Tip: Type command names exactly as shown above."
         );
@@ -182,9 +183,8 @@ public class LibraryView {
                         .append("\n");
 
         StringBuilder output = new StringBuilder();
-        for (LibraryItem item :LibraryData.getInstance().getItems() ) {
-            titleAuthorPrinter.accept(item, output);
-        }
+        LibraryData.getInstance().getItems().stream()
+                .forEach(item -> {titleAuthorPrinter.accept(item, output);});
         System.out.print(output.toString());
     }
 }

@@ -16,14 +16,11 @@ public class TitleSearchStrategy implements SearchStrategy{
     @Override
     public List<LibraryItem> search(String title) {
         synchronized(libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (var item : libraryData.getItems()) {
-                if (item.getTitle().equalsIgnoreCase(title)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
+            var results = libraryData.getItems().stream()
+                    .filter(item -> item.getTitle().equalsIgnoreCase(title))
+                    .peek(LibraryItem::display)
+                    .toList();
+            return results;
         }
     }
 }

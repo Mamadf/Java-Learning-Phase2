@@ -17,14 +17,11 @@ public class StatusSearchStrategy implements SearchStrategy {
     @Override
     public List<LibraryItem> search(String query) {
         synchronized(libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (var item : libraryData.getItems()) {
-                if (item.getStatus() == ItemStatus.valueOf(query)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
+            var results = libraryData.getItems().stream()
+                    .filter(item -> item.getStatus().equals(ItemStatus.valueOf(query)))
+                    .peek(LibraryItem::display)
+                    .toList();
+            return results;
         }
     }
 }

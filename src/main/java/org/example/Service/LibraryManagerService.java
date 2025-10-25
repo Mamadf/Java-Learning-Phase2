@@ -56,15 +56,15 @@ public class LibraryManagerService {
 
     public void sortByPublicationYear() {
         synchronized (libraryData) {
-            libraryData.getItems().sort(Comparator.comparingInt(LibraryItem::getPublicationYear));
+            libraryData.getItems().stream()
+                    .sorted(Comparator.comparingInt(LibraryItem::getPublicationYear))
+                    .forEach(LibraryItem::display);
         }
     }
 
     public void printAll() {
         synchronized (libraryData) {
-            for (var item : libraryData.getItems()) {
-                item.display();
-            }
+            libraryData.getItems().forEach(LibraryItem::display);
         }
     }
 }
