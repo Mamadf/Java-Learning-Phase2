@@ -163,3 +163,27 @@ Title,Author,PublicationYear,Status
 test,Reza,2018,EXIST
 test,Ali Reza,2022,BANNED
 test,moot,2020,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+
+Operation: search by year
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
+new Thesis,fsd,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+OP,po,2018,BORROWED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED

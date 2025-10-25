@@ -6,11 +6,12 @@ import org.example.Model.LibraryItem;
 import org.example.Service.SearchStrategies.SearchStrategy;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class LibraryManagerService {
     private final LibraryData libraryData;
     private SearchStrategy searchStrategy;
-
+    private Consumer<LibraryItem> displayItem = LibraryItem::display;
 
     public LibraryManagerService(LibraryData libraryData) {
         this.libraryData = libraryData;
@@ -58,13 +59,13 @@ public class LibraryManagerService {
         synchronized (libraryData) {
             libraryData.getItems().stream()
                     .sorted(Comparator.comparingInt(LibraryItem::getPublicationYear))
-                    .forEach(LibraryItem::display);
+                    .forEach(displayItem);
         }
     }
 
     public void printAll() {
         synchronized (libraryData) {
-            libraryData.getItems().forEach(LibraryItem::display);
+            libraryData.getItems().forEach(displayItem);
         }
     }
 }

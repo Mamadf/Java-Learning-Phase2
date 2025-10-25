@@ -6,6 +6,7 @@ import org.example.Repository.LibraryData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class StatusSearchStrategy implements SearchStrategy {
     LibraryData libraryData;
@@ -17,9 +18,10 @@ public class StatusSearchStrategy implements SearchStrategy {
     @Override
     public List<LibraryItem> search(String query) {
         synchronized(libraryData) {
+            Consumer<LibraryItem> displayItem = LibraryItem::display;
             var results = libraryData.getItems().stream()
                     .filter(item -> item.getStatus().equals(ItemStatus.valueOf(query)))
-                    .peek(LibraryItem::display)
+                    .peek(displayItem)
                     .toList();
             return results;
         }

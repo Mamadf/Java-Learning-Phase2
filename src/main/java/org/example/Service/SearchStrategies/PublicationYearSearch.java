@@ -5,6 +5,7 @@ import org.example.Repository.LibraryData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PublicationYearSearch implements SearchStrategy{
     private LibraryData libraryData;
@@ -16,11 +17,12 @@ public class PublicationYearSearch implements SearchStrategy{
     @Override
     public List<LibraryItem> search(String year) {
         synchronized(libraryData) {
+            Consumer<LibraryItem> displayItem = LibraryItem::display;
             int targetYear = Integer.parseInt(year);
 
             var result = libraryData.getItems().stream()
                     .filter(item -> item.getPublicationYear() == targetYear)
-                    .peek(LibraryItem::display)
+                    .peek(displayItem)
                     .toList();
             return result;
         }

@@ -5,6 +5,7 @@ import org.example.Repository.LibraryData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class TitleSearchStrategy implements SearchStrategy{
     private LibraryData libraryData;
@@ -16,9 +17,10 @@ public class TitleSearchStrategy implements SearchStrategy{
     @Override
     public List<LibraryItem> search(String title) {
         synchronized(libraryData) {
+            Consumer<LibraryItem> displayItem = LibraryItem::display;
             var results = libraryData.getItems().stream()
                     .filter(item -> item.getTitle().equalsIgnoreCase(title))
-                    .peek(LibraryItem::display)
+                    .peek(displayItem)
                     .toList();
             return results;
         }
