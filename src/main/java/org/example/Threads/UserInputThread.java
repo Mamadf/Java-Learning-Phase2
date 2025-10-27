@@ -33,11 +33,12 @@ public class UserInputThread extends Thread {
                         case "borrow"-> view.borrowItem(scanner, requestQueue);
                         case "return"-> view.returnItem(scanner, requestQueue);
                         case "return time"-> view.updateReturnTime(scanner);
-                        case "search by author"-> view.authorSearch(scanner);
-                        case "search by title"-> view.titleSearch(scanner);
+//                        case "search by author"-> view.authorSearch(scanner);
+//                        case "search by title"-> view.titleSearch(scanner);
                         case "sort" -> view.sort();
-                        case "search by status"-> view.statusSearch(scanner);
-                        case "search by year"-> view.yearSearch(scanner);
+//                        case "search by status"-> view.statusSearch(scanner);
+//                        case "search by year"-> view.yearSearch(scanner);
+                        case "search items" -> view.searchItems(scanner);
                         case "get all assets --short" -> view.showTitleAndAuthor();
                         case "help"-> view.help();
                         case "exit"->{

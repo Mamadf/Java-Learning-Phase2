@@ -2,22 +2,16 @@ package org.example.View;
 
 import org.example.Factory.LibraryItemFactory;
 import org.example.Factory.LibraryItemFactoryProducer;
-import org.example.Model.ItemStatus;
 import org.example.Model.LibraryItem;
 import org.example.Repository.LibraryData;
 import org.example.Service.LibraryManagerService;
 import org.example.Service.LibraryLoanService;
-import org.example.Service.SearchStrategies.AuthorSearchStrategy;
-import org.example.Service.SearchStrategies.PublicationYearSearch;
-import org.example.Service.SearchStrategies.StatusSearchStrategy;
-import org.example.Service.SearchStrategies.TitleSearchStrategy;
 import org.example.Storage.CsvHandler;
 import org.example.utils.CheckValidation;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.BiConsumer;
-import java.util.regex.Pattern;
 
 public class LibraryView {
     private final LibraryManagerService managerService;
@@ -88,64 +82,6 @@ public class LibraryView {
         requestQueue.offer(id + ":return");
     }
 
-    public void titleSearch(Scanner scanner) {
-        System.out.println("Enter title: ");
-        String title = CheckValidation.getNonEmptyString(scanner);
-        managerService.setSearchStrategy(new TitleSearchStrategy());
-        var searchRes = managerService.search(title);
-        if(!searchRes.isEmpty()) {
-            CsvHandler.writeLibrary("search by title", searchRes);
-        }else {
-            System.out.println("❌ Title not found");
-        }
-    }
-    public void authorSearch(Scanner scanner) {
-        System.out.println("Enter Author: ");
-        String author = CheckValidation.getNonEmptyString(scanner);
-        managerService.setSearchStrategy(new AuthorSearchStrategy());
-        var searchRes = managerService.search(author);
-        if(!searchRes.isEmpty()) {
-            CsvHandler.writeLibrary("search by author", searchRes);
-        }else {
-            System.out.println("❌ Author not found");
-        }
-    }
-
-
-    public void yearSearch(Scanner scanner) {
-        System.out.println("Enter Publication Year: ");
-        int year = CheckValidation.getValidInt(scanner);
-        managerService.setSearchStrategy(new PublicationYearSearch());
-        var searchRes = managerService.search(String.valueOf(year));
-        if(!searchRes.isEmpty()) {
-            CsvHandler.writeLibrary("search by year", searchRes);
-        }else {
-            System.out.println("❌ There is no Item in this year");
-        }
-    }
-
-
-    public void statusSearch(Scanner scanner) {
-        boolean running = true;
-        String itemStatus = null;
-        while (running) {
-            System.out.print("Enter item status (EXIST / BORROWED / BANNED): ");
-            itemStatus = scanner.nextLine().trim().toUpperCase();
-            if(CheckValidation.isValidItemStatus(itemStatus)){
-                running = false;
-            }else {
-                System.out.println("❌ Invalid status! Please enter one of: EXIST, BORROWED, BANNED");
-
-            }
-        }
-        managerService.setSearchStrategy(new StatusSearchStrategy());
-        var searchRes = managerService.search(itemStatus);
-        if(!searchRes.isEmpty()) {
-            CsvHandler.writeLibrary("search by author", searchRes);
-        }else {
-            System.out.println("❌ There is no Item with this status");
-        }
-    }
     public void sort() {
         managerService.sortByPublicationYear();
     }
@@ -163,10 +99,7 @@ public class LibraryView {
                         "borrow                 → Borrow an item by ID\n" +
                         "return                 → Return a borrowed item\n" +
                         "return time            → Update the return time for a existing item\n" +
-                        "search by title        → Search items by title\n" +
-                        "search by author       → Search items by author\n" +
-                        "search by year         → Search items by publication year\n" +
-                        "search by status       → Search items by status(exist, borrowed, banned)\n" +
+                        "search items           → Search items by title, author and publication year(choose strategy in config file)\n" +
                         "sort                   → Sort all items by publication year\n" +
                         "borrowed item          → Show all borrowed items\n" +
                         "help                   → Show this help message\n" +
@@ -186,5 +119,16 @@ public class LibraryView {
         LibraryData.getInstance().getItems().stream()
                 .forEach(item -> {titleAuthorPrinter.accept(item, output);});
         System.out.print(output.toString());
+    }
+
+    public void searchItems(Scanner scanner) {
+        System.out.println("Enter the query, Your input should be: <title>,<author>,<publicationYear>");
+        String query = CheckValidation.getValidQuery(scanner);
+        var searchRes = managerService.search(query);
+        if(!searchRes.isEmpty()) {
+            CsvHandler.writeLibrary("search ", searchRes);
+        }else {
+            System.out.println("❌ There is no Item with this information!");
+        }
     }
 }
