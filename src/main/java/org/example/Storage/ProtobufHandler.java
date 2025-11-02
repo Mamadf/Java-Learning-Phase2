@@ -13,8 +13,8 @@ public class ProtobufHandler implements StorageHandler {
     private final LibraryData library;
     private LibraryManagerService libraryManagerService;
 
-    public ProtobufHandler(LibraryData library) {
-        this.library = library;
+    public ProtobufHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 
@@ -26,8 +26,7 @@ public class ProtobufHandler implements StorageHandler {
             for (LibraryItem item : library.getItems()) {
                 LibraryOuterClass.LibraryItem.Builder itemBuilder = LibraryOuterClass.LibraryItem.newBuilder();
 
-                if (item instanceof Book) {
-                    Book b = (Book) item;
+                if (item instanceof Book b) {
                     itemBuilder.setBook(LibraryOuterClass.Book.newBuilder()
                             .setId(b.getId())
                             .setTitle(b.getTitle())
@@ -37,8 +36,7 @@ public class ProtobufHandler implements StorageHandler {
                             .setGenre(b.getGenre())
                             .setPages(b.getPages())
                             .setReturnDate(b.getReturnTime() == null ? "" : b.getReturnTime()));
-                } else if (item instanceof Magazine) {
-                    Magazine m  = (Magazine) item;
+                } else if (item instanceof Magazine m) {
                     itemBuilder.setMagazine(LibraryOuterClass.Magazine.newBuilder()
                             .setId(m.getId())
                             .setTitle(m.getTitle())
@@ -48,8 +46,7 @@ public class ProtobufHandler implements StorageHandler {
                             .setPublisher(m.getPublisher())
                             .setIssueNumber(m.getIssue())
                             .setReturnDate(m.getReturnTime() == null ? "" : m.getReturnTime()));
-                } else if (item instanceof ReferenceBook) {
-                    ReferenceBook r = (ReferenceBook) item;
+                } else if (item instanceof ReferenceBook r) {
                     itemBuilder.setReferenceBook(LibraryOuterClass.ReferenceBook.newBuilder()
                             .setId(r.getId())
                             .setTitle(r.getTitle())
@@ -59,8 +56,7 @@ public class ProtobufHandler implements StorageHandler {
                             .setSubject(r.getSubject())
                             .setEdition(r.getEdition())
                             .setReturnDate(r.getReturnTime() == null ? "" : r.getReturnTime()));
-                } else if (item instanceof Thesis) {
-                    Thesis t = (Thesis) item;
+                } else if (item instanceof Thesis t) {
                     itemBuilder.setThesis(LibraryOuterClass.Thesis.newBuilder()
                             .setId(t.getId())
                             .setTitle(t.getTitle())

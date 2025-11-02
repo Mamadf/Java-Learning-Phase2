@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class Book extends LibraryItem {
+public final class Book extends LibraryItem {
     private String genre;
     private int pages;
 

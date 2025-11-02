@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class Magazine extends LibraryItem {
+public final class Magazine extends LibraryItem {
     private String publisher;
     private int issue;
 

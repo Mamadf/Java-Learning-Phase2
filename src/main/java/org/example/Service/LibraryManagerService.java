@@ -1,17 +1,37 @@
 package org.example.Service;
 
+import org.example.Config.AppConfig;
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
+import org.example.Service.SearchStrategies.SearchStrategy;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class LibraryManagerService {
     private final LibraryData libraryData;
+    private SearchStrategy searchStrategy;
+    private Consumer<LibraryItem> displayItem = LibraryItem::display;
 
     public LibraryManagerService(LibraryData libraryData) {
         this.libraryData = libraryData;
     }
 
+
+
+    public void setSearchStrategy(SearchStrategy searchStrategy) {
+        this.searchStrategy = searchStrategy;
+    }
+
+    public List<LibraryItem> search(String query) {
+        try{
+            return searchStrategy.search(query);
+        }catch (NullPointerException e){
+            GlobalExceptionHandler.handle(e);
+            return null;
+        }
+    }
     public void addItem(LibraryItem item) {
         synchronized (libraryData) {
             libraryData.getItems().add(item);
@@ -21,7 +41,7 @@ public class LibraryManagerService {
 
     public LibraryItem deleteItem(int id) {
         synchronized (libraryData) {
-            LibraryItem item = libraryData.getItemById().remove(id);
+            var item = libraryData.getItemById().remove(id);
             if (item != null) {
                 libraryData.getItems().remove(item);
             } else {
@@ -37,43 +57,17 @@ public class LibraryManagerService {
         }
     }
 
-    public List<LibraryItem> searchByTitle(String title) {
-        synchronized(libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
-                if (item.getTitle().equalsIgnoreCase(title)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
-        }
-    }
-
-    public  List<LibraryItem> searchByAuthor(String author) {
-        synchronized (libraryData) {
-            List<LibraryItem> result = new ArrayList<>();
-            for (LibraryItem item : libraryData.getItems()) {
-                if (item.getAuthor().equalsIgnoreCase(author)) {
-                    item.display();
-                    result.add(item);
-                }
-            }
-            return result;
-        }
-    }
-
     public void sortByPublicationYear() {
         synchronized (libraryData) {
-            libraryData.getItems().sort(Comparator.comparingInt(LibraryItem::getPublicationYear));
+            libraryData.getItems().stream()
+                    .sorted(Comparator.comparingInt(LibraryItem::getPublicationYear))
+                    .forEach(displayItem);
         }
     }
 
     public void printAll() {
         synchronized (libraryData) {
-            for (LibraryItem item : libraryData.getItems()) {
-                item.display();
-            }
+            libraryData.getItems().forEach(displayItem);
         }
     }
 }

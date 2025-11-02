@@ -15,8 +15,8 @@ public class CsvHandler implements  StorageHandler {
     private LibraryManagerService libraryManagerService;
 
 
-    public CsvHandler(LibraryData library) {
-        this.library = library;
+    public CsvHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 
@@ -51,33 +51,29 @@ public class CsvHandler implements  StorageHandler {
                     String extra2 = values.length > 8 ? values[8].trim() : "";
 
                     switch (type) {
-                        case "Book": {
+                        case "Book"-> {
                             int pages = extra2.isEmpty() ? 0 : Integer.parseInt(extra2);
                             Book book = new Book( title, author, publicationYear, status, extra1, pages);
                             if (!returnDate.isEmpty()) book.setReturnTime(returnDate);
                             libraryManagerService.addItem(book);
-                            break;
                         }
-                        case "Magazine": {
+                        case "Magazine"-> {
                             int issue = extra2.isEmpty() ? 0 : Integer.parseInt(extra2);
                             Magazine magazine = new Magazine( title, author, publicationYear, status, extra1, issue);
                             if (!returnDate.isEmpty()) magazine.setReturnTime(returnDate);
                             libraryManagerService.addItem(magazine);
-                            break;
                         }
-                        case "ReferenceBook": {
+                        case "ReferenceBook"-> {
                             ReferenceBook ref = new ReferenceBook( title, author, publicationYear, status, extra1, extra2);
                             if (!returnDate.isEmpty()) ref.setReturnTime(returnDate);
                             libraryManagerService.addItem(ref);
-                            break;
                         }
-                        case "Thesis": {
+                        case "Thesis"-> {
                             Thesis thesis = new Thesis( title, author, publicationYear, status, extra1, extra2);
                             if (!returnDate.isEmpty()) thesis.setReturnTime(returnDate);
                             libraryManagerService.addItem(thesis);
-                            break;
                         }
-                        default:
+                        default->
                             System.err.println("Unknown item type: " + type);
                     }
 
@@ -101,8 +97,7 @@ public class CsvHandler implements  StorageHandler {
             for (LibraryItem item : library.getItems()) {
                 StringBuilder sb = new StringBuilder();
 
-                if (item instanceof Book) {
-                    Book b = (Book) item;
+                if (item instanceof Book b) {
                     sb.append("Book").append(",");
                     sb.append(b.getId()).append(",");
                     sb.append(b.getTitle()).append(",");
@@ -113,8 +108,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(b.getGenre()).append(",");
                     sb.append(b.getPages());
 
-                } else if (item instanceof Magazine) {
-                    Magazine m = (Magazine) item;
+                } else if (item instanceof Magazine m) {
                     sb.append("Magazine").append(",");
                     sb.append(m.getId()).append(",");
                     sb.append(m.getTitle()).append(",");
@@ -125,8 +119,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(m.getPublisher()).append(",");
                     sb.append(m.getIssue());
 
-                } else if (item instanceof ReferenceBook) {
-                    ReferenceBook r = (ReferenceBook) item;
+                } else if (item instanceof ReferenceBook r) {
                     sb.append("ReferenceBook").append(",");
                     sb.append(r.getId()).append(",");
                     sb.append(r.getTitle()).append(",");
@@ -137,8 +130,7 @@ public class CsvHandler implements  StorageHandler {
                     sb.append(r.getSubject()).append(",");
                     sb.append(r.getEdition());
 
-                } else if (item instanceof Thesis) {
-                    Thesis t = (Thesis) item;
+                } else if (item instanceof Thesis t) {
                     sb.append("Thesis").append(",");
                     sb.append(t.getId()).append(",");
                     sb.append(t.getTitle()).append(",");

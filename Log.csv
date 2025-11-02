@@ -62,3 +62,180 @@ Operation: search by author
 Title,Author,PublicationYear,Status
 OP,po,2018,BORROWED
 OP,po,2018,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,moot,2020,EXIST
+hi,hi,2020,BORROWED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+Java Basics,John Smith,2011,EXIST
+AI in Healthcare,Ali Reza,2022,EXIST
+test,moot,2020,EXIST
+adfa,fafa,2023,EXIST
+as,rweqr,2017,EXIST
+fasdfa,wge,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+Java Basics,John Smith,2011,EXIST
+AI in Healthcare,Ali Reza,2022,EXIST
+test,moot,2020,EXIST
+adfa,fafa,2023,EXIST
+as,rweqr,2017,EXIST
+fasdfa,wge,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+
+Operation: remove
+Title,Author,PublicationYear,Status
+Java Basics,John Smith,2011,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search by year
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
+new Thesis,fsd,2021,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+
+Operation: search by year
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
+new Thesis,fsd,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,BORROWED
+Science Today,Mary Editor,2023,BORROWED
+OP,po,2018,BORROWED
+hi,hi,2020,BORROWED
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+
+Operation: search by year
+Title,Author,PublicationYear,Status
+HHH,hhh,2021,BANNED
+new Thesis,fsd,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+
+Operation: search by title
+Title,Author,PublicationYear,Status
+OP,po,2018,BORROWED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+Oxford Dictionary,Oxford Press,2015,BORROWED
+Science Today,Mary Editor,2023,BORROWED
+OP,po,2018,BORROWED
+hi,hi,2020,BORROWED
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+new Thesis,fsd,2021,EXIST
+
+Operation: search by author
+Title,Author,PublicationYear,Status
+test,moot,2020,EXIST
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+HHH,hhh,2021,BANNED
+test,moot,2020,EXIST
+new Thesis,fsd,2021,EXIST
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+Science Today,Mary Editor,2023,BORROWED
+test,moot,2020,EXIST
+adfa,fafa,2023,EXIST
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
+hi,hi,2020,BORROWED
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+AI in Healthcare,Ali Reza,2022,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST

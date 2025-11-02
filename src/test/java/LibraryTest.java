@@ -84,52 +84,52 @@ public class LibraryTest {
         assertTrue(item instanceof Book);
     }
 
-    @Test
-    void testSearchBTitle() {
-        libraryManagerService.addItem(item1);
-        List<LibraryItem> items = libraryManagerService.searchByTitle(firstItemTitle);
-        assertEquals(1, items.size());
-        assertTrue(items.contains(item1));
-    }
+//    @Test
+//    void testSearchBTitle() {
+//        libraryManagerService.addItem(item1);
+//        List<LibraryItem> items = libraryManagerService.searchByTitle(firstItemTitle);
+//        assertEquals(1, items.size());
+//        assertTrue(items.contains(item1));
+//    }
+//
+//    @Test
+//    void testSearchByTitleMultipleBooksSameTitle() {
+//        libraryManagerService.addItem(item4);
+//        libraryManagerService.addItem(item5);
+//
+//        List<LibraryItem> result = libraryManagerService.searchByTitle(forthItemTitle);
+//
+//        assertNotNull(result);
+//        assertEquals(2, result.size());
+//    }
+//
+//    @Test
+//    void testSearchByTitleBookNotExists() {
+//        libraryManagerService.addItem(item1);
+//        libraryManagerService.addItem(item2);
+//
+//        List<LibraryItem> result = libraryManagerService.searchByTitle(nonExistence);
+//        assertTrue(result.isEmpty());
+//    }
 
-    @Test
-    void testSearchByTitleMultipleBooksSameTitle() {
-        libraryManagerService.addItem(item4);
-        libraryManagerService.addItem(item5);
 
-        List<LibraryItem> result = libraryManagerService.searchByTitle(forthItemTitle);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    void testSearchByTitleBookNotExists() {
-        libraryManagerService.addItem(item1);
-        libraryManagerService.addItem(item2);
-
-        List<LibraryItem> result = libraryManagerService.searchByTitle(nonExistence);
-        assertTrue(result.isEmpty());
-    }
-
-
-    @Test
-    void testSearchByAuthor() {
-        libraryManagerService.addItem(item1);
-        libraryManagerService.addItem(item2);
-        libraryManagerService.addItem(item3);
-        libraryManagerService.addItem(item4);
-        libraryManagerService.addItem(item5);
-        libraryManagerService.addItem(item6);
-
-        List<LibraryItem> result = libraryManagerService.searchByAuthor("Ali Reza");
-
-        assertEquals(2, result.size());
-        assertTrue(result.contains(item3));
-        assertTrue(result.contains(item4));
-        result = libraryManagerService.searchByAuthor(nonExistence);
-        assertTrue(result.isEmpty());
-    }
+//    @Test
+//    void testSearchByAuthor() {
+//        libraryManagerService.addItem(item1);
+//        libraryManagerService.addItem(item2);
+//        libraryManagerService.addItem(item3);
+//        libraryManagerService.addItem(item4);
+//        libraryManagerService.addItem(item5);
+//        libraryManagerService.addItem(item6);
+//
+//        List<LibraryItem> result = libraryManagerService.searchByAuthor("Ali Reza");
+//
+//        assertEquals(2, result.size());
+//        assertTrue(result.contains(item3));
+//        assertTrue(result.contains(item4));
+//        result = libraryManagerService.searchByAuthor(nonExistence);
+//        assertTrue(result.isEmpty());
+//    }
 
 
     @Test

@@ -4,6 +4,9 @@ import org.example.Exception.GlobalExceptionHandler;
 import org.example.Factory.StorageFactory;
 import org.example.Repository.LibraryData;
 import org.example.Service.*;
+import org.example.Service.SearchStrategies.ContainsAllKeyStrategy;
+import org.example.Service.SearchStrategies.ContainsAtLeastOneKeyStrategy;
+import org.example.Service.SearchStrategies.SearchStrategy;
 import org.example.Storage.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +24,7 @@ public class AppConfig {
 
     private static final Logger logger = Logger.getLogger(AppConfig.class.getName());
 
+
     public AppConfig() {
         Properties props = new Properties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
@@ -36,19 +40,28 @@ public class AppConfig {
 
         this.storageType = props.getProperty("storage.type", "proto");
         this.storagePath = props.getProperty("storage.path", "library_data.bin");
-        this.libraryData = new LibraryData();
+
+        this.libraryData = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(libraryData);
         this.libraryLoanService = new LibraryLoanService(libraryData);
-        this.activeStorageHandler = StorageFactory.createStorageHandler(storageType, storagePath, libraryData);
+        this.activeStorageHandler = StorageFactory.createStorageHandler(storageType, storagePath);
+
+        String strategy = props.getProperty("search.type", "at least one");
+
+        switch (strategy) {
+            case "all":
+                libraryManagerService.setSearchStrategy(new ContainsAllKeyStrategy());
+                break;
+            default:
+                libraryManagerService.setSearchStrategy(new ContainsAtLeastOneKeyStrategy());
+
+        }
     }
 
     public void saveData(){
         activeStorageHandler.saveData(storagePath);
     }
 
-    public LibraryData getLibraryData() {
-        return libraryData;
-    }
 
     public LibraryManagerService getLibraryManagerService() {
         return libraryManagerService;

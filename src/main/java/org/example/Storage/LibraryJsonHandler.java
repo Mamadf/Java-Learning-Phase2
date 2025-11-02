@@ -15,8 +15,8 @@ public class LibraryJsonHandler implements StorageHandler {
     private LibraryData library;
     private LibraryManagerService libraryManagerService;
 
-    public LibraryJsonHandler(LibraryData library) {
-        this.library = library;
+    public LibraryJsonHandler() {
+        this.library = LibraryData.getInstance();
         this.libraryManagerService = new LibraryManagerService(library);
     }
 
@@ -51,21 +51,14 @@ public class LibraryJsonHandler implements StorageHandler {
 
                 LibraryItem item;
                 switch (type) {
-                    case "Book":
-                        item = gson.fromJson(data, Book.class);
-                        break;
-                    case "Magazine":
-                        item = gson.fromJson(data, Magazine.class);
-                        break;
-                    case "ReferenceBook":
-                        item = gson.fromJson(data, ReferenceBook.class);
-                        break;
-                    case "Thesis":
-                        item = gson.fromJson(data, Thesis.class);
-                        break;
-                    default:
+                    case "Book"-> item = gson.fromJson(data, Book.class);
+                    case "Magazine"-> item = gson.fromJson(data, Magazine.class);
+                    case "ReferenceBook"-> item = gson.fromJson(data, ReferenceBook.class);
+                    case "Thesis"-> item = gson.fromJson(data, Thesis.class);
+                    default -> {
                         System.err.println("Unknown type: " + type);
                         continue;
+                    }
                 }
 
                 libraryManagerService.addItem(item);
