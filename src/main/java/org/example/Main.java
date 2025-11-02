@@ -21,6 +21,7 @@ public class Main {
             GlobalExceptionHandler.handle(e);
         });
         AppConfig config = new AppConfig();
+
         BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 
         LibraryView view = new LibraryView(

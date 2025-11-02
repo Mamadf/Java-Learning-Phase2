@@ -26,7 +26,7 @@ public class ManagerThread extends Thread {
                 try {
                     String request = requestQueue.take();
                     if (request.equals("exit")) {
-                        appConfig.saveData();
+//                        appConfig.saveData();
                         running = false;
                         continue;
                     }

@@ -239,3 +239,9 @@ test,Reza,2018,EXIST
 AI in Healthcare,Ali Reza,2022,EXIST
 test,Ali Reza,2022,BANNED
 test,moot,2020,EXIST
+
+Operation: search 
+Title,Author,PublicationYear,Status
+test,Reza,2018,EXIST
+test,Ali Reza,2022,BANNED
+test,moot,2020,EXIST
