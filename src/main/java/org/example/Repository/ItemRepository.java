@@ -1,11 +1,9 @@
 package org.example.Repository;
 
 import org.example.Service.LibraryManagerService;
-import org.example.utils.DatabaseConnection;
+import org.example.Config.DatabaseConfig;
 import org.example.Model.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemRepository {
 
@@ -15,7 +13,7 @@ public class ItemRepository {
 
         String baseQuery = "SELECT * FROM LibraryItem";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(baseQuery);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -53,7 +51,6 @@ public class ItemRepository {
                                          String status, int year) throws SQLException {
 
 
-        // Check each subclass table
         if (existsInTable(conn, "Book", id)) {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Book WHERE item_id = ?");
             ps.setInt(1, id);
@@ -61,6 +58,7 @@ public class ItemRepository {
             if (r.next()) {
                 Book b = new Book(title, author, year, ItemStatus.valueOf(status),
                         r.getString("genre"), r.getInt("page"));
+                b.setId(id);
                 return b;
             }
         } else if (existsInTable(conn, "Magazine", id)) {
@@ -70,6 +68,7 @@ public class ItemRepository {
             if (r.next()) {
                 Magazine m = new Magazine(title, author, year, ItemStatus.valueOf(status),
                         r.getString("publisher"), r.getInt("issue"));
+                m.setId(id);
                 return m;
             }
         } else if (existsInTable(conn, "ReferenceBook", id)) {
@@ -79,6 +78,7 @@ public class ItemRepository {
             if (r.next()) {
                 ReferenceBook ref = new ReferenceBook(title, author, year, ItemStatus.valueOf(status),
                         r.getString("subject"), r.getString("edition"));
+                ref.setId(id);
                 return ref;
             }
         } else if (existsInTable(conn, "Thesis", id)) {
@@ -88,7 +88,7 @@ public class ItemRepository {
             if (r.next()) {
                 Thesis t = new Thesis(title, author, year, ItemStatus.valueOf(status),
                         r.getString("university"), r.getString("supervisor"));
-
+                t.setId(id);
                 return t;
             }
         }

@@ -11,7 +11,6 @@ public sealed abstract class LibraryItem permits Book, Thesis, ReferenceBook, Ma
 
 
     public LibraryItem(String title, String author, int publicationYear , ItemStatus status) {
-        this.id = counter++;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
@@ -58,5 +57,7 @@ public sealed abstract class LibraryItem permits Book, Thesis, ReferenceBook, Ma
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
     }
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

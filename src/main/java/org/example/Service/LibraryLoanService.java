@@ -3,10 +3,10 @@ package org.example.Service;
 import org.example.Exception.GlobalExceptionHandler;
 import org.example.Model.ItemStatus;
 import org.example.Observer.Notifier;
-import org.example.Observer.User;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
-import org.example.utils.DatabaseConnection;
+import org.example.Config.DatabaseConfig;
+import org.example.Repository.OperationRepository;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -26,6 +26,7 @@ public class LibraryLoanService {
     private static final Predicate<LibraryItem> isBorrowed =
             item -> item != null && item.getStatus() == ItemStatus.BORROWED;
     private LibraryData library;
+    private OperationRepository operationRepository;
 
     private List<LibraryItem> items;
     private Map<Integer, LibraryItem> itemById;
@@ -33,6 +34,7 @@ public class LibraryLoanService {
         this.library = library;
         items = library.getItems();
         itemById = library.getItemById();
+        operationRepository = new OperationRepository();
     }
 
     public LibraryItem borrowItem(int id) {
@@ -41,7 +43,7 @@ public class LibraryLoanService {
             if (item != null) {
                 if (isBorrowable.test(item)) {
                     item.setStatus(ItemStatus.BORROWED);
-                    SQLBorrow(item);
+                    operationRepository.SQLBorrow(item);
                     logger.info("Item '" + item.getTitle() + "' borrowed successfully.");
                 } else if (isBorrowed.test(item)) {
                     logger.warning("Item is already borrowed.");
@@ -56,37 +58,7 @@ public class LibraryLoanService {
             return item;
         }
     }
-    public static void SQLBorrow(LibraryItem item ) {
-        String sql = "INSERT INTO operations (item_id, user_id, borrow_date, due_date, return_date) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, item.getId());
-            ps.setInt(2, 1);
-            ps.setDate(3, Date.valueOf(LocalDate.now()));
-            ps.setDate(4, Date.valueOf(LocalDate.now().plusDays(14)));
-            ps.setDate(5, null);
-
-            ps.executeUpdate();
-            System.out.println("✅ Borrow operation saved successfully!");
-        } catch (SQLException e) {
-            GlobalExceptionHandler.handle(e);
-        }
-    }
-    public static void SQLReturn(LibraryItem item ) {
-        String sql = "UPDATE operations SET return_date = ? WHERE item_id = ? AND return_date IS NULL";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setDate(1, Date.valueOf(LocalDate.now()));
-            ps.setInt(2, item.getId());
-
-            ps.executeUpdate();
-            System.out.println("✅ Return operation saved successfully!");
-        } catch (SQLException e) {
-            GlobalExceptionHandler.handle(e);
-        }
-    }
     public LibraryItem returnItem(int id) {
         synchronized (library) {
             var item = itemById.get(id);
@@ -96,7 +68,7 @@ public class LibraryLoanService {
                     item.setReturnTime(LocalDate.now().toString());
                     Notifier notifier = new Notifier();
                     notifier.notifyObservers("Item '" + item.getTitle() + "' returned successfully.");
-                    SQLReturn(item);
+                    operationRepository.SQLReturn(item);
                     logger.info("Item '" + item.getTitle() + "' returned successfully.");
 
                 } else if (isBorrowable.test(item)) {

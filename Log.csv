@@ -245,3 +245,7 @@ Title,Author,PublicationYear,Status
 test,Reza,2018,EXIST
 test,Ali Reza,2022,BANNED
 test,moot,2020,EXIST
+
+Operation: remove
+Title,Author,PublicationYear,Status
+test2,test2,2014,EXIST

@@ -1,4 +1,4 @@
-package org.example.utils;
+package org.example.Config;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -6,13 +6,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DatabaseConnection {
+public class DatabaseConfig {
 
-    private DatabaseConnection() {}
+    private DatabaseConfig() {}
 
     public static Connection getConnection() throws SQLException {
         Properties props = new Properties();
-        try (InputStream input = DatabaseConnection.class.getClassLoader()
+        try (InputStream input = DatabaseConfig.class.getClassLoader()
                 .getResourceAsStream("config.properties")) {
 
             if (input == null) {
