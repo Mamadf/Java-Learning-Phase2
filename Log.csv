@@ -249,3 +249,7 @@ test,moot,2020,EXIST
 Operation: remove
 Title,Author,PublicationYear,Status
 test2,test2,2014,EXIST
+
+Operation: remove
+Title,Author,PublicationYear,Status
+test5,test5,2013,BORROWED

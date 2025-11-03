@@ -31,8 +31,8 @@ public class LibraryView {
         LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(type);
         if (factory != null) {
             LibraryItem item = factory.createItem(scanner);
-            managerService.addItem(item);
             operationRepository.addSQL(item);
+            managerService.addItem(item);
             System.out.println("✅ Item added successfully!");
         } else {
             System.out.println("❌ Unknown item type!");

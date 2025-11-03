@@ -58,6 +58,7 @@ public class OperationRepository {
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     itemId = rs.getInt(1);
+                    item.setId(itemId);
                 } else {
                     throw new SQLException("Failed to retrieve generated item_id.");
                 }
