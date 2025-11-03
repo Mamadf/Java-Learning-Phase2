@@ -1,5 +1,6 @@
 package org.example.Repository;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Service.LibraryManagerService;
 import org.example.Config.DatabaseConfig;
 import org.example.Model.*;
@@ -24,7 +25,6 @@ public class ItemRepository {
                 String status = rs.getString("status");
                 int year = rs.getInt("publication_year");
 
-                // determine subclass
                 LibraryItem item = loadSpecificItem(conn, id, title, author, status, year);
                 PreparedStatement ps = conn.prepareStatement("SELECT due_date FROM operations WHERE item_id = ? AND return_date IS NULL");
                 ps.setInt(1, id);
@@ -42,7 +42,7 @@ public class ItemRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            GlobalExceptionHandler.handle(e);
         }
 
     }

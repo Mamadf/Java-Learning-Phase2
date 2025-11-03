@@ -23,7 +23,6 @@ public class OperationRepository {
             ps.setDate(5, null);
 
             ps.executeUpdate();
-            System.out.println("✅ Borrow operation saved successfully!");
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
@@ -38,7 +37,6 @@ public class OperationRepository {
             ps.setInt(2, item.getId());
 
             ps.executeUpdate();
-            System.out.println("✅ Return operation saved successfully!");
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
@@ -200,6 +198,18 @@ public class OperationRepository {
                 }
             }
 
+        } catch (SQLException e) {
+            GlobalExceptionHandler.handle(e);
+        }
+    }
+    public void updateDueDate(int itemId, String newDueDate) {
+        String sql = "UPDATE operations SET due_date = ? WHERE item_id = ? AND return_date IS NULL";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDate(1, Date.valueOf(newDueDate));
+            ps.setInt(2, itemId);
+            ps.executeUpdate();
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }

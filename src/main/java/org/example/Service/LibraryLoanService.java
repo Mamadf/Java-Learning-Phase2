@@ -89,11 +89,12 @@ public class LibraryLoanService {
         synchronized (library) {
             var item = itemById.get(id);
             if (item != null) {
-                if (isBorrowable.test(item)) {
+                if (isBorrowed.test(item)) {
                     item.setReturnTime(date);
                     logger.info("Item '" + item.getTitle() + "' return time has been set successfully.");
-                } else if (isBorrowed.test(item)) {
-                    logger.warning("Item is borrowed, you can't change return time");
+                    operationRepository.updateDueDate(item.getId() , date);
+                } else if (isBorrowable.test(item)) {
+                    logger.warning("Item isn't borrowed, you can't change return time");
                     return null;
                 } else {
                     logger.warning("Item '" + item.getTitle() + "' is banned.");
