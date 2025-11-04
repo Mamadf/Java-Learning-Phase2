@@ -23,6 +23,7 @@ public class OperationRepository {
             ps.setDate(5, null);
 
             ps.executeUpdate();
+            item.setReturnTime(String.valueOf(LocalDate.now().plusDays(14)));
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
@@ -37,6 +38,7 @@ public class OperationRepository {
             ps.setInt(2, item.getId());
 
             ps.executeUpdate();
+            item.setReturnTime(null);
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
