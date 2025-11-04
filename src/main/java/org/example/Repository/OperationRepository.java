@@ -141,11 +141,14 @@ public class OperationRepository {
                 }
             }
 
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Operations WHERE item_id = ?")) {
+                ps.setInt(1, item.getId());
+                ps.executeUpdate();
+            }
             try (PreparedStatement ps = conn.prepareStatement("DELETE FROM LibraryItem WHERE item_id = ?")) {
                 ps.setInt(1, item.getId());
                 ps.executeUpdate();
             }
-
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
