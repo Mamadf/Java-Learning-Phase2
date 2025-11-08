@@ -8,10 +8,11 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OperationRepository {
 
-    public void SQLBorrow(LibraryItem item) {
+    public void borrow(LibraryItem item) {
         String sql = "INSERT INTO operations (item_id, user_id, borrow_date, due_date, return_date) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -29,7 +30,7 @@ public class OperationRepository {
         }
     }
 
-    public void SQLReturn(LibraryItem item) {
+    public void returnItem(LibraryItem item) {
         String sql = "UPDATE operations SET return_date = ? WHERE item_id = ? AND return_date IS NULL";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -44,7 +45,7 @@ public class OperationRepository {
         }
     }
 
-    public void addSQL(LibraryItem item) {
+    public void add(LibraryItem item) {
         String sql = "INSERT INTO LibraryItem (title, author, publication_year, status) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConfig.getConnection();
@@ -116,46 +117,47 @@ public class OperationRepository {
         }
     }
 
-    public void deleteSQL(LibraryItem item) {
+    public void delete(LibraryItem item) {
         if (item == null) return;
 
         try (Connection conn = DatabaseConfig.getConnection()) {
 
-            if (item instanceof Book) {
-                try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Book WHERE item_id = ?")) {
-                    ps.setInt(1, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof Magazine) {
-                try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Magazine WHERE item_id = ?")) {
-                    ps.setInt(1, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof ReferenceBook) {
-                try (PreparedStatement ps = conn.prepareStatement("DELETE FROM ReferenceBook WHERE item_id = ?")) {
-                    ps.setInt(1, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof Thesis) {
-                try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Thesis WHERE item_id = ?")) {
-                    ps.setInt(1, item.getId());
-                    ps.executeUpdate();
-                }
+// Map item types to their corresponding tables
+            Map<Class<? extends LibraryItem>, String> tableMap = Map.of(
+                    Book.class, "Book",
+                    Magazine.class, "Magazine",
+                    ReferenceBook.class, "ReferenceBook",
+                    Thesis.class, "Thesis"
+            );
+
+// Delete from specific item table if applicable
+            String tableName = tableMap.get(item.getClass());
+            if (tableName != null) {
+                deleteByItemId(conn, tableName, item.getId());
             }
 
-            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM Operations WHERE item_id = ?")) {
-                ps.setInt(1, item.getId());
-                ps.executeUpdate();
-            }
-            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM LibraryItem WHERE item_id = ?")) {
-                ps.setInt(1, item.getId());
-                ps.executeUpdate();
-            }
+// Delete related records
+            deleteByItemId(conn, "Operations", item.getId());
+            deleteByItemId(conn, "LibraryItem", item.getId());
+
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
     }
-    public void updateSQL(LibraryItem item) {
+
+
+
+
+
+    private void deleteByItemId(Connection conn, String tableName, int itemId) throws SQLException {
+        String sql = "DELETE FROM " + tableName + " WHERE item_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, itemId);
+            ps.executeUpdate();
+        }
+    }
+
+    public void update(LibraryItem item) {
         if (item == null) return;
 
         try (Connection conn = DatabaseConfig.getConnection()) {
@@ -170,44 +172,46 @@ public class OperationRepository {
                 ps.executeUpdate();
             }
 
-            if (item instanceof Book b) {
-                String sql = "UPDATE Book SET genre = ?, page = ? WHERE item_id = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, b.getGenre());
-                    ps.setInt(2, b.getPages());
-                    ps.setInt(3, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof Magazine m) {
-                String sql = "UPDATE Magazine SET publisher = ?, issue = ? WHERE item_id = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, m.getPublisher());
-                    ps.setInt(2, m.getIssue());
-                    ps.setInt(3, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof ReferenceBook r) {
-                String sql = "UPDATE ReferenceBook SET subject = ?, edition = ? WHERE item_id = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, r.getSubject());
-                    ps.setString(2, r.getEdition());
-                    ps.setInt(3, item.getId());
-                    ps.executeUpdate();
-                }
-            } else if (item instanceof Thesis t) {
-                String sql = "UPDATE Thesis SET university = ?, supervisor = ? WHERE item_id = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, t.getUniversity());
-                    ps.setString(2, t.getSupervisor());
-                    ps.setInt(3, item.getId());
-                    ps.executeUpdate();
-                }
+            Map<Class<? extends LibraryItem>, String> updateMap = Map.of(
+                    Book.class, "UPDATE Book SET genre = ?, page = ? WHERE item_id = ?",
+                    Magazine.class, "UPDATE Magazine SET publisher = ?, issue = ? WHERE item_id = ?",
+                    ReferenceBook.class, "UPDATE ReferenceBook SET subject = ?, edition = ? WHERE item_id = ?",
+                    Thesis.class, "UPDATE Thesis SET university = ?, supervisor = ? WHERE item_id = ?"
+            );
+
+            String sql = updateMap.get(item.getClass());
+            if (sql != null) {
+                updateSpecific(conn, sql, item);
             }
 
         } catch (SQLException e) {
             GlobalExceptionHandler.handle(e);
         }
     }
+
+    private void updateSpecific(Connection conn, String sql, LibraryItem item) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (item instanceof Book b) {
+                ps.setString(1, b.getGenre());
+                ps.setInt(2, b.getPages());
+            } else if (item instanceof Magazine m) {
+                ps.setString(1, m.getPublisher());
+                ps.setInt(2, m.getIssue());
+            } else if (item instanceof ReferenceBook r) {
+                ps.setString(1, r.getSubject());
+                ps.setString(2, r.getEdition());
+            } else if (item instanceof Thesis t) {
+                ps.setString(1, t.getUniversity());
+                ps.setString(2, t.getSupervisor());
+            }
+
+            ps.setInt(3, item.getId());
+            ps.executeUpdate();
+        }
+    }
+
+
     public void updateDueDate(int itemId, String newDueDate) {
         String sql = "UPDATE operations SET due_date = ? WHERE item_id = ? AND return_date IS NULL";
         try (Connection conn = DatabaseConfig.getConnection();

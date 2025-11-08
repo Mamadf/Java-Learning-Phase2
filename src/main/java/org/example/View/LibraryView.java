@@ -31,7 +31,7 @@ public class LibraryView {
         LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(type);
         if (factory != null) {
             LibraryItem item = factory.createItem(scanner);
-            operationRepository.addSQL(item);
+            operationRepository.add(item);
             managerService.addItem(item);
             System.out.println("✅ Item added successfully!");
         } else {
@@ -50,7 +50,7 @@ public class LibraryView {
         LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(item.getClass().getSimpleName());
         if (factory != null){
             factory.updateItem(item, scanner);
-            operationRepository.updateSQL(item);
+            operationRepository.update(item);
         }
 
     }
@@ -61,7 +61,7 @@ public class LibraryView {
         var removed = managerService.deleteItem(id);
         if (removed != null) {
             CsvHandler.writeLibrary("remove", List.of(removed));
-            operationRepository.deleteSQL(removed);
+            operationRepository.delete(removed);
             System.out.println("✅ Item removed successfully!");
         }
     }

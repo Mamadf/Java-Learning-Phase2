@@ -43,7 +43,7 @@ public class LibraryLoanService {
             if (item != null) {
                 if (isBorrowable.test(item)) {
                     item.setStatus(ItemStatus.BORROWED);
-                    operationRepository.SQLBorrow(item);
+                    operationRepository.borrow(item);
                     logger.info("Item '" + item.getTitle() + "' borrowed successfully.");
                 } else if (isBorrowed.test(item)) {
                     logger.warning("Item is already borrowed.");
@@ -68,7 +68,7 @@ public class LibraryLoanService {
                     item.setReturnTime(LocalDate.now().toString());
                     Notifier notifier = new Notifier();
                     notifier.notifyObservers("Item '" + item.getTitle() + "' returned successfully.");
-                    operationRepository.SQLReturn(item);
+                    operationRepository.returnItem(item);
                     logger.info("Item '" + item.getTitle() + "' returned successfully.");
 
                 } else if (isBorrowable.test(item)) {

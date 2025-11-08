@@ -261,3 +261,7 @@ thes,auth,2022,EXIST
 Operation: remove
 Title,Author,PublicationYear,Status
 magtestt,mag,2020,EXIST
+
+Operation: remove
+Title,Author,PublicationYear,Status
+thes,auth,2021,EXIST
