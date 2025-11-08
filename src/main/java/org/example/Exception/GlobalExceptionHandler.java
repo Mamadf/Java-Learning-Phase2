@@ -2,6 +2,7 @@ package org.example.Exception;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class GlobalExceptionHandler {
@@ -21,6 +22,10 @@ public class GlobalExceptionHandler {
         } else if (e instanceof InterruptedException) {
             logger.warning("❌ Thread interrupted: " + e.getMessage());
             Thread.currentThread().interrupt();
+        } else if (e instanceof SQLException) {
+            logger.severe("❌ Database error: " + e.getMessage());
+        } else if (e instanceof RuntimeException) {
+            logger.severe("❌ Runtime error: " + e.getMessage());
         } else {
             logger.severe("❌ Unexpected error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }

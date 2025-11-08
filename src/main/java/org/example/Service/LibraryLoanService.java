@@ -1,11 +1,17 @@
 package org.example.Service;
 
+import org.example.Exception.GlobalExceptionHandler;
 import org.example.Model.ItemStatus;
 import org.example.Observer.Notifier;
-import org.example.Observer.User;
 import org.example.Repository.LibraryData;
 import org.example.Model.LibraryItem;
+import org.example.Config.DatabaseConfig;
+import org.example.Repository.OperationRepository;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +26,7 @@ public class LibraryLoanService {
     private static final Predicate<LibraryItem> isBorrowed =
             item -> item != null && item.getStatus() == ItemStatus.BORROWED;
     private LibraryData library;
+    private OperationRepository operationRepository;
 
     private List<LibraryItem> items;
     private Map<Integer, LibraryItem> itemById;
@@ -27,6 +34,7 @@ public class LibraryLoanService {
         this.library = library;
         items = library.getItems();
         itemById = library.getItemById();
+        operationRepository = new OperationRepository();
     }
 
     public LibraryItem borrowItem(int id) {
@@ -35,6 +43,7 @@ public class LibraryLoanService {
             if (item != null) {
                 if (isBorrowable.test(item)) {
                     item.setStatus(ItemStatus.BORROWED);
+                    operationRepository.borrow(item);
                     logger.info("Item '" + item.getTitle() + "' borrowed successfully.");
                 } else if (isBorrowed.test(item)) {
                     logger.warning("Item is already borrowed.");
@@ -59,6 +68,7 @@ public class LibraryLoanService {
                     item.setReturnTime(LocalDate.now().toString());
                     Notifier notifier = new Notifier();
                     notifier.notifyObservers("Item '" + item.getTitle() + "' returned successfully.");
+                    operationRepository.returnItem(item);
                     logger.info("Item '" + item.getTitle() + "' returned successfully.");
 
                 } else if (isBorrowable.test(item)) {
@@ -79,11 +89,12 @@ public class LibraryLoanService {
         synchronized (library) {
             var item = itemById.get(id);
             if (item != null) {
-                if (isBorrowable.test(item)) {
+                if (isBorrowed.test(item)) {
                     item.setReturnTime(date);
                     logger.info("Item '" + item.getTitle() + "' return time has been set successfully.");
-                } else if (isBorrowed.test(item)) {
-                    logger.warning("Item is borrowed, you can't change return time");
+                    operationRepository.updateDueDate(item.getId() , date);
+                } else if (isBorrowable.test(item)) {
+                    logger.warning("Item isn't borrowed, you can't change return time");
                     return null;
                 } else {
                     logger.warning("Item '" + item.getTitle() + "' is banned.");

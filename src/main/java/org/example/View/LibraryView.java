@@ -4,6 +4,7 @@ import org.example.Factory.LibraryItemFactory;
 import org.example.Factory.LibraryItemFactoryProducer;
 import org.example.Model.LibraryItem;
 import org.example.Repository.LibraryData;
+import org.example.Repository.OperationRepository;
 import org.example.Service.LibraryManagerService;
 import org.example.Service.LibraryLoanService;
 import org.example.Storage.CsvHandler;
@@ -16,11 +17,12 @@ import java.util.function.BiConsumer;
 public class LibraryView {
     private final LibraryManagerService managerService;
     private final LibraryLoanService loanService;
-
+    private OperationRepository operationRepository;
 
     public LibraryView(LibraryManagerService managerService, LibraryLoanService loanService) {
         this.managerService = managerService;
         this.loanService = loanService;
+        operationRepository = new OperationRepository();
     }
 
     public void addItem(Scanner scanner) {
@@ -29,6 +31,7 @@ public class LibraryView {
         LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(type);
         if (factory != null) {
             LibraryItem item = factory.createItem(scanner);
+            operationRepository.add(item);
             managerService.addItem(item);
             System.out.println("✅ Item added successfully!");
         } else {
@@ -45,7 +48,11 @@ public class LibraryView {
             return;
         }
         LibraryItemFactory factory = LibraryItemFactoryProducer.getFactory(item.getClass().getSimpleName());
-        if (factory != null) factory.updateItem(item, scanner);
+        if (factory != null){
+            factory.updateItem(item, scanner);
+            operationRepository.update(item);
+        }
+
     }
 
     public void removeItem(Scanner scanner) {
@@ -54,6 +61,7 @@ public class LibraryView {
         var removed = managerService.deleteItem(id);
         if (removed != null) {
             CsvHandler.writeLibrary("remove", List.of(removed));
+            operationRepository.delete(removed);
             System.out.println("✅ Item removed successfully!");
         }
     }
